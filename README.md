@@ -1,6 +1,6 @@
 ```mermaid
 gantt
-    title 校园网建设项目进度安排（紧凑版）
+    title 校园网建设项目进度安排
     dateFormat  YYYY-MM-DD
     section 需求分析
     收集学院网络需求       :done, 2025-04-01, 4d
