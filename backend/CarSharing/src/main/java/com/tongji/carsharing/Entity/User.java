@@ -14,7 +14,7 @@ public class User {
     private String phone;
     private String role;
     private String avatar;
-    private Timestamp createdAt;
+    private Timestamp createdTime;
     private String homeAddress;
     private String companyAddress;
     private Long totalMileage;
