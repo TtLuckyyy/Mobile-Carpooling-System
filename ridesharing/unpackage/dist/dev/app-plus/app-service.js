@@ -31,6 +31,7 @@ if (uni.restoreGlobal) {
 }
 (function(vue) {
   "use strict";
+  const _imports_0$3 = "/static/pictures/start.png";
   const _export_sfc = (sfc, props) => {
     const target = sfc.__vccOpts || sfc;
     for (const [key, val] of props) {
@@ -38,6 +39,98 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
+  const _sfc_main$d = {
+    onShow() {
+      setTimeout(() => {
+        uni.reLaunch({
+          url: "/pages/index/welcome"
+          // 你想跳转的主页面
+        });
+      }, 2e3);
+    }
+  };
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "splash-page" }, [
+      vue.createElementVNode("text", { class: "title" }, "拼 好 车"),
+      vue.createElementVNode("text", { class: "subtitle" }, "你的出行省钱指南"),
+      vue.createElementVNode("image", {
+        class: "logo",
+        src: _imports_0$3
+      }),
+      vue.createElementVNode("view", { class: "footer" }, [
+        vue.createElementVNode("text", { class: "footer-text" }, "一路同行，美好随行"),
+        vue.createElementVNode("text", { class: "version" }, "V1.0.0")
+      ])
+    ]);
+  }
+  const PagesIndexLaunch = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-8d8376b8"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/index/launch.vue"]]);
+  const _imports_0$2 = "/static/pictures/welcome0.png";
+  const _imports_1 = "/static/pictures/welcome1.png";
+  const _sfc_main$c = {
+    methods: {
+      goToExperience() {
+        uni.reLaunch({
+          url: "/pages/index/index"
+          // 你想跳转的主页面
+        });
+      }
+    }
+  };
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "splash-container" }, [
+      vue.createCommentVNode(" 使用swiper组件 "),
+      vue.createElementVNode("swiper", {
+        class: "swiper",
+        "indicator-dots": "true",
+        autoplay: "false",
+        interval: "5000",
+        duration: "300",
+        circular: "true"
+      }, [
+        vue.createCommentVNode(" 第一个页面 "),
+        vue.createElementVNode("swiper-item", { class: "page1" }, [
+          vue.createElementVNode("view", { class: "page-content" }, [
+            vue.createElementVNode("text", { class: "title" }, [
+              vue.createElementVNode("text", { class: "orange-text" }, "连接"),
+              vue.createElementVNode("text", { class: "green-text" }, "你我")
+            ]),
+            vue.createElementVNode("text", { class: "title" }, [
+              vue.createElementVNode("text", { class: "orange-text" }, "连接"),
+              vue.createElementVNode("text", { class: "green-text" }, "城市")
+            ]),
+            vue.createElementVNode("image", {
+              class: "image",
+              src: _imports_0$2
+            })
+          ])
+        ]),
+        vue.createCommentVNode(" 第二个页面 "),
+        vue.createElementVNode("swiper-item", { class: "page2" }, [
+          vue.createElementVNode("view", { class: "page-content" }, [
+            vue.createCommentVNode(" 第一行：车主乘客一键切换 "),
+            vue.createElementVNode("text", { class: "big-title" }, [
+              vue.createElementVNode("text", { class: "green-text" }, "车主乘客"),
+              vue.createElementVNode("text", { class: "small-green-text" }, "一键切换！")
+            ]),
+            vue.createCommentVNode(" 第二行：出行更自由 "),
+            vue.createElementVNode("text", { class: "small-title" }, [
+              vue.createElementVNode("text", { class: "orange-text" }, "出行更"),
+              vue.createElementVNode("text", { class: "big-orange-text" }, "自由!")
+            ]),
+            vue.createElementVNode("image", {
+              class: "image",
+              src: _imports_1
+            }),
+            vue.createElementVNode("button", {
+              class: "experience-button",
+              onClick: _cache[0] || (_cache[0] = (...args) => $options.goToExperience && $options.goToExperience(...args))
+            }, "立即体验")
+          ])
+        ])
+      ])
+    ]);
+  }
+  const PagesIndexWelcome = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-c7aac77f"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/index/welcome.vue"]]);
   const _sfc_main$b = {
     data() {
       return {
@@ -79,7 +172,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesCustomerCustomer = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "C:/Users/Lenovo/Desktop/Code/ridesharing/pages/customer/customer.vue"]]);
+  const PagesCustomerCustomer = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/customer.vue"]]);
   const _sfc_main$a = {
     data() {
       return {
@@ -99,7 +192,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesDriverDriver = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "C:/Users/Lenovo/Desktop/Code/ridesharing/pages/driver/driver.vue"]]);
+  const PagesDriverDriver = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/driver/driver.vue"]]);
   const _sfc_main$9 = {
     data() {
       return {
@@ -119,7 +212,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "C:/Users/Lenovo/Desktop/Code/ridesharing/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/index/index.vue"]]);
   const _sfc_main$8 = {
     data() {
       return {
@@ -154,7 +247,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyMy = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__file", "C:/Users/Lenovo/Desktop/Code/ridesharing/pages/my/my.vue"]]);
+  const PagesMyMy = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/my/my.vue"]]);
   const _imports_0$1 = "/static/left-arrow.png";
   const _sfc_main$7 = {
     name: "PageHeader",
@@ -204,7 +297,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsPageHeader = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__file", "C:/Users/Lenovo/Desktop/Code/ridesharing/components/PageHeader.vue"]]);
+  const ComponentsPageHeader = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/components/PageHeader.vue"]]);
   function formatAppLog(type, filename, ...args) {
     if (uni.__log__) {
       uni.__log__(type, filename, ...args);
@@ -934,7 +1027,7 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-d31e1c47"], ["__file", "C:/Users/Lenovo/Desktop/Code/ridesharing/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   const _sfc_main$5 = {
     name: "UniRate",
     props: {
@@ -1200,7 +1293,7 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-5c8fbdf3"], ["__file", "C:/Users/Lenovo/Desktop/Code/ridesharing/uni_modules/uni-rate/components/uni-rate/uni-rate.vue"]]);
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-5c8fbdf3"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/uni_modules/uni-rate/components/uni-rate/uni-rate.vue"]]);
   function formatDateTime(dateStr) {
     if (!dateStr)
       return "";
@@ -1404,7 +1497,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsListBlock = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "C:/Users/Lenovo/Desktop/Code/ridesharing/components/ListBlock.vue"]]);
+  const ComponentsListBlock = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/components/ListBlock.vue"]]);
   const _sfc_main$3 = {
     mounted() {
       this.publishDemand();
@@ -1517,7 +1610,7 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesCustomerInvitationMatch = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "C:/Users/Lenovo/Desktop/Code/ridesharing/pages/customer/InvitationMatch.vue"]]);
+  const PagesCustomerInvitationMatch = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/InvitationMatch.vue"]]);
   const _imports_0 = "/static/right-arrow-blue.png";
   const _sfc_main$2 = {
     props: {
@@ -1611,7 +1704,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsRequestBlock = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "C:/Users/Lenovo/Desktop/Code/ridesharing/components/RequestBlock.vue"]]);
+  const ComponentsRequestBlock = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/components/RequestBlock.vue"]]);
   const _sfc_main$1 = {
     components: {
       PageHeader: ComponentsPageHeader,
@@ -1692,7 +1785,9 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesCustomerRequestList = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "C:/Users/Lenovo/Desktop/Code/ridesharing/pages/customer/RequestList.vue"]]);
+  const PagesCustomerRequestList = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/RequestList.vue"]]);
+  __definePage("pages/index/launch", PagesIndexLaunch);
+  __definePage("pages/index/welcome", PagesIndexWelcome);
   __definePage("pages/customer/customer", PagesCustomerCustomer);
   __definePage("pages/driver/driver", PagesDriverDriver);
   __definePage("pages/index/index", PagesIndexIndex);
@@ -1714,7 +1809,7 @@ if (uni.restoreGlobal) {
       formatAppLog("log", "at App.vue:11", "App Hide");
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "C:/Users/Lenovo/Desktop/Code/ridesharing/App.vue"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/App.vue"]]);
   function createApp() {
     const app = vue.createVueApp(App);
     return {
