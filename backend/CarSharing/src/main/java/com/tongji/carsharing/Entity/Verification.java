@@ -1,5 +1,6 @@
 package com.tongji.carsharing.Entity;
 
+import com.tongji.carsharing.enums.enums;
 import lombok.*;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
@@ -18,7 +19,7 @@ public class Verification {
 
     @ManyToOne
     @JoinColumn(name = "verification_user_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private User verificationUser;                // 用户ID (外键，关联到 user 表)
+    private User user;                // 用户ID (外键，关联到 user 表)
 
     @Column(name = "verification_license_number", nullable = false)
     private String verificationLicenseNumber; // 车主驾驶证号
@@ -26,11 +27,12 @@ public class Verification {
     @Column(name = "verification_car_plate", nullable = false)
     private String verificationCarPlate;     // 车主车牌号
 
-    @Column(name = "verification_ar_model", nullable = false)
+    @Column(name = "verification_car_model", nullable = false)
     private String verificationArModel;      // 车主车型
 
-    @Column(name = "verification_state", nullable = false)
-    private String verificationState;         // 认证状态（待审核、已通过、已拒绝）
+    @Enumerated(EnumType.STRING)
+    @Column(name = "verification_state", nullable = false)  // 映射到数据库中的 status 字段
+    private enums.AdminStatus status;      // 认证状态（待审核、已通过、已拒绝）
 
     @Column(name = "verification_submit_time", nullable = false)
     private Timestamp verificationSubmitTime; // 提交时间
@@ -39,8 +41,8 @@ public class Verification {
     private Timestamp verificationCheckedTime; // 审核时间
 
     @ManyToOne
-    @JoinColumn(name = "verification_administrator", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private User verificationAdministrator;   // 审核人ID (外键，关联到 user 表)
+    @JoinColumn(name = "verification_administrator_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
+    private User adminUser;   // 审核人ID (外键，关联到 user 表)
 
     @Column(name = "real_name", nullable = false)
     private String realName;                  // 真实姓名

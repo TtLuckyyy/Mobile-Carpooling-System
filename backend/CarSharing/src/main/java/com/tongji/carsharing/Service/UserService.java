@@ -20,7 +20,7 @@ public class UserService {
 
 
         // 构造完整 RequestMapper 对象
-        request.setPassengerId(request.getPassengerId());
+        request.setPassengerUser(request.getPassengerUser());
         request.setStartLoc(request.getStartLoc());
         request.setEndLoc(request.getEndLoc());
         request.setDistance(request.getDistance());

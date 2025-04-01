@@ -52,13 +52,13 @@ public class OrderService {
         }
 
         // 5. 获取车主认证信息
-        Verification verification = verimapper.getVerificationByUserId(bestOffer.getDriverId());
+        Verification verification = verimapper.getVerificationByUserId(bestOffer.getDriverUser().getId());
         if (verification == null) {
             return Map.of("error", "未找到车主认证信息");
         }
 
         // 6. 获取车主头像
-        String avatar = usermapper.getAvatarByUserId(bestOffer.getDriverId());
+        String avatar = usermapper.getAvatarByUserId(bestOffer.getDriverUser().getId());
 
 
         // 8. 组装结果

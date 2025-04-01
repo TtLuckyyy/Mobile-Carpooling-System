@@ -1,5 +1,6 @@
 package com.tongji.carsharing.Entity;
 
+import com.tongji.carsharing.enums.enums;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,23 +22,28 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // 主键自增
     private Integer id;
 
-    @Column(name = "driver_id", nullable = false)  // 映射到数据库中的 driver_id 字段
-    private Integer driverId;
+    @ManyToOne
+    @JoinColumn(name = "driver_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
+    private User driverUser;
 
-    @Column(name = "passenger_id", nullable = false)  // 映射到数据库中的 passenger_id 字段
-    private Integer passengerId;
+    @ManyToOne
+    @JoinColumn(name = "passenger_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
+    private User passengerUser;
 
-    @Column(name = "offer_id", nullable = false)  // 映射到数据库中的 offer_id 字段
-    private Integer offerId;
+    @ManyToOne
+    @JoinColumn(name = "offer_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
+    private Offer offer;
 
-    @Column(name = "request_id", nullable = false)  // 映射到数据库中的 request_id 字段
-    private Integer requestId;
+    @ManyToOne
+    @JoinColumn(name = "request_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
+    private Request request;
 
     @Column(name = "price", nullable = false)  // 映射到数据库中的 price 字段
     private BigDecimal price;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)  // 映射到数据库中的 status 字段
-    private String status;
+    private enums.OfferStatus status;
 
     @Column(name = "created_at", nullable = false, updatable = false)  // 映射到数据库中的 created_at 字段
     private Timestamp createdAt;

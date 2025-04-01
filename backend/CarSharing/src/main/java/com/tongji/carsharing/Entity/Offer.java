@@ -1,5 +1,6 @@
 package com.tongji.carsharing.Entity;
 
+import com.tongji.carsharing.enums.enums;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -17,8 +18,9 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // 主键自增
     private Integer id;
 
-    @Column(name = "driver_id", nullable = false)  // 映射到数据库中的 driver_id 字段
-    private Integer driverId;
+    @ManyToOne
+    @JoinColumn(name = "driver_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
+    private User driverUser;
 
     @Column(name = "start_loc", nullable = false)  // 映射到数据库中的 start_loc 字段
     private String startLoc;
@@ -29,8 +31,9 @@ public class Offer {
     @Column(name = "seats", nullable = false)  // 映射到数据库中的 seats 字段
     private Integer seats;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)  // 映射到数据库中的 status 字段
-    private String status;
+    private enums.OfferStatus status;
 
     @Column(name = "created_at", nullable = false, updatable = false)  // 映射到数据库中的 created_at 字段
     private Timestamp createdAt;

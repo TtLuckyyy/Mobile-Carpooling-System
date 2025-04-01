@@ -1,5 +1,6 @@
 package com.tongji.carsharing.Entity;
 
+import com.tongji.carsharing.enums.enums;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,8 +22,9 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // 主键自增
     private Integer id;
 
-    @Column(name = "passenger_id", nullable = false)  // 映射到数据库中的 passenger_id 字段
-    private Integer passengerId;
+    @ManyToOne
+    @JoinColumn(name = "passenger_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
+    private User passengerUser;
 
     @Column(name = "start_loc", nullable = false)  // 映射到数据库中的 start_loc 字段
     private String startLoc;
@@ -36,8 +38,9 @@ public class Request {
     @Column(name = "price", nullable = false)  // 映射到数据库中的 price 字段
     private BigDecimal price;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)  // 映射到数据库中的 status 字段
-    private String status;
+    private enums.OfferStatus status;
 
     @Column(name = "created_at", nullable = false, updatable = false)  // 映射到数据库中的 created_at 字段
     private Timestamp createdAt;
