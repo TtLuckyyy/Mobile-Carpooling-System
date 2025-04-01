@@ -8,14 +8,15 @@ import java.sql.Timestamp;
 @AllArgsConstructor // 生成全参构造方法
 @Builder  // 生成 Builder 模式
 public class User {
-    private Long id;
+    private Integer id;
     private String username;
     private String password;
     private String phone;
+    private String email;
     private String role;
     private String avatar;
     private Timestamp createdTime;
     private String homeAddress;
     private String companyAddress;
-    private Long totalMileage;
+    private Integer totalMileage;
 }

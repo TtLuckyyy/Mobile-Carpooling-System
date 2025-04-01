@@ -14,11 +14,11 @@ import java.sql.Timestamp;
 //违规记录表
 public class Report {
 
-    private Long id;              // 违规记录唯一ID
-    private Long adminId;         // 管理者用户ID
-    private Long reportedId;      // 被举报用户ID
-    private Long reporterId;      // 举报人ID
-    private Long orderId;         // 关联的订单ID
+    private Integer id;              // 违规记录唯一ID
+    private Integer adminId;         // 管理者用户ID
+    private Integer reportedId;      // 被举报用户ID
+    private Integer reporterId;      // 举报人ID
+    private Integer orderId;         // 关联的订单ID
     private String reason;        // 违规原因描述
     private String status;        // 处理状态（pending, reviewed, resolved）
     private Timestamp createdAt;  // 举报时间

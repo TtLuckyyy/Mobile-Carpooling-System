@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 
 @Data
 @NoArgsConstructor
@@ -14,10 +15,11 @@ import java.sql.Timestamp;
 @Builder
 public class Request {
 
-    private Long id;              // 需求唯一ID
-    private Long passengerId;     // 乘客ID
+    private Integer id;              // 需求唯一ID
+    private Integer passengerId;     // 乘客ID
     private String startLoc;      // 起点
     private String endLoc;        // 终点
+    private BigDecimal distance;  // 订单距离
     private BigDecimal price;     // 费用
     private String status;        // 需求状态（pending, matched, completed, canceled）
     private Timestamp createdAt;  // 发布时间

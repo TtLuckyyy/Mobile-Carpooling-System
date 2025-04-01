@@ -8,8 +8,8 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Builder
 public class Offer {
-    private Long id;
-    private Long driverId;
+    private Integer id;
+    private Integer driverId;
     private String startLoc;
     private String endLoc;
     private Integer seats;
