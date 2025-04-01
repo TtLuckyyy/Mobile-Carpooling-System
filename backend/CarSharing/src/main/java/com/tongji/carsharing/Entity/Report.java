@@ -5,23 +5,39 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.persistence.*;
 import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//违规记录表
+@Entity
+@Table(name = "carpool_report")  // 映射到数据库中的 reports 表
 public class Report {
 
-    private Integer id;              // 违规记录唯一ID
-    private Integer adminId;         // 管理者用户ID
-    private Integer reportedId;      // 被举报用户ID
-    private Integer reporterId;      // 举报人ID
-    private Integer orderId;         // 关联的订单ID
-    private String reason;        // 违规原因描述
-    private String status;        // 处理状态（pending, reviewed, resolved）
-    private Timestamp createdAt;  // 举报时间
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // 主键自增
+    private Integer id;
 
+    @Column(name = "admin_id", nullable = false)  // 映射到数据库中的 admin_id 字段
+    private Integer adminId;
 
+    @Column(name = "reported_id", nullable = false)  // 映射到数据库中的 reported_id 字段
+    private Integer reportedId;
+
+    @Column(name = "reporter_id", nullable = false)  // 映射到数据库中的 reporter_id 字段
+    private Integer reporterId;
+
+    @Column(name = "order_id", nullable = false)  // 映射到数据库中的 order_id 字段
+    private Integer orderId;
+
+    @Column(name = "reason", nullable = false)  // 映射到数据库中的 reason 字段
+    private String reason;
+
+    @Column(name = "status", nullable = false)  // 映射到数据库中的 status 字段
+    private String status;
+
+    @Column(name = "created_at", nullable = false, updatable = false)  // 映射到数据库中的 created_at 字段
+    private Timestamp createdAt;
 }

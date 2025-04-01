@@ -5,26 +5,49 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.DecimalFormat;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name = "carpool_request")  // 映射到数据库中的 requests 表
 public class Request {
 
-    private Integer id;              // 需求唯一ID
-    private Integer passengerId;     // 乘客ID
-    private String startLoc;      // 起点
-    private String endLoc;        // 终点
-    private BigDecimal distance;  // 订单距离
-    private BigDecimal price;     // 费用
-    private String status;        // 需求状态（pending, matched, completed, canceled）
-    private Timestamp createdAt;  // 发布时间
-    private Timestamp startAt;    // 出发时间
-    private Boolean exclusive;    // 是否独享
-    private Boolean highway;      // 是否协商高速费
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // 主键自增
+    private Integer id;
 
+    @Column(name = "passenger_id", nullable = false)  // 映射到数据库中的 passenger_id 字段
+    private Integer passengerId;
+
+    @Column(name = "start_loc", nullable = false)  // 映射到数据库中的 start_loc 字段
+    private String startLoc;
+
+    @Column(name = "end_loc", nullable = false)  // 映射到数据库中的 end_loc 字段
+    private String endLoc;
+
+    @Column(name = "distance", nullable = false)  // 映射到数据库中的 distance 字段
+    private BigDecimal distance;
+
+    @Column(name = "price", nullable = false)  // 映射到数据库中的 price 字段
+    private BigDecimal price;
+
+    @Column(name = "status", nullable = false)  // 映射到数据库中的 status 字段
+    private String status;
+
+    @Column(name = "created_at", nullable = false, updatable = false)  // 映射到数据库中的 created_at 字段
+    private Timestamp createdAt;
+
+    @Column(name = "start_at", nullable = false)  // 映射到数据库中的 start_at 字段
+    private Timestamp startAt;
+
+    @Column(name = "exclusive", nullable = false)  // 映射到数据库中的 exclusive 字段
+    private Boolean exclusive;
+
+    @Column(name = "highway", nullable = false)  // 映射到数据库中的 highway 字段
+    private Boolean highway;
 }
