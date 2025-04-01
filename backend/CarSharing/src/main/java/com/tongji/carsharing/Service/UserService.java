@@ -20,16 +20,15 @@ public class UserService {
 
 
         // 构造完整 RequestMapper 对象
-        request.setPassengerUser(request.getPassengerUser());
-        request.setStartLoc(request.getStartLoc());
-        request.setEndLoc(request.getEndLoc());
-        request.setDistance(request.getDistance());
+//        request.setPassengerUser(request.getPassengerUser());
+//        request.setStartLoc(request.getStartLoc());
+//        request.setEndLoc(request.getEndLoc());
+//        request.setDistance(request.getDistance());
         request.setPrice(price);
-        request.setStatus(request.getStatus());
         request.setCreatedAt(createdAt);
-        request.setStartAt(request.getStartAt());
-        request.setExclusive(request.getExclusive());
-        request.setHighway(request.getHighway());
+//        request.setStartAt(request.getStartAt());
+//        request.setExclusive(request.getExclusive());
+//        request.setHighway(request.getHighway());
 
         // 插入数据库
         int result = requestmapper.insertRequest(request);

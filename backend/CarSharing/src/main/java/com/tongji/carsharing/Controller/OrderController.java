@@ -38,9 +38,9 @@ public class OrderController {
     private OrderService orderservice;
 
     @RequestMapping("/matched-orders/{reqest_id}")
-    public Map<String, Object> matchedOrders(@PathVariable Integer reqest_id) {
+    public Map<String, Object> matchedOrders(@PathVariable Integer request_id) {
         Map<String, Object> response = new HashMap<>();
-        response=orderservice.matchedOrders(usermapper,offermapper,requestmapper,verimapper,calculateTool,reqest_id);
+        response=orderservice.matchedOrders(usermapper,offermapper,requestmapper,verimapper,calculateTool,request_id);
         if (response !=null) {
             response.put("status", "success");
             response.put("message", "拼车需求发布成功！");
