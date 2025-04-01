@@ -4,7 +4,10 @@
     <view class="back-button" @click="goToSpecificPage">
       <text>← 返回首页</text>
     </view>
-    
+	<!-- 登录按钮 -->
+	<view class="login-button" @click="goToLoginPage">
+	  <text>登录</text>
+	</view>
     <view class="content">
       我的个人页面
     </view>
@@ -23,7 +26,12 @@ export default {
 	  uni.switchTab({ 
 	      url: '/pages/customer/customer' 
 	    });
-    }
+    },
+	goToLoginPage() {
+	  uni.navigateTo({
+		  url: '/pages/my/login/login'
+	    });
+	}
   },
 }
 </script>
@@ -39,7 +47,16 @@ export default {
   z-index: 999;
   margin-top: var(--status-bar-height);
 }
-
+.login-button {
+  padding: 15px;
+  font-size: 16px;
+  color: #007AFF;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 999;
+  margin-top: var(--status-bar-height);
+}
 .content {
   margin-top: 50px;
   padding: 20px;

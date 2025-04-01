@@ -8,13 +8,6 @@
 		}
 	},
 	{
-		"path" : "pages/index/welcome",
-		"style" : 
-		{
-			"navigationBarTitleText" : ""
-		}
-	},
-	{
 		"path": "pages/customer/customer",
 		"style": {
 			"navigationBarTitleText": ""
@@ -72,6 +65,56 @@
 	},
 	{
 		"path" : "components/RequestBlock",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+
+	{
+		"path" : "pages/index/welcome",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+	  "path": "pages/my/login/login",
+	  "style": {
+		"navigationBarTitleText": "登录",
+		"navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/my/login/passwordLogin",
+	  "style": {
+		"navigationBarTitleText": "密码登录",
+		"navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/my/login/forget",
+	  "style": {
+		"navigationBarTitleText": "忘记密码",
+		"navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/my/login/register",
+	  "style": {
+		"navigationBarTitleText": "注册账户",
+		"navigationStyle": "custom"
+	  }
+	},
+	{
+		"path" : "pages/customer/StartLoc",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/customer/EndLoc",
 		"style" : 
 		{
 			"navigationBarTitleText" : ""

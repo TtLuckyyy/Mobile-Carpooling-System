@@ -2,7 +2,7 @@
   <view class="splash-page">
     <text class="title">拼  好  车</text>
     <text class="subtitle">你的出行省钱指南</text>
-	<image class="logo" src="D:/GitHub/Mobile-Carpooling-System/ridesharing/static/pictures/start.png" />
+	<image class="logo" src="@/static/launch/start.png" />
     <view class="footer">
       <text class="footer-text">一路同行，美好随行</text>
       <text class="version">V1.0.0</text>

@@ -26,17 +26,17 @@
 			<view class="up-right">
 				<view style="	display: flex; align-items: center; ">
 					<image :src="item.avatar"  class="driver-avatar" mode="aspectFill"></image>
-					<text class="car-plate">{{ formatCarPlate(item.carPlate) }}</text>
+					<text class="car-plate">{{ formatCarPlate(item.verificationCarPlate) }}</text>
 				</view>
 				
 				<view class="car_info">
-					<text style="margin-right:5px ;">{{item.car_color}}</text>
+					<text style="margin-right:5px ;">{{item.verificationColor}}</text>
 					<text>|</text>
-					<text style="margin-left:5px ;">{{item.car_model}}</text>
+					<text style="margin-left:5px ;">{{item.verificationCarModel}}</text>
 				</view>
 				
 				<view class="driver_info">
-					<text style="margin-right:8px ; color: black;">{{item.username}}</text>
+					<text style="margin-right:8px ; color: black;">{{item.realName}}</text>
 					  <uni-rate  :value="item.rating"  size="14"  color="#bbb"  active-color="var(--color-yellow)" readonly ></uni-rate>
 					<text style="margin-left:8px ;color: var(--color-yellow);">{{item.rating}}分</text>
 				</view>
@@ -66,7 +66,7 @@
 			  <text 
 			      class="abutton"
 			      :class="{ 'active': isPressed }"
-			      @click="createOrder"
+			      @click="createOrder" :disabled="isPressed"
 			      @touchstart="isPressed = true"
 			      @touchend="isPressed = false"
 			    >
@@ -78,6 +78,7 @@
 
 <script>
 	import {formatDateTime} from '@/utils/functions/formatDateTime';
+	import { mapState, mapActions } from 'vuex'
 	export default {
 		props: {
 		  item: {
@@ -91,10 +92,11 @@
 				isPressed: false
 			}
 		},
-		mounted() {
-			// console.log(formatDateTime);
-		},
+	    computed: {
+		    ...mapState(['rideRequest']) // 获取Vuex中的rideRequest
+	    },
 		methods: {
+			...mapActions(['setOrderId']),
 			formatDateTime,
 			formatCarPlate(plate) {
 			    if (!plate) return '';
@@ -106,41 +108,52 @@
 			},
 			
 			async createOrder() {
-			//   // 从Vuex获取用户ID
-			//   const userId = this.$store.state.user.id; 
-			//   // 或从uni-app存储获取
-			//   // const userId = uni.getStorageSync('userId');
-			  
-			//   if (!userId) {
-			//     throw new Error('请先登录');
-			//   }
-			
-			//   const orderData = {
-			// 	driver_id: this.item.driverId, // 假设item中有driverId
-			// 	start_time: this.item.startAt,
-			// 	start_location: this.item.startLoc,
-			// 	end_location: this.item.endLoc,
-			// 	price: this.item.price,
-			// 	seats: this.item.seats
-			//   };
-			  
-			//   // 发送请求到后端
-			//   const [error, res] = await uni.request({
-			// 	url: 'https://your-api-domain.com/api/orders',           //需修改
-			// 	method: 'POST',
-			// 	data: orderData,
-			// 	header: {
-			// 	  'Authorization': 'Bearer ' + uni.getStorageSync('token'),
-			// 	  'Content-Type': 'application/json'
-			// 	}
-			//   });
-			  
-			//   if (error) throw new Error('网络请求失败');
-			//   if (res.statusCode !== 200) {
-			// 	throw new Error(res.data.message || '订单创建失败');
-			//   }
-			  
-			//   return res.data.order_id; // 返回订单ID
+			  try {
+				this.isPressed = true; // 防止重复点击
+				
+				// 构建请求数据
+				const orderData = {
+				  offer_id: this.item.id, // 拼车邀请的id
+				  request_id: this.$store.state.rideRequest.requestID, // 拼车需求的id
+				  price: this.item.price // 订单费用
+				};
+				
+				// 发送创建订单请求
+				const response = await uni.request({
+				  url: `/create-order`, 
+				  method: 'POST',
+				  data: orderData,
+				  header: {
+					'Content-Type': 'application/json'
+				  }
+				});
+				
+				// 处理响应
+				if (response[0] && response[0].statusCode === 200) {
+				  const orderId = response[0].data.order_id;
+				  
+				  // 保存订单ID到Vuex
+				  this.setOrderId(orderId);
+				  
+				  uni.showToast({
+					title: '订单创建成功',
+					icon: 'success'
+				  });
+				  
+				  // 添加跳转到订单详情页的逻辑
+				  // uni.navigateTo({ url: '/pages/order/detail' });
+				} else {
+				  throw new Error(response[0].data.message || '订单创建失败');
+				}
+			  } catch (error) {
+				console.error('创建订单失败:', error);
+				uni.showToast({
+				  title: error.message || '创建订单失败',
+				  icon: 'none'
+				});
+			  } finally {
+				this.isPressed = false;
+			  }
 			}
 		}
 	}

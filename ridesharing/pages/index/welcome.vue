@@ -11,7 +11,7 @@
           <text class="title">
             <text class="orange-text">连接</text><text class="green-text">城市</text>
           </text>
-          <image class="image" src="D:/GitHub/Mobile-Carpooling-System/ridesharing/static/pictures/welcome0.png" />
+          <image class="image" src="@/static/launch/welcome0.png" />
         </view>
       </swiper-item>
       <!-- 第二个页面 -->
@@ -25,7 +25,7 @@
           <text class="small-title">
             <text class="orange-text">出行更</text><text class="big-orange-text">自由!</text>
           </text>
-          <image class="image" src="D:/GitHub/Mobile-Carpooling-System/ridesharing/static/pictures/welcome1.png" />
+          <image class="image" src="@/static/launch/welcome1.png" />
           <button class="experience-button" @click="goToExperience">立即体验</button>
         </view>
       </swiper-item>
@@ -39,7 +39,7 @@ export default {
     goToExperience() {
       // 跳转到主页面或其他页面
       uni.reLaunch({
-        url: '/pages/index/index' // 你想跳转的主页面
+        url: '/pages/customer/customer' // 你想跳转的主页面
       });
     }
   }
