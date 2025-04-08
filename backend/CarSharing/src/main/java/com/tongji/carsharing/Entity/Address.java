@@ -20,9 +20,8 @@ public class Address {
     @Column(name = "address_id")
     private Integer addressId;          // 地址ID
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private User user;
+    @Column(name = "user_id")
+    private String userId;       // 详细地址
 
     @Column(name = "address_detail")
     private String addressDetail;       // 详细地址

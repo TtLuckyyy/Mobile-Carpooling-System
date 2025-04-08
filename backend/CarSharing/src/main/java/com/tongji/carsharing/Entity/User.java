@@ -16,16 +16,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // 主键自增
     private Integer id;
 
-    @Column(name = "username", nullable = false, unique = true)  // 映射到数据库中的 username 字段
+    @Column(name = "username", unique = true)  // 映射到数据库中的 username 字段
     private String username;
 
     @Column(name = "password", nullable = false)  // 映射到数据库中的 password 字段
     private String password;
 
-    @Column(name = "phone", nullable = false, unique = true)  // 映射到数据库中的 phone 字段
+    @Column(name = "phone",nullable = false ,unique = true)  // 映射到数据库中的 phone 字段
     private String phone;
 
-    @Column(name = "email", nullable = false, unique = true)  // 映射到数据库中的 email 字段
+    @Column(name = "email", unique = true)  // 映射到数据库中的 email 字段
     private String email;
 
     @Column(name = "role", nullable = false)  // 映射到数据库中的 role 字段

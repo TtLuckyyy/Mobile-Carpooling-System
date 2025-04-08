@@ -1,10 +1,13 @@
 package com.tongji.carsharing.enums;
 
 public class enums {
-    public enum OfferStatus {
-        PENDING, CONFIRMED, CANCELLED,MATCHED
+    public enum PDStatus {
+        PENDING, ONGOING,COMPLETED,CANCELLED
     }
-    public enum AdminStatus {
+    public enum VerifyStatus {
+        PENDING, REJECTED,ACCEPTED
+    }
+    public enum ReportStatus {
         PENDING, REVIEWED,RESOLVED
     }
 }

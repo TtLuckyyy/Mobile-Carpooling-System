@@ -1,6 +1,7 @@
 package com.tongji.carsharing.Entity;
 
 import com.tongji.carsharing.enums.enums;
+import com.tongji.carsharing.enums.enums.PDStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,32 +23,26 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // 主键自增
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "driver_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private User driverUser;
+    @Column(name = "driver_id", nullable = false)  // 映射到数据库中的 start_loc 字段
+    private Integer driverId;
 
-    @ManyToOne
-    @JoinColumn(name = "passenger_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private User passengerUser;
+    @Column(name = "passenger_id", nullable = false)  // 映射到数据库中的 start_loc 字段
+    private Integer passengerId;
 
-    @ManyToOne
-    @JoinColumn(name = "offer_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private Offer offer;
+    @Column(name = "offer_id", nullable = false)  // 映射到数据库中的 start_loc 字段
+    private Integer offerId;
 
-    @ManyToOne
-    @JoinColumn(name = "request_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private Request request;
+    @Column(name = "request_id", nullable = false)  // 映射到数据库中的 start_loc 字段
+    private Integer requestId;
 
     @Column(name = "price", nullable = false)  // 映射到数据库中的 price 字段
     private BigDecimal price;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)  // 映射到数据库中的 status 字段
-    private enums.OfferStatus status;
+    private PDStatus status;
 
     @Column(name = "created_at", nullable = false, updatable = false)  // 映射到数据库中的 created_at 字段
     private Timestamp createdAt;
 
-    @Column(name = "waiting", nullable = false)  // 映射到数据库中的 waiting 字段
-    private boolean waiting;
 }

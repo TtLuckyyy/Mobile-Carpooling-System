@@ -4,6 +4,8 @@ import com.tongji.carsharing.Entity.Request;
 import com.tongji.carsharing.Entity.User;
 import org.apache.ibatis.annotations.*;
 
+import java.math.BigDecimal;
+
 @Mapper
 public interface UserMapper {
 
@@ -16,5 +18,12 @@ public interface UserMapper {
         @Select("SELECT * FROM users WHERE id = #{userId}")
         User getUserById(Integer userId);
 
+        // 添加用户总里程数
+        @Update("UPDATE users SET total_mileage = total_mileage + #{mileage} WHERE id = #{userId}")
+        void addTotalMileage(Integer userId, BigDecimal mileage);
+
+        //添加新用户
+        @Insert("INSERT INTO users(password, phone, role,created_time) VALUES(#{user.getPassword()}, #{user.getPhone()}, #{user.getRole()},#{user.getCreatedTime()})")
+        Integer addUser(User user);
 
 }

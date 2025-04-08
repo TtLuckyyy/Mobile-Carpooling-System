@@ -1,6 +1,6 @@
 package com.tongji.carsharing.Entity;
 
-import com.tongji.carsharing.enums.enums;
+import com.tongji.carsharing.enums.enums.PDStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,9 +22,8 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // 主键自增
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "passenger_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private User passengerUser;
+    @Column(name = "passenger_id", nullable = false)  // 映射到数据库中的 start_loc 字段
+    private Integer passengerId;
 
     @Column(name = "start_loc", nullable = false)  // 映射到数据库中的 start_loc 字段
     private String startLoc;
@@ -40,7 +39,7 @@ public class Request {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)  // 映射到数据库中的 status 字段
-    private enums.OfferStatus status;
+    private PDStatus status;
 
     @Column(name = "created_at", nullable = false, updatable = false)  // 映射到数据库中的 created_at 字段
     private Timestamp createdAt;
@@ -53,4 +52,6 @@ public class Request {
 
     @Column(name = "highway", nullable = false)  // 映射到数据库中的 highway 字段
     private Boolean highway;
+
+
 }

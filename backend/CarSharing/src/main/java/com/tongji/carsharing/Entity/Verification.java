@@ -1,6 +1,6 @@
 package com.tongji.carsharing.Entity;
 
-import com.tongji.carsharing.enums.enums;
+import com.tongji.carsharing.enums.enums.VerifyStatus;
 import lombok.*;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
@@ -17,9 +17,8 @@ public class Verification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // 主键自增
     private Integer verificationId;              // 认证ID
 
-    @ManyToOne
-    @JoinColumn(name = "verification_user_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private User user;                // 用户ID (外键，关联到 user 表)
+    @Column(name = "verification_user_id", nullable = false)  // 映射到数据库中的 start_loc 字段
+    private Integer verificationUserId;
 
     @Column(name = "verification_license_number", nullable = false)
     private String verificationLicenseNumber; // 车主驾驶证号
@@ -28,11 +27,11 @@ public class Verification {
     private String verificationCarPlate;     // 车主车牌号
 
     @Column(name = "verification_car_model", nullable = false)
-    private String verificationArModel;      // 车主车型
+    private String verificationCarModel;      // 车主车型
 
     @Enumerated(EnumType.STRING)
     @Column(name = "verification_state", nullable = false)  // 映射到数据库中的 status 字段
-    private enums.AdminStatus status;      // 认证状态（待审核、已通过、已拒绝）
+    private VerifyStatus verificationStatus;      // 认证状态（待审核、已通过、已拒绝）
 
     @Column(name = "verification_submit_time", nullable = false)
     private Timestamp verificationSubmitTime; // 提交时间
@@ -40,9 +39,8 @@ public class Verification {
     @Column(name = "verification_checked_time")
     private Timestamp verificationCheckedTime; // 审核时间
 
-    @ManyToOne
-    @JoinColumn(name = "verification_administrator_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private User adminUser;   // 审核人ID (外键，关联到 user 表)
+    @Column(name = "verification_administrator_id" ,nullable = false)  // 外键，关联到 user 表
+    private Integer verificationAdministratorId;   // 审核人ID (外键，关联到 user 表)
 
     @Column(name = "real_name", nullable = false)
     private String realName;                  // 真实姓名

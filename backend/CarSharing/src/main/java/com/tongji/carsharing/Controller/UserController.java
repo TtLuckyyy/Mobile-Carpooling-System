@@ -1,17 +1,16 @@
 package com.tongji.carsharing.Controller;
-
-
-import com.tongji.carsharing.DTO.RequestDTO;
 import com.tongji.carsharing.Entity.Request;
+import com.tongji.carsharing.Entity.User;
 import com.tongji.carsharing.Mapper.RequestMapper;
 import com.tongji.carsharing.Mapper.UserMapper;
 import com.tongji.carsharing.Service.UserService;
 import com.tongji.carsharing.Utility.CalculateTool;
+import com.tongji.carsharing.enums.enums;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.sql.Timestamp;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,31 +23,47 @@ public class UserController {
 
     @Autowired
     private UserMapper usermapper;
+
     @Autowired
     private CalculateTool calculateTool;
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/post-request")
-    public Map<String, Object> PostCarpoolRequest(@RequestBody RequestDTO requestDTO) {
+    // 用户注册
+    @PostMapping("/register")
+    public Map<String, Object> Register(@RequestBody User user) {
         Map<String, Object> response = new HashMap<>();
-        Request request = new Request();
+        Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 
-        // 将 RequestDTO 中的数据设置到 Request 实体中
-        request.setPassengerUser(usermapper.getUserById(requestDTO.getPassengerId()));  // 假设 PassengerUser 是 User 类型
-        request.setStartLoc(requestDTO.getStartLoc());
-        request.setEndLoc(requestDTO.getEndLoc());
-        request.setDistance(requestDTO.getDistance());
-        request.setPrice(requestDTO.getPrice());
-        request.setStatus(requestDTO.getStatus());
-        request.setCreatedAt(requestDTO.getCreatedAt());
-        request.setStartAt(requestDTO.getStartAt());
-        request.setExclusive(requestDTO.getExclusive());
-        request.setHighway(requestDTO.getHighway());
+        user.setCreatedTime(createdAt);
+        user.setRole("passenger");
+
+        Integer result = usermapper.addUser(user);
+        if (result > 0) {
+            response.put("status", "success");
+            response.put("message", "注册成功！");
+        } else {
+            response.put("status", "error");
+            response.put("message", "注册失败！");
+        }
+
+        return response;
+    }
+
+
+    // 发布拼车需求
+    @PostMapping("/post-request")
+    public Map<String, Object> PostCarpoolRequest(@RequestBody Request request) {
+        Map<String, Object> response = new HashMap<>();
+        System.out.println(request);
+
+        Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+        request.setCreatedAt(createdAt);
+        request.setStatus(enums.PDStatus.PENDING);
+        request.setDistance(BigDecimal.valueOf(calculateTool.calculateTripDistance(request)));
 
         Integer request_id = userService.createUserRequest(requestmapper,calculateTool,request);
-
         if (request_id > 0) {
             response.put("status", "success");
             response.put("message", "拼车需求发布成功！");
@@ -60,6 +75,7 @@ public class UserController {
 
         return response;
     }
+
 
 
 }

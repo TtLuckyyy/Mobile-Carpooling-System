@@ -10,10 +10,8 @@ import com.tongji.carsharing.Mapper.VerificationMapper;
 import com.tongji.carsharing.Utility.CalculateTool;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -30,55 +28,49 @@ public class OrderService {
             return Map.of("error", "请求的拼车需求不存在");
         }
 
-        // 2. 获取所有符合条件的拼车邀请
+        // 2. 获取所有拼车邀请
         List<Offer> potentialOffers = offermapper.getAllOffers();
 
-        // 3. 计算匹配度（偏差距离）并找到最小偏差的订单
-        Offer bestOffer = null;
-        double minOffsetDistance = Double.MAX_VALUE;
 
-        for (Offer offer : potentialOffers) {
-            double offsetDistance = calculatetool.calculateOffsetDistance(request, offer);
+        // 3. 定义最大偏差范围（单位：公里）
+        double MAX_OFFSET = 10.0;
 
-            if (offsetDistance < minOffsetDistance) {
-                minOffsetDistance = offsetDistance;
-                bestOffer = offer;
+        // 4. 结果列表
+        List<Map<String, Object>> matchedOffers = new ArrayList<>();
+
+        for (Offer offerdto : potentialOffers) {
+            double offsetDistance = calculatetool.calculateOffsetDistance(request, offerdto);
+
+            if (offsetDistance <= MAX_OFFSET && offerdto.getStatus() == request.getStatus()) {
+                Verification verification = verimapper.getVerificationByUserId(offerdto.getDriverId());
+                if (verification == null) continue;
+
+                String avatar = usermapper.getAvatarByUserId(offerdto.getDriverId());
+
+                Map<String, Object> match = new HashMap<>();
+                match.put("id", offerdto.getId());
+                match.put("start_loc", offerdto.getStartLoc());
+                match.put("end_loc", offerdto.getEndLoc());
+                match.put("start_at", offerdto.getStartAt());
+                match.put("seats", offerdto.getSeats());
+                match.put("real_name", verification.getRealName());
+                match.put("verification_car_plate", verification.getVerificationCarPlate());
+                match.put("verification_car_model", verification.getVerificationCarModel());
+                match.put("verification_user_id", verification.getVerificationUserId());
+                match.put("verification_color", verification.getVerificationColor());
+                match.put("rating", verification.getRating());
+                match.put("avatar", avatar);
+                match.put("offset_distance", offsetDistance);
+                match.put("price", request.getPrice());
+
+                matchedOffers.add(match);
             }
         }
 
-        // 4. 如果没有找到合适的拼车订单
-        if (bestOffer == null) {
-            return Map.of("error", "没有匹配的拼车订单");
+        if (matchedOffers.isEmpty()) {
+            return Map.of("error", "没有符合偏差范围的拼车订单");
         }
 
-        // 5. 获取车主认证信息
-        Verification verification = verimapper.getVerificationByUserId(bestOffer.getDriverUser().getId());
-        if (verification == null) {
-            return Map.of("error", "未找到车主认证信息");
-        }
-
-        // 6. 获取车主头像
-        String avatar = usermapper.getAvatarByUserId(bestOffer.getDriverUser().getId());
-
-
-        // 8. 组装结果
-        Map<String, Object> match = new HashMap<>();
-        match.put("id", bestOffer.getId());
-        match.put("start_loc", bestOffer.getStartLoc());
-        match.put("end_loc", bestOffer.getEndLoc());
-        match.put("start_at", bestOffer.getStartAt());
-        match.put("seats", bestOffer.getSeats());
-        match.put("real_name", verification.getRealName());
-        match.put("verification_car_plate", verification.getVerificationCarPlate());
-        match.put("verification_car_model", verification.getVerificationArModel());
-        match.put("verification_color", verification.getVerificationColor());
-        match.put("rating", verification.getRating());
-        match.put("avatar", avatar);
-        match.put("offset_distance", minOffsetDistance);
-        match.put("price", request.getPrice());
-
-        return Map.of("matched_order", match);
+        return Map.of("matched_orders", matchedOffers);
     }
-
-
 }

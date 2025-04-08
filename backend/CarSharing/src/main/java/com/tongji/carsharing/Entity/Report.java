@@ -1,6 +1,6 @@
 package com.tongji.carsharing.Entity;
 
-import com.tongji.carsharing.enums.enums;
+import com.tongji.carsharing.enums.enums.ReportStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,17 +21,14 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // 主键自增
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "admin_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private User adminUser;
+    @Column(name = "admin_id", nullable = false)  // 映射到数据库中的 start_loc 字段
+    private Integer adminId;
 
-    @ManyToOne
-    @JoinColumn(name = "reported_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private User reportedUser;
+    @Column(name = "reported_id", nullable = false)  // 映射到数据库中的 start_loc 字段
+    private Integer reportedId;
 
-    @ManyToOne
-    @JoinColumn(name = "reporter_id", referencedColumnName = "id", nullable = false)  // 外键，关联到 user 表
-    private User reporterUser;
+    @Column(name = "reporter_id", nullable = false)  // 映射到数据库中的 start_loc 字段
+    private Integer reporterId;
 
     @Column(name = "order_id", nullable = false)  // 映射到数据库中的 order_id 字段
     private Integer orderId;
@@ -41,7 +38,7 @@ public class Report {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)  // 映射到数据库中的 status 字段
-    private enums.AdminStatus status;
+    private ReportStatus status;
 
     @Column(name = "created_at", nullable = false, updatable = false)  // 映射到数据库中的 created_at 字段
     private Timestamp createdAt;
