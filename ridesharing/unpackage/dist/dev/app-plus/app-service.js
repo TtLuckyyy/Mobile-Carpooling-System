@@ -31,7 +31,7 @@ if (uni.restoreGlobal) {
 }
 (function(vue) {
   "use strict";
-  const _imports_0$3 = "/static/launch/start.png";
+  const _imports_0$4 = "/static/launch/start.png";
   const _export_sfc = (sfc, props) => {
     const target = sfc.__vccOpts || sfc;
     for (const [key, val] of props) {
@@ -39,7 +39,7 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$k = {
+  const _sfc_main$l = {
     onShow() {
       setTimeout(() => {
         uni.reLaunch({
@@ -49,13 +49,13 @@ if (uni.restoreGlobal) {
       }, 2e3);
     }
   };
-  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "splash-page" }, [
       vue.createElementVNode("text", { class: "title" }, "拼 好 车"),
       vue.createElementVNode("text", { class: "subtitle" }, "你的出行省钱指南"),
       vue.createElementVNode("image", {
         class: "logo",
-        src: _imports_0$3
+        src: _imports_0$4
       }),
       vue.createElementVNode("view", { class: "footer" }, [
         vue.createElementVNode("text", { class: "footer-text" }, "一路同行，美好随行"),
@@ -63,7 +63,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesIndexLaunch = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-8d8376b8"], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/index/launch.vue"]]);
+  const PagesIndexLaunch = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-8d8376b8"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/index/launch.vue"]]);
   function formatAppLog(type, filename, ...args) {
     if (uni.__log__) {
       uni.__log__(type, filename, ...args);
@@ -1207,7 +1207,7 @@ if (uni.restoreGlobal) {
     }
     return module;
   }
-  const _sfc_main$j = {
+  const _sfc_main$k = {
     data() {
       return {
         statusBarHeight: uni.getSystemInfoSync().statusBarHeight
@@ -1302,7 +1302,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -1336,27 +1336,285 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesCustomerCustomer = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/customer/customer.vue"]]);
-  const _sfc_main$i = {
+  const PagesCustomerCustomer = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/customer.vue"]]);
+  const _imports_0$3 = "/static/icon_order.png";
+  const _imports_1$1 = "/static/icon_safe.png";
+  const _imports_2 = "/static/icon_cash.png";
+  const _sfc_main$j = {
     data() {
       return {
         statusBarHeight: uni.getSystemInfoSync().statusBarHeight
       };
     },
-    methods: {}
+    methods: {
+      goToAuthPage() {
+        uni.navigateTo({
+          url: "/pages/driver/car-owner"
+        });
+      }
+    }
   };
-  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
-        style: vue.normalizeStyle({ paddingTop: $data.statusBarHeight + "px" })
+        style: vue.normalizeStyle({ paddingTop: $data.statusBarHeight + "px" }),
+        class: "container"
       },
-      " 车主 ",
+      [
+        vue.createElementVNode("view", { class: "content-box" }, [
+          vue.createElementVNode("view", { class: "features" }, [
+            vue.createElementVNode("view", { class: "feature-item" }, [
+              vue.createElementVNode("image", {
+                src: _imports_0$3,
+                class: "feature-icon"
+              }),
+              vue.createElementVNode("view", { class: "feature-text" }, [
+                vue.createElementVNode("text", { class: "title green" }, "海量订单"),
+                vue.createElementVNode("text", { class: "subtitle" }, "出行随时接单")
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "feature-item" }, [
+              vue.createElementVNode("image", {
+                src: _imports_1$1,
+                class: "feature-icon"
+              }),
+              vue.createElementVNode("view", { class: "feature-text" }, [
+                vue.createElementVNode("text", { class: "title blue" }, "完全合规"),
+                vue.createElementVNode("text", { class: "subtitle" }, "注册接单无顾虑")
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "feature-item" }, [
+              vue.createElementVNode("image", {
+                src: _imports_2,
+                class: "feature-icon"
+              }),
+              vue.createElementVNode("view", { class: "feature-text" }, [
+                vue.createElementVNode("text", { class: "title orange" }, "快速提现"),
+                vue.createElementVNode("text", { class: "subtitle" }, "支付宝秒到账")
+              ])
+            ])
+          ]),
+          vue.createCommentVNode(" 成为车主按钮 "),
+          vue.createElementVNode("view", { class: "button-wrapper" }, [
+            vue.createElementVNode("view", {
+              class: "join-button",
+              onClick: _cache[0] || (_cache[0] = (...args) => $options.goToAuthPage && $options.goToAuthPage(...args))
+            }, [
+              vue.createElementVNode("text", { class: "button-text" }, "立即成为车主")
+            ])
+          ])
+        ])
+      ],
       4
       /* STYLE */
     );
   }
-  const PagesDriverDriver = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/driver/driver.vue"]]);
+  const PagesDriverDriver = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-da5dba0b"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/driver/driver.vue"]]);
+  const _sfc_main$i = {
+    data() {
+      return {
+        selectedCity: "上海市",
+        cityOptions: ["上海市", "北京市", "广州市", "深圳市", "杭州市"],
+        uploadItems: [
+          { label: "驾驶证", desc: "准驾车型：至少包含A1, A2, A3, B1, B2, C1, C2" },
+          { label: "行驶证", desc: "本人车辆或亲友车辆均可认证" },
+          { label: "车辆照片", desc: "使用真实照片，座位数7座及以下" }
+        ],
+        realNameCertified: false,
+        realName: "",
+        idNumber: "",
+        showAuthDialog: false
+      };
+    },
+    computed: {
+      idNumberDisplay() {
+        if (!this.idNumber)
+          return "";
+        return this.idNumber.slice(0, 1) + "*".repeat(this.idNumber.length - 2) + this.idNumber.slice(-1);
+      }
+    },
+    methods: {
+      goBack() {
+        uni.navigateBack();
+      },
+      chooseCity() {
+        uni.showActionSheet({
+          itemList: this.cityOptions,
+          success: (res) => {
+            this.selectedCity = this.cityOptions[res.tapIndex];
+          }
+        });
+      },
+      openAuthDialog() {
+        this.showAuthDialog = true;
+      },
+      closeAuthDialog() {
+        this.showAuthDialog = false;
+      },
+      confirmAuth() {
+        if (this.realName && this.idNumber.length >= 6) {
+          this.realNameCertified = true;
+          this.showAuthDialog = false;
+        } else {
+          uni.showToast({
+            title: "请输入有效信息",
+            icon: "none"
+          });
+        }
+      }
+    }
+  };
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "auth-container" }, [
+      vue.createCommentVNode(" 顶部标题栏 + 返回按钮 "),
+      vue.createElementVNode("view", { class: "header" }, [
+        vue.createElementVNode("view", {
+          class: "back-icon",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.goBack && $options.goBack(...args))
+        }, "‹"),
+        vue.createElementVNode("text", { class: "title" }, "私家车拼车车主认证")
+      ]),
+      vue.createCommentVNode(" 城市选择 "),
+      vue.createElementVNode("view", {
+        class: "city-selector",
+        onClick: _cache[1] || (_cache[1] = (...args) => $options.chooseCity && $options.chooseCity(...args))
+      }, [
+        vue.createElementVNode("text", { class: "city-label" }, "接单城市"),
+        vue.createElementVNode("view", { class: "city-box" }, [
+          vue.createElementVNode(
+            "text",
+            { class: "city-name" },
+            vue.toDisplayString($data.selectedCity),
+            1
+            /* TEXT */
+          ),
+          vue.createElementVNode("text", { class: "arrow" }, "›")
+        ])
+      ]),
+      vue.createCommentVNode(" 实名认证卡片 "),
+      vue.createElementVNode("view", { class: "auth-card" }, [
+        vue.createElementVNode("view", { class: "row" }, [
+          vue.createElementVNode("view", { class: "left" }, [
+            vue.createElementVNode("text", { class: "label" }, "实名认证"),
+            !$data.realNameCertified ? (vue.openBlock(), vue.createElementBlock("text", {
+              key: 0,
+              class: "desc",
+              onClick: _cache[2] || (_cache[2] = (...args) => $options.openAuthDialog && $options.openAuthDialog(...args))
+            }, "点击进行实名认证")) : (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
+              vue.createElementVNode(
+                "text",
+                { class: "desc" },
+                vue.toDisplayString($data.realName) + " " + vue.toDisplayString($options.idNumberDisplay),
+                1
+                /* TEXT */
+              ),
+              vue.createElementVNode("text", { class: "subdesc" }, "年龄要求：18–70周岁")
+            ]))
+          ]),
+          $data.realNameCertified ? (vue.openBlock(), vue.createElementBlock("text", {
+            key: 0,
+            class: "verified"
+          }, "✔ 已认证")) : vue.createCommentVNode("v-if", true)
+        ]),
+        vue.createCommentVNode(" 上传项 "),
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($data.uploadItems, (item, index) => {
+            return vue.openBlock(), vue.createElementBlock("view", {
+              class: "row",
+              key: index
+            }, [
+              vue.createElementVNode("view", { class: "left" }, [
+                vue.createElementVNode(
+                  "text",
+                  { class: "label" },
+                  vue.toDisplayString(item.label),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "text",
+                  { class: "desc" },
+                  vue.toDisplayString(item.desc),
+                  1
+                  /* TEXT */
+                )
+              ]),
+              vue.createElementVNode("view", { class: "upload-btn" }, "去上传")
+            ]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ]),
+      vue.createCommentVNode(" 协议 "),
+      vue.createElementVNode("view", { class: "agreement" }, [
+        vue.createElementVNode("view", { class: "checkbox-line" }, [
+          vue.createElementVNode("checkbox"),
+          vue.createTextVNode(" 请阅读并同意 "),
+          vue.createElementVNode("text", { class: "link" }, "《拼好车车主协议》"),
+          vue.createTextVNode("（必选） ")
+        ]),
+        vue.createElementVNode("view", { class: "checkbox-line" }, [
+          vue.createElementVNode("checkbox"),
+          vue.createTextVNode(" 同意成为拼车车主并同意 "),
+          vue.createElementVNode("text", { class: "link" }, "《拼好车主协议》")
+        ])
+      ]),
+      vue.createCommentVNode(" 提交按钮 "),
+      vue.createElementVNode("view", { class: "submit-area" }, [
+        vue.createElementVNode("button", { class: "submit-btn" }, "确认上传")
+      ]),
+      vue.createCommentVNode(" 实名认证弹窗 "),
+      $data.showAuthDialog ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "popup-mask"
+      }, [
+        vue.createElementVNode("view", { class: "popup-box" }, [
+          vue.createElementVNode("view", { class: "popup-title" }, "实名认证"),
+          vue.withDirectives(vue.createElementVNode(
+            "input",
+            {
+              class: "input",
+              placeholder: "请输入姓名",
+              "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.realName = $event)
+            },
+            null,
+            512
+            /* NEED_PATCH */
+          ), [
+            [vue.vModelText, $data.realName]
+          ]),
+          vue.withDirectives(vue.createElementVNode(
+            "input",
+            {
+              class: "input",
+              placeholder: "请输入身份证号",
+              "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.idNumber = $event)
+            },
+            null,
+            512
+            /* NEED_PATCH */
+          ), [
+            [vue.vModelText, $data.idNumber]
+          ]),
+          vue.createElementVNode("view", { class: "popup-btns" }, [
+            vue.createElementVNode("view", {
+              class: "cancel",
+              onClick: _cache[5] || (_cache[5] = (...args) => $options.closeAuthDialog && $options.closeAuthDialog(...args))
+            }, "取消"),
+            vue.createElementVNode("view", {
+              class: "confirm",
+              onClick: _cache[6] || (_cache[6] = (...args) => $options.confirmAuth && $options.confirmAuth(...args))
+            }, "确定")
+          ])
+        ])
+      ])) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  const PagesDriverCarOwner = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-ba5a77be"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/driver/car-owner.vue"]]);
   const _sfc_main$h = {
     data() {
       return {
@@ -1376,7 +1634,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/index/index.vue"]]);
   const _sfc_main$g = {
     data() {
       return {
@@ -1423,7 +1681,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyMy = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/my/my.vue"]]);
+  const PagesMyMy = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/my/my.vue"]]);
   const _imports_0$2 = "/static/left-arrow.png";
   const _sfc_main$f = {
     name: "PageHeader",
@@ -1473,7 +1731,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsPageHeader = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/components/PageHeader.vue"]]);
+  const ComponentsPageHeader = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/components/PageHeader.vue"]]);
   const fontData = [
     {
       "font_class": "arrow-down",
@@ -2193,7 +2451,7 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-d31e1c47"], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   const _sfc_main$d = {
     name: "UniRate",
     props: {
@@ -2459,7 +2717,7 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-5c8fbdf3"], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/uni_modules/uni-rate/components/uni-rate/uni-rate.vue"]]);
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-5c8fbdf3"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/uni_modules/uni-rate/components/uni-rate/uni-rate.vue"]]);
   function formatDateTime(dateStr) {
     if (!dateStr)
       return "";
@@ -2698,7 +2956,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsListBlock = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/components/ListBlock.vue"]]);
+  const ComponentsListBlock = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/components/ListBlock.vue"]]);
   const _sfc_main$b = {
     components: {
       PageHeader: ComponentsPageHeader,
@@ -2864,7 +3122,7 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesCustomerInvitationMatch = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/customer/InvitationMatch.vue"]]);
+  const PagesCustomerInvitationMatch = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/InvitationMatch.vue"]]);
   const _imports_0$1 = "/static/right-arrow-blue.png";
   const _sfc_main$a = {
     props: {
@@ -2958,7 +3216,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsRequestBlock = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/components/RequestBlock.vue"]]);
+  const ComponentsRequestBlock = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/components/RequestBlock.vue"]]);
   const _sfc_main$9 = {
     components: {
       PageHeader: ComponentsPageHeader,
@@ -3039,7 +3297,7 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesCustomerRequestList = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/customer/RequestList.vue"]]);
+  const PagesCustomerRequestList = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/RequestList.vue"]]);
   const _imports_0 = "/static/launch/welcome0.png";
   const _imports_1 = "/static/launch/welcome1.png";
   const _sfc_main$8 = {
@@ -3106,7 +3364,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesIndexWelcome = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-c7aac77f"], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/index/welcome.vue"]]);
+  const PagesIndexWelcome = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-c7aac77f"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/index/welcome.vue"]]);
   const _sfc_main$7 = {
     data() {
       return {
@@ -3258,7 +3516,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-dd394eb5"], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/my/login/login.vue"]]);
+  const PagesMyLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-dd394eb5"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/my/login/login.vue"]]);
   const _sfc_main$6 = {
     data() {
       return {
@@ -3403,7 +3661,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyLoginPasswordLogin = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-ac03f4cd"], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/my/login/passwordLogin.vue"]]);
+  const PagesMyLoginPasswordLogin = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-ac03f4cd"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/my/login/passwordLogin.vue"]]);
   const _sfc_main$5 = {
     data() {
       return {
@@ -3621,7 +3879,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyLoginForget = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-4a450a78"], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/my/login/forget.vue"]]);
+  const PagesMyLoginForget = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-4a450a78"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/my/login/forget.vue"]]);
   const _sfc_main$4 = {
     data() {
       return {
@@ -3837,7 +4095,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-013d98be"], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/my/login/register.vue"]]);
+  const PagesMyLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-013d98be"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/my/login/register.vue"]]);
   const _sfc_main$3 = {
     props: {
       title: String,
@@ -3895,7 +4153,7 @@ if (uni.restoreGlobal) {
       ))
     ]);
   }
-  const LocationList = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-ba39095f"], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/components/LocationList.vue"]]);
+  const LocationList = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-ba39095f"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/components/LocationList.vue"]]);
   const _sfc_main$2 = {
     components: { LocationList },
     data() {
@@ -4000,7 +4258,7 @@ if (uni.restoreGlobal) {
       ))
     ]);
   }
-  const PagesCustomerStartLoc = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-6cc13438"], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/customer/StartLoc.vue"]]);
+  const PagesCustomerStartLoc = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-6cc13438"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/StartLoc.vue"]]);
   const _sfc_main$1 = {
     components: { LocationList },
     data() {
@@ -4106,10 +4364,11 @@ if (uni.restoreGlobal) {
       ))
     ]);
   }
-  const PagesCustomerEndLoc = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-d057533e"], ["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/pages/customer/EndLoc.vue"]]);
+  const PagesCustomerEndLoc = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-d057533e"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/EndLoc.vue"]]);
   __definePage("pages/index/launch", PagesIndexLaunch);
   __definePage("pages/customer/customer", PagesCustomerCustomer);
   __definePage("pages/driver/driver", PagesDriverDriver);
+  __definePage("pages/driver/car-owner", PagesDriverCarOwner);
   __definePage("pages/index/index", PagesIndexIndex);
   __definePage("pages/my/my", PagesMyMy);
   __definePage("components/PageHeader", ComponentsPageHeader);
@@ -4136,7 +4395,7 @@ if (uni.restoreGlobal) {
       formatAppLog("log", "at App.vue:11", "App Hide");
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "C:/Users/Lenovo/Desktop/Code/upload/ridesharing/App.vue"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/App.vue"]]);
   const store = createStore({
     state() {
       return {
