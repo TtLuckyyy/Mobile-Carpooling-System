@@ -73,7 +73,7 @@ export default {
 	methods: {
 		async fetchAddresses() {
 		      try {
-		        const response = await uniRequest.get(`/api/addresses/${this.userId}`);
+		        const response = await uniRequest.get(`http://localhost:8083/carsharing/get-user-addresses/${this.userId}`);
 		        this.homeAddress = response.data.home;
 		        this.companyAddress = response.data.company;
 		      } catch (error) {
