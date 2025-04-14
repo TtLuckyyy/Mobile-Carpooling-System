@@ -21,7 +21,7 @@ public interface OfferMapper {
     Offer getOfferById(int id);
 
     //查询时间最近的五条起始地点记录
-    @Select("SELECT start_loc FROM carsharing4.carpool_offer WHERE driver_id = #{userId} ORDER BY created_at DESC")
+    @Select("SELECT start_loc FROM carpool_offer WHERE driver_id = #{userId} ORDER BY created_at DESC")
     List<String> findTop5StartLocByDriverUserIdOrderByCreatedAtDesc(@Param("userId") Integer userId, RowBounds rowBounds);
 
     //根据邀请表ID寻找车主ID

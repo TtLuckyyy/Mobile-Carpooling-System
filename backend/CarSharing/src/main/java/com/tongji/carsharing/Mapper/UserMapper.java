@@ -23,7 +23,15 @@ public interface UserMapper {
         void addTotalMileage(Integer userId, BigDecimal mileage);
 
         //添加新用户
-        @Insert("INSERT INTO users(password, phone, role,created_time) VALUES(#{user.getPassword()}, #{user.getPhone()}, #{user.getRole()},#{user.getCreatedTime()})")
+        @Insert("INSERT INTO users(password, phone, role, created_time) VALUES(#{password}, #{phone}, #{role}, #{createdTime})")
         Integer addUser(User user);
+
+        // 修改密码
+        @Update("UPDATE users SET password = #{password} WHERE phone = #{phone}")
+        int updatePasswordByPhone(@Param("phone") String phone, @Param("password") String password);
+
+        // 用户登录
+        @Select("SELECT * FROM users WHERE phone = #{phone} AND password = #{password}")
+        User login(@Param("phone") String phone, @Param("password") String password);
 
 }

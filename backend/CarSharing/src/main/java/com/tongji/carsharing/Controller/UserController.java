@@ -51,31 +51,45 @@ public class UserController {
         return response;
     }
 
-
-    // 发布拼车需求
-    @PostMapping("/post-request")
-    public Map<String, Object> PostCarpoolRequest(@RequestBody Request request) {
+    // 用户登录
+    @PostMapping("/login")
+    public Map<String, Object> login(@RequestBody Map<String, String> data) {
         Map<String, Object> response = new HashMap<>();
-        System.out.println(request);
+        String phone = data.get("phone");
+        String password = data.get("password");
 
-        Timestamp createdAt = new Timestamp(System.currentTimeMillis());
-        request.setCreatedAt(createdAt);
-        request.setStatus(enums.PDStatus.PENDING);
-        request.setDistance(BigDecimal.valueOf(calculateTool.calculateTripDistance(request)));
 
-        Integer request_id = userService.createUserRequest(requestmapper,calculateTool,request);
-        if (request_id > 0) {
+        User user = usermapper.login(phone, password); // 未加密版本
+
+        if (user!= null) {
             response.put("status", "success");
-            response.put("message", "拼车需求发布成功！");
-            response.put("id", request_id);
+            response.put("message", "登陆成功！");
         } else {
             response.put("status", "error");
-            response.put("message", "拼车需求发布失败！");
+            response.put("message", "登录失败！");
         }
 
         return response;
     }
 
+    //忘记密码
+    @PostMapping("/forget")
+    public Map<String, Object> forgetPassword(@RequestBody Map<String, String> data) {
+        Map<String, Object> response = new HashMap<>();
+        String phone = data.get("phone");
+        String newPassword = data.get("password");
 
+        int result = usermapper.updatePasswordByPhone(phone, newPassword);
+
+        if (result > 0) {
+            response.put("status", "success");
+            response.put("message", "密码修改成功！");
+        } else {
+            response.put("status", "error");
+            response.put("message", "密码修改失败！");
+        }
+
+        return response;
+    }
 
 }
