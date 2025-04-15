@@ -30,7 +30,7 @@
         <button
           :class="['code-btn', isCounting ? 'disabled' : '']"
           :disabled="isCounting"
-          @tap="getVerifyCode"
+          @tap="getCode"
         >
           {{ codeBtnText }}
         </button>
@@ -109,6 +109,35 @@ export default {
     }
   },
   methods: {
+	async getCode() {
+	    if (!this.validatePhone()) {
+	      uni.showToast({ title: '请输入有效手机号', icon: 'none' })
+	      return
+	    }
+	    
+	    this.isCounting = true
+	    const timer = setInterval(() => {
+	      if (this.countdown <= 0) {
+	        clearInterval(timer)
+	        this.isCounting = false
+	        this.countdown = 60
+	        return
+	      }
+	      this.countdown--
+	    }, 1000)
+	    
+	    try {
+	      const res = await uni.request({
+	        url: '/api/sendCode',
+	        method: 'POST',
+	        data: { phone: this.phone }
+	      })
+	      uni.showToast({ title: '验证码已发送' })
+	    } catch (error) {
+	      uni.showToast({ title: '发送失败', icon: 'none' })
+	    }
+	  },
+	  
 	// 密码可见切换
 	togglePassword() {
 	  this.showPassword = !this.showPassword
@@ -154,7 +183,7 @@ export default {
       try {
         // 向后端发送注册请求
         const res = await uni.request({
-          url: '{后端路径}/forget',  
+          url: 'http://localhost:8083/carsharing/forget',  
           method: 'POST',
           data: {
             phone: this.phone,  // 用户手机号
@@ -163,7 +192,7 @@ export default {
         });
     
         // 后端返回响应处理：根据返回的状态码进行处理
-        if (res.data === 1) {
+        if (res.data.statue === "success") {
           uni.showToast({ title: '修改成功', icon: 'success' });
           setTimeout(() => {
             uni.navigateTo('/pages/my/login/passwordLogin');  // 注册成功后返回登录页面

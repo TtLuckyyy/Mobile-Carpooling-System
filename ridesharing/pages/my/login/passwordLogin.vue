@@ -101,7 +101,7 @@ export default {
         })
         
         uni.hideLoading()
-        if (res.data.code === 200) {
+        if (res.data.statue === "success") {
           uni.switchTab({ url: '/pages/home/home' })
         } else {
           uni.showToast({ title: res.data.msg || '登录失败', icon: 'none' })

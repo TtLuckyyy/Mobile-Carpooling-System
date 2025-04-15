@@ -33,7 +33,8 @@
         </view>
       </view>
 
-      <button class="login-btn" @tap="handleLogin">登录</button>
+	  <button class="login-btn" @tap="handleLogin">登录</button>
+
 
       <view class="links">
         <text @tap="navigateTo('/pages/my/login/passwordLogin')">密码登录</text>
@@ -108,22 +109,21 @@ export default {
       return /^1[3-9]\d{9}$/.test(this.phone)
     },
 
-    handleLogin() {
-      if (!this.validatePhone() || !this.code) {
-        uni.showToast({ title: '请填写完整信息', icon: 'none' })
-        return
-      }
-      
-      uni.navigateTo({
-        url: '/pages/home/home'
-      })
-    },
+	handleLogin() {
+
+	  if (!this.validatePhone() || !this.code) {
+		uni.showToast({ title: '请填写完整信息', icon: 'none' })
+		return
+	  }
+
+		uni.switchTab({
+		  url: '/pages/my/my'
+		})
+	},
 
     navigateTo(url) {
       uni.navigateTo({ url })
     },
-
-
   }
 }
 </script>

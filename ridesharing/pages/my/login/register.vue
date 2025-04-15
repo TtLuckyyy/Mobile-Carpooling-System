@@ -30,7 +30,7 @@
         <button
           :class="['code-btn', isCounting ? 'disabled' : '']"
           :disabled="isCounting"
-          @tap="getVerifyCode"
+          @tap="getCode"
         >
           {{ codeBtnText }}
         </button>
@@ -41,7 +41,7 @@
         <input
           v-model="newPassword"
           :type="showPassword ? 'text' : 'password'"
-          placeholder="请输入新密码（8-20位字母+数字）"
+          placeholder="请输入密码（8-20位字母+数字）"
           class="input"
           maxlength="20"
         />
@@ -56,7 +56,7 @@
         <input
           v-model="confirmPassword"
           :type="showConfirmPassword ? 'text' : 'password'"
-          placeholder="请确认新密码"
+          placeholder="请确认密码"
           class="input"
           maxlength="20"
         />
@@ -105,13 +105,42 @@ export default {
     }
   },
   methods: {
-	// 密码可见切换
-	togglePassword() {
-	  this.showPassword = !this.showPassword
-	},
-	toggleConfirmPassword() {
-	  this.showConfirmPassword = !this.showConfirmPassword
-	},
+    async getCode() {
+      if (!this.validatePhone()) {
+        uni.showToast({ title: '请输入有效手机号', icon: 'none' })
+        return
+      }
+      
+      this.isCounting = true
+      const timer = setInterval(() => {
+        if (this.countdown <= 0) {
+          clearInterval(timer)
+          this.isCounting = false
+          this.countdown = 60
+          return
+        }
+        this.countdown--
+      }, 1000)
+      
+      try {
+        const res = await uni.request({
+          url: '/api/sendCode',
+          method: 'POST',
+          data: { phone: this.phone }
+        })
+        uni.showToast({ title: '验证码已发送' })
+      } catch (error) {
+        uni.showToast({ title: '发送失败', icon: 'none' })
+      }
+    },
+
+    // 密码可见切换
+    togglePassword() {
+      this.showPassword = !this.showPassword
+    },
+    toggleConfirmPassword() {
+      this.showConfirmPassword = !this.showConfirmPassword
+    },
     // 验证手机号格式
     validatePhone() {
       return /^1[3-9]\d{9}$/.test(this.phone)
@@ -150,7 +179,7 @@ export default {
       try {
         // 向后端发送注册请求
         const res = await uni.request({
-          url: '{后端路径}/register',  
+          url: 'http://localhost:8083/carsharing/register',  
           method: 'POST',
           data: {
             phone: this.phone,  // 用户手机号
@@ -159,7 +188,7 @@ export default {
         });
     
         // 后端返回响应处理：根据返回的状态码进行处理
-        if (res.data === 1) {
+        if (res.data.statue === "success") {
           uni.showToast({ title: '注册成功', icon: 'success' });
           setTimeout(() => {
             uni.navigateTo('/pages/customer/customer');  // 注册成功后返回登录页面
