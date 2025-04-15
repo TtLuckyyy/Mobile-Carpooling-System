@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,7 +27,7 @@ public class RequestController {
     private CalculateTool calculateTool;
 
     @Autowired
-    private RequestService requestService;
+    private RequestService requestservice;
 
     // 发布拼车需求
     @PostMapping("/post-request")
@@ -39,7 +40,7 @@ public class RequestController {
         request.setStatus(enums.PDStatus.PENDING);
         request.setDistance(BigDecimal.valueOf(calculateTool.calculateTripDistance(request)));
 
-        Integer request_id = requestService.createUserRequest(requestmapper,calculateTool,request);
+        Integer request_id = requestservice.createUserRequest(requestmapper,calculateTool,request);
         if (request_id > 0) {
             response.put("status", "success");
             response.put("message", "拼车需求发布成功！");
@@ -52,6 +53,37 @@ public class RequestController {
         return response;
     }
 
+    @GetMapping("/get-start-loc-history")
+    public Map<String, Object> getStartLocHistory(@RequestParam Integer userId) {  //使用方法：后端路径/参数，而非后端路径/?key=value
+        Map<String, Object> response = new HashMap<>();
+        List<String> history = requestservice.getLocHistory(userId,true);
+        if (!history.isEmpty()) {
+            response.put("status","success");
+            response.put("message", "起点历史记录查询成功!");
+            response.put("history", history);
+        }
+        else{
+            response.put("status","error");
+            response.put("message","起点历史记录查询失败！");
+        }
+        return response;
+    }
+
+    @GetMapping("/get-end-loc-history")
+    public Map<String, Object> getEndLocHistory(@RequestParam Integer userId) {  //使用方法：后端路径/参数，而非后端路径/?key=value
+        Map<String, Object> response = new HashMap<>();
+        List<String> history = requestservice.getLocHistory(userId,false);
+        if (!history.isEmpty()) {
+            response.put("status","success");
+            response.put("message", "终点历史记录查询成功!");
+            response.put("history", history);
+        }
+        else{
+            response.put("status","error");
+            response.put("message","终点历史记录查询失败！");
+        }
+        return response;
+    }
 
 
 }

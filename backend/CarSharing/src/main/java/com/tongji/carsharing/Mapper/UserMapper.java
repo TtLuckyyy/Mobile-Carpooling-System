@@ -14,6 +14,13 @@ public interface UserMapper {
         @Select("SELECT avatar FROM users WHERE id = #{userId}")
         String getAvatarByUserId(Integer userId);
 
+        // 1.根据用户ID查询家庭地址
+        @Select("SELECT home_address FROM users WHERE id = #{userId}")
+        String gethomeAddressByUserId(Integer userId);
+
+        // 1.根据用户ID查询公司地址
+        @Select("SELECT company_address FROM users WHERE id = #{userId}")
+        String getcompanyAddressByUserId(Integer userId);
         // 2. 根据 ID 查询用户信息
         @Select("SELECT * FROM users WHERE id = #{userId}")
         User getUserById(Integer userId);
@@ -23,7 +30,7 @@ public interface UserMapper {
         void addTotalMileage(Integer userId, BigDecimal mileage);
 
         //添加新用户
-        @Insert("INSERT INTO users(password, phone, role, created_time) VALUES(#{password}, #{phone}, #{role}, #{createdTime})")
+        @Insert("INSERT INTO users(username,password, phone, role, created_time) VALUES(#{username},#{password}, #{phone}, #{role}, #{createdTime})")
         Integer addUser(User user);
 
         // 修改密码

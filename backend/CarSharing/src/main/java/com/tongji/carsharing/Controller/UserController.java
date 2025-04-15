@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @RestController
 @CrossOrigin
@@ -35,10 +36,20 @@ public class UserController {
     public Map<String, Object> Register(@RequestBody User user) {
         Map<String, Object> response = new HashMap<>();
         Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+        System.out.println(user);
+
+        //随机生成一个用户名，长度为10个字符
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(10);
+
+        for (int i = 0; i < 10; i++) {
+            sb.append(characters.charAt(random.nextInt(characters.length())));
+        }
 
         user.setCreatedTime(createdAt);
         user.setRole("passenger");
-
+        user.setUsername(sb.toString());
         Integer result = usermapper.addUser(user);
         if (result > 0) {
             response.put("status", "success");
@@ -60,10 +71,12 @@ public class UserController {
 
 
         User user = usermapper.login(phone, password); // 未加密版本
+        Integer userId = user.getId();
 
         if (user!= null) {
             response.put("status", "success");
             response.put("message", "登陆成功！");
+            response.put("userId", userId);
         } else {
             response.put("status", "error");
             response.put("message", "登录失败！");
