@@ -6,12 +6,11 @@
 			<text class="title">私家车拼车车主认证</text>
 		</view>
 
-		<!-- 城市选择 -->
-		<view class="city-selector" @click="chooseCity">
+		<!-- 城市显示（固定为上海市） -->
+		<view class="city-display">
 			<text class="city-label">接单城市</text>
 			<view class="city-box">
 				<text class="city-name">{{ selectedCity }}</text>
-				<text class="arrow">›</text>
 			</view>
 		</view>
 
@@ -35,34 +34,92 @@
 					<text class="label">{{ item.label }}</text>
 					<text class="desc">{{ item.desc }}</text>
 				</view>
-				<view class="upload-btn">去上传</view>
+				<text class="verified" v-if="item.certified">✔ 已认证</text>
+				<view class="upload-btn" v-else @click="openUploadDialog(index)">去上传</view>
 			</view>
 		</view>
 
 		<!-- 协议 -->
 		<view class="agreement">
-			<view class="checkbox-line">
-				<checkbox /> 请阅读并同意 <text class="link">《拼好车车主协议》</text>（必选）
-			</view>
-			<view class="checkbox-line">
-				<checkbox /> 同意成为拼车车主并同意 <text class="link">《拼好车主协议》</text>
-			</view>
+			<checkbox-group @change="handleProtocolChange">
+				<view class="checkbox-line">
+					<checkbox value="protocol1" :checked="agreeProtocol1" />
+					请阅读并同意 <text class="link" @click="showAgreement">《拼好车车主协议》</text>（必选）
+				</view>
+				<view class="checkbox-line">
+					<checkbox value="protocol2" :checked="agreeProtocol2" />
+					同意成为拼车车主并同意 <text class="link" @click="showAgreement">《拼好车车主协议》</text>
+				</view>
+			</checkbox-group>
 		</view>
 
 		<!-- 提交按钮 -->
 		<view class="submit-area">
-			<button class="submit-btn">确认上传</button>
+			<button class="submit-btn" :disabled="isSubmitting" @click="submit">确认上传</button>
 		</view>
 
-		<!-- 实名认证弹窗 -->
-		<view class="popup-mask" v-if="showAuthDialog">
-			<view class="popup-box">
-				<view class="popup-title">实名认证</view>
-				<input class="input" placeholder="请输入姓名" v-model="realName" />
-				<input class="input" placeholder="请输入身份证号" v-model="idNumber" />
-				<view class="popup-btns">
-					<view class="cancel" @click="closeAuthDialog">取消</view>
-					<view class="confirm" @click="confirmAuth">确定</view>
+		<!-- 协议弹窗 -->
+		<view class="agreement-mask" v-if="showAgreementDialog">
+			<view class="agreement-box">
+				<view class="agreement-title">拼好车车主协议</view>
+				<scroll-view class="agreement-content" scroll-y>
+					<view class="content-text">
+						<view class="section">
+							<text class="section-title">一、协议目的</text>
+							<text class="section-text">
+								本协议旨在规范拼好车平台车主的服务行为，保障车主和乘客的合法权益，促进平台的健康发展。
+							</text>
+						</view>
+						<view class="section">
+							<text class="section-title">二、服务要求</text>
+							<text class="section-text">
+								1. 车主需年满18周岁且不超过70周岁，持有有效驾驶证，并确保车辆符合平台要求（7座及以下）。\n
+								2. 车主需提供真实有效的身份信息，包括姓名、身份证号、驾驶证、行驶证等。\n
+								3. 车主应遵守交通规则，确保行车安全，不得从事违法行为。
+							</text>
+						</view>
+						<view class="section">
+							<text class="section-title">三、费用与结算</text>
+							<text class="section-text">
+								1. 车主通过平台接单后，费用由乘客支付，平台将按约定比例与车主结算。\n
+								2. 车主需遵守平台的收费标准，不得私自向乘客收取额外费用。
+							</text>
+						</view>
+						<view class="section">
+							<text class="section-title">四、责任与义务</text>
+							<text class="section-text">
+								1. 车主应对乘客的安全负责，确保服务过程中不发生安全事故。\n
+								2. 如因车主原因导致服务纠纷，车主需承担相应责任，平台有权暂停或终止其服务资格。
+							</text>
+						</view>
+						<view class="section">
+							<text class="section-title">五、其他条款</text>
+							<text class="section-text">
+								1. 本协议自车主同意之日起生效。\n
+								2. 平台有权根据法律法规或运营需要调整协议内容，调整后将通过平台通知车主。
+							</text>
+						</view>
+					</view>
+				</scroll-view>
+				<view class="agreement-btns">
+					<view class="close-btn" @click="hideAgreement">关闭</view>
+				</view>
+			</view>
+		</view>
+
+		<!-- 上传图片弹窗 -->
+		<view class="upload-mask" v-if="showUploadDialog">
+			<view class="upload-box">
+				<view class="upload-title">上传{{ currentUploadItem ? currentUploadItem.label : '' }}</view>
+				<view class="upload-area">
+					<view class="upload-placeholder" v-if="!uploadedImage" @click="chooseImage">
+						<text>点击上传图片</text>
+					</view>
+					<image v-else :src="uploadedImage" class="uploaded-image" mode="aspectFit" />
+				</view>
+				<view class="upload-btns">
+					<view class="cancel" @click="closeUploadDialog">取消</view>
+					<view class="confirm" @click="confirmUpload">确定</view>
 				</view>
 			</view>
 		</view>
@@ -73,53 +130,191 @@
 export default {
 	data() {
 		return {
-			selectedCity: '上海市',
-			cityOptions: ['上海市', '北京市', '广州市', '深圳市', '杭州市'],
+			selectedCity: '上海市', // 固定为上海市
 			uploadItems: [
-				{ label: '驾驶证', desc: '准驾车型：至少包含A1, A2, A3, B1, B2, C1, C2' },
-				{ label: '行驶证', desc: '本人车辆或亲友车辆均可认证' },
-				{ label: '车辆照片', desc: '使用真实照片，座位数7座及以下' }
+				{ label: '驾驶证', desc: '准驾车型：至少包含A1, A2, A3, B1, B2, C1, C2', certified: false },
+				{ label: '行驶证', desc: '本人车辆或亲友车辆均可认证', certified: false },
+				{ label: '车辆照片', desc: '使用真实照片，座位数7座及以下', certified: false }
 			],
 			realNameCertified: false,
 			realName: '',
 			idNumber: '',
-			showAuthDialog: false
+			showAgreementDialog: false, // 控制协议弹窗显示
+			showUploadDialog: false, // 控制上传弹窗显示
+			currentUploadIndex: null, // 当前上传的项的索引
+			uploadedImage: '', // 存储上传的图片路径
+			agreeProtocol1: false, // 第一个协议勾选状态
+			agreeProtocol2: false, // 第二个协议勾选状态
+			isSubmitting: false // 防止重复点击
 		};
 	},
 	computed: {
+		currentUploadItem() {
+			return this.currentUploadIndex !== null ? this.uploadItems[this.currentUploadIndex] : null;
+		},
 		idNumberDisplay() {
 			if (!this.idNumber) return '';
 			return this.idNumber.slice(0, 1) + '*'.repeat(this.idNumber.length - 2) + this.idNumber.slice(-1);
+		},
+		isAllCertified() {
+			return this.realNameCertified && this.uploadItems.every(item => item.certified);
+		},
+		isAllAgreed() {
+			return this.agreeProtocol1 && this.agreeProtocol2;
 		}
 	},
 	methods: {
 		goBack() {
 			uni.navigateBack();
 		},
-		chooseCity() {
-			uni.showActionSheet({
-				itemList: this.cityOptions,
+		openAuthDialog() {
+			uni.showModal({
+				title: '实名认证 - 姓名',
+				content: '请输入您的姓名',
+				showCancel: true,
+				editable: true,
+				placeholderText: '请输入姓名',
 				success: res => {
-					this.selectedCity = this.cityOptions[res.tapIndex];
+					if (res.confirm && res.content) {
+						this.realName = res.content.trim();
+						if (!this.realName) {
+							uni.showToast({
+								title: '姓名不能为空',
+								icon: 'none'
+							});
+							return;
+						}
+						uni.showModal({
+							title: '实名认证 - 身份证号',
+							content: '请输入您的身份证号',
+							showCancel: true,
+							editable: true,
+							placeholderText: '请输入身份证号',
+							success: res2 => {
+								if (res2.confirm && res2.content) {
+									this.idNumber = res2.content.trim();
+									// 验证长度
+									if (this.idNumber.length !== 18) {
+										uni.showToast({
+											title: '身份证号必须为18位',
+											icon: 'none'
+										});
+										return;
+									}
+									// 正则表达式验证身份证号格式
+									const idNumberRegex = /^[1-9]\d{16}(\d|X)$/i;
+									if (!idNumberRegex.test(this.idNumber)) {
+										uni.showToast({
+											title: '身份证号格式不正确',
+											icon: 'none'
+										});
+										return;
+									}
+									if (this.realName && this.idNumber.length === 18) {
+										this.realNameCertified = true;
+									} else {
+										uni.showToast({
+											title: '请输入有效信息',
+											icon: 'none'
+										});
+									}
+								}
+							}
+						});
+					} else if (res.confirm && !res.content) {
+						uni.showToast({
+							title: '姓名不能为空',
+							icon: 'none'
+						});
+					}
 				}
 			});
 		},
-		openAuthDialog() {
-			this.showAuthDialog = true;
+		showAgreement() {
+			this.showAgreementDialog = true;
 		},
-		closeAuthDialog() {
-			this.showAuthDialog = false;
+		hideAgreement() {
+			this.showAgreementDialog = false;
 		},
-		confirmAuth() {
-			if (this.realName && this.idNumber.length >= 6) {
-				this.realNameCertified = true;
-				this.showAuthDialog = false;
-			} else {
+		openUploadDialog(index) {
+			this.currentUploadIndex = index;
+			this.uploadedImage = ''; // 重置上传图片
+			this.showUploadDialog = true;
+		},
+		closeUploadDialog() {
+			this.showUploadDialog = false;
+			this.currentUploadIndex = null;
+			this.uploadedImage = '';
+		},
+		chooseImage() {
+			uni.chooseImage({
+				count: 1,
+				sizeType: ['original', 'compressed'],
+				sourceType: ['album', 'camera'],
+				success: res => {
+					this.uploadedImage = res.tempFilePaths[0];
+				},
+				fail: err => {
+					uni.showToast({
+						title: '选择图片失败',
+						icon: 'none'
+					});
+				}
+			});
+		},
+		confirmUpload() {
+			if (this.currentUploadIndex !== null) {
+				this.uploadItems[this.currentUploadIndex].certified = true; // 标记为已认证
+			}
+			this.closeUploadDialog();
+		},
+		handleProtocolChange(e) {
+			const values = e.detail.value; // 获取勾选的值数组
+			this.agreeProtocol1 = values.includes('protocol1');
+			this.agreeProtocol2 = values.includes('protocol2');
+			// 调试：打印勾选状态
+			console.log('agreeProtocol1:', this.agreeProtocol1, 'agreeProtocol2:', this.agreeProtocol2);
+		},
+		submit() {
+			if (this.isSubmitting) return; // 防止重复点击
+			this.isSubmitting = true;
+			console.log('isAllCertified:', this.isAllCertified);
+			console.log('isAllAgreed:', this.isAllAgreed);
+			if (!this.isAllCertified) {
 				uni.showToast({
-					title: '请输入有效信息',
+					title: '请完成所有认证和上传',
 					icon: 'none'
 				});
+				this.isSubmitting = false;
+				return;
 			}
+			if (!this.isAllAgreed) {
+				uni.showToast({
+					title: '请同意所有协议',
+					icon: 'none'
+				});
+				this.isSubmitting = false;
+				return;
+			}
+			// 所有条件满足，跳转到 driver_search.vue
+			uni.redirectTo({
+				url: '/pages/driver/driver_search', // 修正路径
+				success: res => {
+					console.log('跳转成功:', res);
+				},
+				fail: err => {
+					console.error('跳转失败:', err);
+					uni.showToast({
+						title: '跳转失败，请检查路径',
+						icon: 'none'
+					});
+					this.isSubmitting = false;
+				},
+				complete: () => {
+					// 无论成功或失败，complete 都会执行
+					// 这里可以留空，或者添加其他逻辑
+				}
+			});
 		}
 	}
 };
@@ -153,7 +348,7 @@ export default {
 	color: #333;
 }
 
-.city-selector {
+.city-display {
 	margin-top: 40rpx;
 	background-color: #f8f8f8;
 	border-radius: 16rpx;
@@ -176,12 +371,6 @@ export default {
 .city-name {
 	font-size: 32rpx;
 	color: #333;
-	margin-right: 10rpx;
-}
-
-.arrow {
-	font-size: 36rpx;
-	color: #999;
 }
 
 .auth-card {
@@ -275,8 +464,12 @@ export default {
 	border-radius: 100rpx;
 }
 
-/* 弹窗 */
-.popup-mask {
+.submit-btn[disabled] {
+	background-color: #cccccc;
+}
+
+/* 协议弹窗 */
+.agreement-mask {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -289,7 +482,78 @@ export default {
 	z-index: 999;
 }
 
-.popup-box {
+.agreement-box {
+	background: #fff;
+	width: 80%;
+	max-height: 80vh;
+	padding: 40rpx;
+	border-radius: 20rpx;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+}
+
+.agreement-title {
+	font-size: 36rpx;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 30rpx;
+}
+
+.agreement-content {
+	flex: 1;
+	max-height: 60vh;
+}
+
+.content-text {
+	padding-right: 20rpx;
+}
+
+.section {
+	margin-bottom: 30rpx;
+}
+
+.section-title {
+	font-size: 32rpx;
+	font-weight: bold;
+	color: #333;
+}
+
+.section-text {
+	font-size: 28rpx;
+	color: #666;
+	line-height: 40rpx;
+}
+
+.agreement-btns {
+	display: flex;
+	justify-content: center;
+	margin-top: 30rpx;
+}
+
+.close-btn {
+	background-color: #3ea87a;
+	color: #fff;
+	font-size: 30rpx;
+	padding: 20rpx 60rpx;
+	border-radius: 12rpx;
+}
+
+/* 上传弹窗 */
+.upload-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 999;
+}
+
+.upload-box {
 	background: #fff;
 	width: 600rpx;
 	padding: 40rpx;
@@ -297,27 +561,38 @@ export default {
 	box-sizing: border-box;
 }
 
-.popup-title {
+.upload-title {
 	font-size: 32rpx;
 	font-weight: bold;
-	margin-bottom: 30rpx;
 	text-align: center;
+	margin-bottom: 30rpx;
 }
 
-.input {
-	border: 1rpx solid #ddd;
-	padding: 20rpx;
-	border-radius: 12rpx;
-	margin-bottom: 20rpx;
+.upload-area {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 30rpx;
+}
+
+.upload-placeholder {
+	width: 200rpx;
+	height: 200rpx;
+	border: 2rpx dashed #ddd;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	font-size: 28rpx;
-	width: 100%;
-	box-sizing: border-box;
+	color: #999;
 }
 
-.popup-btns {
+.uploaded-image {
+	width: 200rpx;
+	height: 200rpx;
+}
+
+.upload-btns {
 	display: flex;
 	justify-content: space-between;
-	margin-top: 20rpx;
 }
 
 .cancel, .confirm {

@@ -27,6 +27,12 @@
 		}
 	},
 	{
+	      "path": "pages/driver/driver_search",
+	      "style": {
+	        "navigationBarTitleText": "拼单"
+	      }
+	},
+	{
 		"path" : "pages/index/index",
 		"style" : 
 		{
