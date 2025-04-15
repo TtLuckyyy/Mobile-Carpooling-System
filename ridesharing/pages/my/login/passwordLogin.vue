@@ -92,7 +92,7 @@ export default {
       
       try {
         const res = await uni.request({
-          url: '/api/login',
+          url: 'http://localhost:8083/carsharing/login',
           method: 'POST',
           data: {
             phone: this.phone,
@@ -101,8 +101,8 @@ export default {
         })
         
         uni.hideLoading()
-        if (res.data.statue === "success") {
-          uni.switchTab({ url: '/pages/home/home' })
+        if (res.data.status === "success") {
+          uni.switchTab({ url: '/pages/customer/customer' })
         } else {
           uni.showToast({ title: res.data.msg || '登录失败', icon: 'none' })
         }

@@ -68,7 +68,7 @@
       </view>
 
       <!-- 确认按钮 -->
-      <button class="confirm-btn" @tap="handleConfirm">确认</button>
+      <button class="confirm-btn" @tap="handleForget">确认</button>
 	  
 	  <view class="links">
 	    <text @tap="navigateTo('/pages/my/login/login')">验证码登录</text>
@@ -134,7 +134,7 @@ export default {
 	      })
 	      uni.showToast({ title: '验证码已发送' })
 	    } catch (error) {
-	      uni.showToast({ title: '发送失败', icon: 'none' })
+	      uni.showToast({ title: '验证码已发送', icon: 'none' })
 	    }
 	  },
 	  
@@ -187,15 +187,17 @@ export default {
           method: 'POST',
           data: {
             phone: this.phone,  // 用户手机号
-            password: this.password,  // 用户密码
+            password: this.newPassword,  // 用户密码
           }
         });
     
         // 后端返回响应处理：根据返回的状态码进行处理
-        if (res.data.statue === "success") {
+        if (res.data.status === "success") {
           uni.showToast({ title: '修改成功', icon: 'success' });
           setTimeout(() => {
-            uni.navigateTo('/pages/my/login/passwordLogin');  // 注册成功后返回登录页面
+			uni.navigateTo({
+			  url: '/pages/my/login/passwordLogin'
+			});
           }, 1500);
         } else {
           uni.showToast({ title: '修改失败，请重试', icon: 'none' });

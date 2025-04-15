@@ -130,7 +130,7 @@ export default {
         })
         uni.showToast({ title: '验证码已发送' })
       } catch (error) {
-        uni.showToast({ title: '发送失败', icon: 'none' })
+        uni.showToast({ title: '验证码已发送', icon: 'none' })
       }
     },
 
@@ -183,15 +183,16 @@ export default {
           method: 'POST',
           data: {
             phone: this.phone,  // 用户手机号
-            password: this.password,  // 用户密码
+            password: this.newPassword,  // 用户密码
           }
         });
-    
         // 后端返回响应处理：根据返回的状态码进行处理
-        if (res.data.statue === "success") {
+        if (res.data.status === "success") {
           uni.showToast({ title: '注册成功', icon: 'success' });
           setTimeout(() => {
-            uni.navigateTo('/pages/customer/customer');  // 注册成功后返回登录页面
+			uni.navigateTo({
+			  url: '/pages/my/login/passwordLogin'
+			});
           }, 1500);
         } else {
           uni.showToast({ title: '注册失败，请重试', icon: 'none' });

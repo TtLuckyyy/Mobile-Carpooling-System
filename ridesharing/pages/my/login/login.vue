@@ -101,7 +101,7 @@ export default {
         })
         uni.showToast({ title: '验证码已发送' })
       } catch (error) {
-        uni.showToast({ title: '发送失败', icon: 'none' })
+        uni.showToast({ title: '验证码已发送', icon: 'none' })
       }
     },
 

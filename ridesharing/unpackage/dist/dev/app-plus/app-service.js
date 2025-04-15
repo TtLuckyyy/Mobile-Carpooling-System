@@ -31,7 +31,7 @@ if (uni.restoreGlobal) {
 }
 (function(vue) {
   "use strict";
-  const _imports_0$4 = "/static/launch/start.png";
+  const _imports_0$5 = "/static/launch/start.png";
   const _export_sfc = (sfc, props) => {
     const target = sfc.__vccOpts || sfc;
     for (const [key, val] of props) {
@@ -55,7 +55,7 @@ if (uni.restoreGlobal) {
       vue.createElementVNode("text", { class: "subtitle" }, "你的出行省钱指南"),
       vue.createElementVNode("image", {
         class: "logo",
-        src: _imports_0$4
+        src: _imports_0$5
       }),
       vue.createElementVNode("view", { class: "footer" }, [
         vue.createElementVNode("text", { class: "footer-text" }, "一路同行，美好随行"),
@@ -63,7 +63,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesIndexLaunch = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-8d8376b8"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/index/launch.vue"]]);
+  const PagesIndexLaunch = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-8d8376b8"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/index/launch.vue"]]);
   function formatAppLog(type, filename, ...args) {
     if (uni.__log__) {
       uni.__log__(type, filename, ...args);
@@ -1336,8 +1336,8 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesCustomerCustomer = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/customer.vue"]]);
-  const _imports_0$3 = "/static/icon_order.png";
+  const PagesCustomerCustomer = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/customer/customer.vue"]]);
+  const _imports_0$4 = "/static/icon_order.png";
   const _imports_1$1 = "/static/icon_safe.png";
   const _imports_2 = "/static/icon_cash.png";
   const _sfc_main$k = {
@@ -1366,7 +1366,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("view", { class: "features" }, [
             vue.createElementVNode("view", { class: "feature-item" }, [
               vue.createElementVNode("image", {
-                src: _imports_0$3,
+                src: _imports_0$4,
                 class: "feature-icon"
               }),
               vue.createElementVNode("view", { class: "feature-text" }, [
@@ -1410,7 +1410,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesDriverDriver = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-da5dba0b"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/driver/driver.vue"]]);
+  const PagesDriverDriver = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-da5dba0b"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/driver/driver.vue"]]);
   const _sfc_main$j = {
     data() {
       return {
@@ -1821,7 +1821,7 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const PagesDriverCarOwner = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-ba5a77be"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/driver/car-owner.vue"]]);
+  const PagesDriverCarOwner = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-ba5a77be"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/driver/car-owner.vue"]]);
   const _sfc_main$i = {
     data() {
       return {
@@ -1960,7 +1960,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesDriverDriverSearch = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-f1865e65"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/driver/driver_search.vue"]]);
+  const PagesDriverDriverSearch = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-f1865e65"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/driver/driver_search.vue"]]);
   const _sfc_main$h = {
     data() {
       return {
@@ -1980,22 +1980,62 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/index/index.vue"]]);
+  const _imports_0$3 = "/static/tongji/school_badge.png";
   const _sfc_main$g = {
     data() {
       return {
-        statusBarHeight: uni.getSystemInfoSync().statusBarHeight || 0
+        username: "未知用户",
+        total_mileage: 0,
+        statusBarHeight: uni.getSystemInfoSync().statusBarHeight,
+        menuItems: [
+          { icon: "🕒", text: "我的行程" },
+          { icon: "🎟️", text: "优惠券" },
+          { icon: "🔑", text: "登录" },
+          { icon: "📝", text: "修改个人信息" },
+          { icon: "🛡️", text: "账号与安全" },
+          { icon: "🎧", text: "联系客服" },
+          { icon: "⚙️", text: "设置" }
+        ]
       };
     },
+    computed: {
+      ...mapState(["userID"])
+    },
+    onLoad() {
+      this.fetchUserInfo();
+    },
     methods: {
-      goToSpecificPage() {
-        uni.switchTab({
-          url: "/pages/customer/customer"
+      fetchUserInfo() {
+        uni.request({
+          url: `http://localhost:8083/carsharing/get-name-mile?userID=${this.userID}`,
+          // 替换成你的后端地址
+          method: "GET",
+          success: (res) => {
+            if (res.statusCode === 200 && res.data) {
+              this.username = res.data.username || "未命名用户";
+              this.total_mileage = res.data.total_mileage || 0;
+            } else {
+              uni.showToast({ title: "用户信息加载失败", icon: "none" });
+            }
+          },
+          fail: () => {
+            uni.showToast({ title: "网络错误", icon: "none" });
+          }
         });
       },
-      goToLoginPage() {
+      handleMenuClick(index) {
+        const pages = [
+          "/pages/my/trip",
+          "/pages/my/coupon",
+          "/pages/my/login/login",
+          "/pages/my/change/change",
+          "/pages/my/account",
+          "/pages/my/support",
+          "/pages/my/setting"
+        ];
         uni.navigateTo({
-          url: "/pages/my/login/login"
+          url: pages[index]
         });
       }
     }
@@ -2004,30 +2044,78 @@ if (uni.restoreGlobal) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
+        class: "mine-page",
         style: vue.normalizeStyle({ paddingTop: $data.statusBarHeight + "px" })
       },
       [
-        vue.createCommentVNode(" 返回按钮 - 强制跳转到指定页面 "),
-        vue.createElementVNode("view", {
-          class: "back-button",
-          onClick: _cache[0] || (_cache[0] = (...args) => $options.goToSpecificPage && $options.goToSpecificPage(...args))
-        }, [
-          vue.createElementVNode("text", null, "← 返回首页")
+        vue.createCommentVNode(" 用户信息栏 "),
+        vue.createElementVNode("view", { class: "profile" }, [
+          vue.createElementVNode("image", {
+            class: "avatar",
+            src: _imports_0$3,
+            mode: "aspectFill"
+          }),
+          vue.createElementVNode("view", { class: "info" }, [
+            vue.createElementVNode(
+              "text",
+              { class: "phone" },
+              vue.toDisplayString($data.username),
+              1
+              /* TEXT */
+            ),
+            vue.createElementVNode("text", { class: "mileage" }, [
+              vue.createTextVNode("里程值 "),
+              vue.createElementVNode(
+                "text",
+                { class: "green" },
+                vue.toDisplayString($data.total_mileage),
+                1
+                /* TEXT */
+              ),
+              vue.createTextVNode("/60")
+            ])
+          ])
         ]),
-        vue.createCommentVNode(" 登录按钮 "),
-        vue.createElementVNode("view", {
-          class: "login-button",
-          onClick: _cache[1] || (_cache[1] = (...args) => $options.goToLoginPage && $options.goToLoginPage(...args))
-        }, [
-          vue.createElementVNode("text", null, "登录")
-        ]),
-        vue.createElementVNode("view", { class: "content" }, " 我的个人页面 ")
+        vue.createCommentVNode(" 菜单项 "),
+        vue.createElementVNode("view", { class: "menu-list" }, [
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList($data.menuItems, (item, index) => {
+              return vue.openBlock(), vue.createElementBlock("view", {
+                class: "menu-item",
+                key: index,
+                onClick: ($event) => $options.handleMenuClick(index)
+              }, [
+                vue.createElementVNode("view", { class: "left" }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "icon" },
+                    vue.toDisplayString(item.icon),
+                    1
+                    /* TEXT */
+                  ),
+                  vue.createElementVNode(
+                    "text",
+                    { class: "text" },
+                    vue.toDisplayString(item.text),
+                    1
+                    /* TEXT */
+                  )
+                ]),
+                vue.createElementVNode("text", { class: "arrow" }, "›")
+              ], 8, ["onClick"]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ])
       ],
       4
       /* STYLE */
     );
   }
-  const PagesMyMy = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/my/my.vue"]]);
+  const PagesMyMy = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-2f1ef635"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/my/my.vue"]]);
   const _imports_0$2 = "/static/left-arrow.png";
   const _sfc_main$f = {
     name: "PageHeader",
@@ -2077,7 +2165,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsPageHeader = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/components/PageHeader.vue"]]);
+  const ComponentsPageHeader = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/components/PageHeader.vue"]]);
   const fontData = [
     {
       "font_class": "arrow-down",
@@ -2797,7 +2885,7 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-d31e1c47"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   const _sfc_main$d = {
     name: "UniRate",
     props: {
@@ -3063,7 +3151,7 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-5c8fbdf3"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/uni_modules/uni-rate/components/uni-rate/uni-rate.vue"]]);
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-5c8fbdf3"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/uni_modules/uni-rate/components/uni-rate/uni-rate.vue"]]);
   function formatDateTime(dateStr) {
     if (!dateStr)
       return "";
@@ -3302,7 +3390,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsListBlock = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/components/ListBlock.vue"]]);
+  const ComponentsListBlock = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/components/ListBlock.vue"]]);
   const _sfc_main$b = {
     components: {
       PageHeader: ComponentsPageHeader,
@@ -3468,7 +3556,7 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesCustomerInvitationMatch = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/InvitationMatch.vue"]]);
+  const PagesCustomerInvitationMatch = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/customer/InvitationMatch.vue"]]);
   const _imports_0$1 = "/static/right-arrow-blue.png";
   const _sfc_main$a = {
     props: {
@@ -3562,7 +3650,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsRequestBlock = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/components/RequestBlock.vue"]]);
+  const ComponentsRequestBlock = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/components/RequestBlock.vue"]]);
   const _sfc_main$9 = {
     components: {
       PageHeader: ComponentsPageHeader,
@@ -3643,7 +3731,7 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesCustomerRequestList = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/RequestList.vue"]]);
+  const PagesCustomerRequestList = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/customer/RequestList.vue"]]);
   const _imports_0 = "/static/launch/welcome0.png";
   const _imports_1 = "/static/launch/welcome1.png";
   const _sfc_main$8 = {
@@ -3710,7 +3798,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesIndexWelcome = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-c7aac77f"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/index/welcome.vue"]]);
+  const PagesIndexWelcome = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-c7aac77f"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/index/welcome.vue"]]);
   const _sfc_main$7 = {
     data() {
       return {
@@ -3761,8 +3849,8 @@ if (uni.restoreGlobal) {
           uni.showToast({ title: "请填写完整信息", icon: "none" });
           return;
         }
-        uni.navigateTo({
-          url: "/pages/home/home"
+        uni.switchTab({
+          url: "/pages/my/my"
         });
       },
       navigateTo(url) {
@@ -3862,7 +3950,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-dd394eb5"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/my/login/login.vue"]]);
+  const PagesMyLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-dd394eb5"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/my/login/login.vue"]]);
   const _sfc_main$6 = {
     data() {
       return {
@@ -3901,7 +3989,7 @@ if (uni.restoreGlobal) {
             }
           });
           uni.hideLoading();
-          if (res.data.code === 200) {
+          if (res.data.statue === "success") {
             uni.switchTab({ url: "/pages/home/home" });
           } else {
             uni.showToast({ title: res.data.msg || "登录失败", icon: "none" });
@@ -4007,7 +4095,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyLoginPasswordLogin = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-ac03f4cd"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/my/login/passwordLogin.vue"]]);
+  const PagesMyLoginPasswordLogin = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-ac03f4cd"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/my/login/passwordLogin.vue"]]);
   const _sfc_main$5 = {
     data() {
       return {
@@ -4028,6 +4116,32 @@ if (uni.restoreGlobal) {
       }
     },
     methods: {
+      async getCode() {
+        if (!this.validatePhone()) {
+          uni.showToast({ title: "请输入有效手机号", icon: "none" });
+          return;
+        }
+        this.isCounting = true;
+        const timer = setInterval(() => {
+          if (this.countdown <= 0) {
+            clearInterval(timer);
+            this.isCounting = false;
+            this.countdown = 60;
+            return;
+          }
+          this.countdown--;
+        }, 1e3);
+        try {
+          const res = await uni.request({
+            url: "/api/sendCode",
+            method: "POST",
+            data: { phone: this.phone }
+          });
+          uni.showToast({ title: "验证码已发送" });
+        } catch (error) {
+          uni.showToast({ title: "发送失败", icon: "none" });
+        }
+      },
       // 密码可见切换
       togglePassword() {
         this.showPassword = !this.showPassword;
@@ -4066,7 +4180,7 @@ if (uni.restoreGlobal) {
         uni.showLoading({ title: "修改中..." });
         try {
           const res = await uni.request({
-            url: "{后端路径}/forget",
+            url: "http://localhost:8083/carsharing/forget",
             method: "POST",
             data: {
               phone: this.phone,
@@ -4075,7 +4189,7 @@ if (uni.restoreGlobal) {
               // 用户密码
             }
           });
-          if (res.data === 1) {
+          if (res.data.statue === "success") {
             uni.showToast({ title: "修改成功", icon: "success" });
             setTimeout(() => {
               uni.navigateTo("/pages/my/login/passwordLogin");
@@ -4145,7 +4259,7 @@ if (uni.restoreGlobal) {
             vue.createElementVNode("button", {
               class: vue.normalizeClass(["code-btn", $data.isCounting ? "disabled" : ""]),
               disabled: $data.isCounting,
-              onClick: _cache[3] || (_cache[3] = (...args) => _ctx.getVerifyCode && _ctx.getVerifyCode(...args))
+              onClick: _cache[3] || (_cache[3] = (...args) => $options.getCode && $options.getCode(...args))
             }, vue.toDisplayString($options.codeBtnText), 11, ["disabled"])
           ]),
           vue.createCommentVNode(" 新增密码输入部分 "),
@@ -4225,7 +4339,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyLoginForget = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-4a450a78"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/my/login/forget.vue"]]);
+  const PagesMyLoginForget = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-4a450a78"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/my/login/forget.vue"]]);
   const _sfc_main$4 = {
     data() {
       return {
@@ -4245,6 +4359,32 @@ if (uni.restoreGlobal) {
       }
     },
     methods: {
+      async getCode() {
+        if (!this.validatePhone()) {
+          uni.showToast({ title: "请输入有效手机号", icon: "none" });
+          return;
+        }
+        this.isCounting = true;
+        const timer = setInterval(() => {
+          if (this.countdown <= 0) {
+            clearInterval(timer);
+            this.isCounting = false;
+            this.countdown = 60;
+            return;
+          }
+          this.countdown--;
+        }, 1e3);
+        try {
+          const res = await uni.request({
+            url: "/api/sendCode",
+            method: "POST",
+            data: { phone: this.phone }
+          });
+          uni.showToast({ title: "验证码已发送" });
+        } catch (error) {
+          uni.showToast({ title: "发送失败", icon: "none" });
+        }
+      },
       // 密码可见切换
       togglePassword() {
         this.showPassword = !this.showPassword;
@@ -4283,7 +4423,7 @@ if (uni.restoreGlobal) {
         uni.showLoading({ title: "注册中..." });
         try {
           const res = await uni.request({
-            url: "{后端路径}/register",
+            url: "http://localhost:8083/carsharing/register",
             method: "POST",
             data: {
               phone: this.phone,
@@ -4292,7 +4432,7 @@ if (uni.restoreGlobal) {
               // 用户密码
             }
           });
-          if (res.data === 1) {
+          if (res.data.statue === "success") {
             uni.showToast({ title: "注册成功", icon: "success" });
             setTimeout(() => {
               uni.navigateTo("/pages/customer/customer");
@@ -4362,7 +4502,7 @@ if (uni.restoreGlobal) {
             vue.createElementVNode("button", {
               class: vue.normalizeClass(["code-btn", $data.isCounting ? "disabled" : ""]),
               disabled: $data.isCounting,
-              onClick: _cache[3] || (_cache[3] = (...args) => _ctx.getVerifyCode && _ctx.getVerifyCode(...args))
+              onClick: _cache[3] || (_cache[3] = (...args) => $options.getCode && $options.getCode(...args))
             }, vue.toDisplayString($options.codeBtnText), 11, ["disabled"])
           ]),
           vue.createCommentVNode(" 新增密码输入部分 "),
@@ -4370,7 +4510,7 @@ if (uni.restoreGlobal) {
             vue.withDirectives(vue.createElementVNode("input", {
               "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.newPassword = $event),
               type: $data.showPassword ? "text" : "password",
-              placeholder: "请输入新密码（8-20位字母+数字）",
+              placeholder: "请输入密码（8-20位字母+数字）",
               class: "input",
               maxlength: "20"
             }, null, 8, ["type"]), [
@@ -4391,7 +4531,7 @@ if (uni.restoreGlobal) {
             vue.withDirectives(vue.createElementVNode("input", {
               "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => $data.confirmPassword = $event),
               type: $data.showConfirmPassword ? "text" : "password",
-              placeholder: "请确认新密码",
+              placeholder: "请确认密码",
               class: "input",
               maxlength: "20"
             }, null, 8, ["type"]), [
@@ -4441,7 +4581,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-013d98be"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/my/login/register.vue"]]);
+  const PagesMyLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-013d98be"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/my/login/register.vue"]]);
   const _sfc_main$3 = {
     props: {
       title: String,
@@ -4462,6 +4602,10 @@ if (uni.restoreGlobal) {
         1
         /* TEXT */
       ),
+      $props.locations.length === 0 ? (vue.openBlock(), vue.createElementBlock("div", {
+        key: 0,
+        class: "no-record"
+      }, " 暂无地址记录 ")) : vue.createCommentVNode("v-if", true),
       (vue.openBlock(true), vue.createElementBlock(
         vue.Fragment,
         null,
@@ -4471,20 +4615,22 @@ if (uni.restoreGlobal) {
             class: "location",
             onClick: ($event) => $options.selectLocation(loc.name)
           }, [
-            vue.createElementVNode(
-              "span",
-              { class: "loc-name" },
-              vue.toDisplayString(loc.name),
-              1
-              /* TEXT */
-            ),
-            vue.createElementVNode(
-              "span",
-              { class: "loc-address" },
-              vue.toDisplayString(loc.address),
-              1
-              /* TEXT */
-            ),
+            vue.createElementVNode("div", { class: "loc-info" }, [
+              vue.createElementVNode(
+                "span",
+                { class: "loc-name" },
+                vue.toDisplayString(loc.name),
+                1
+                /* TEXT */
+              ),
+              vue.createElementVNode(
+                "span",
+                { class: "loc-address" },
+                vue.toDisplayString(loc.address),
+                1
+                /* TEXT */
+              )
+            ]),
             vue.createElementVNode(
               "span",
               { class: "distance" },
@@ -4499,46 +4645,233 @@ if (uni.restoreGlobal) {
       ))
     ]);
   }
-  const LocationList = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-ba39095f"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/components/LocationList.vue"]]);
+  const LocationList = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-ba39095f"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/components/LocationList.vue"]]);
   const _sfc_main$2 = {
     components: { LocationList },
+    computed: {
+      ...mapState(["userID"])
+      // 读取 Vuex 里的 userID
+    },
     data() {
       return {
+        homeAddress: "",
+        companyAddress: "",
         start_loc: "",
-        history: [
-          { name: "北京南站", address: "北京南站的详细地址", distance: 10 }
-        ],
+        history: [],
+        suggestions: [],
+        showSuggestions: false,
+        ak: "qUvnqoxw0awJluKPaBmcvUam4wQYOHF7",
         cities: [
           {
-            name: "辽阳市",
+            name: "上海市",
             stations: [
-              { name: "辽阳站", address: "辽阳站的地址", distance: 12 },
-              { name: "灯塔站", address: "灯塔站的地址", distance: 18 }
-            ]
-          },
-          {
-            name: "沈阳市",
-            stations: [
-              { name: "沈阳站", address: "沈阳站的地址", distance: 10 },
-              { name: "沈阳北站", address: "沈阳北站的地址", distance: 13 },
-              { name: "沈阳南站", address: "沈阳南站的地址", distance: 20 }
+              { name: "上海交通大学", address: "", distance: 0 },
+              { name: "同济大学（嘉定校区）", address: "", distance: 0 },
+              { name: "外滩观景大道", address: "", distance: 0 },
+              { name: "复旦大学附属华山医院", address: "", distance: 0 },
+              { name: "虹桥国际机场", address: "", distance: 0 },
+              { name: "上海迪士尼乐园", address: "", distance: 0 }
             ]
           }
         ]
       };
     },
+    onLoad() {
+      this.fetchAddresses();
+    },
     methods: {
+      async handleInput(e) {
+        const keyword = e.detail.value;
+        if (!keyword) {
+          this.suggestions = [];
+          this.showSuggestions = false;
+          return;
+        }
+        try {
+          const res = await uni.request({
+            url: `https://api.map.baidu.com/place/v2/suggestion`,
+            method: "GET",
+            data: {
+              query: keyword,
+              region: "上海",
+              // 你也可以使用当前定位城市
+              output: "json",
+              ak: this.ak
+            }
+          });
+          if (res.data.status === 0) {
+            this.suggestions = await Promise.all(res.data.result.map(async (item) => {
+              let { address, lat, lng } = await this.getAddressAndCoordinatesByName(item.name);
+              let currentLocation = await this.getCurrentLocation();
+              let distance = await this.calculateDistance(currentLocation.lat, currentLocation.lng, lat, lng);
+              return {
+                name: item.name,
+                address,
+                // 获取的地址
+                distance: Math.round(distance)
+                // 计算的距离
+              };
+            }));
+            this.showSuggestions = true;
+          } else {
+            formatAppLog("warn", "at pages/customer/StartLoc.vue:142", "百度 Suggestion 接口失败:", res.data.message);
+            this.suggestions = [];
+            this.showSuggestions = false;
+          }
+        } catch (err) {
+          formatAppLog("error", "at pages/customer/StartLoc.vue:147", "请求失败:", err);
+          this.suggestions = [];
+        }
+      },
+      selectSuggestion(item) {
+        this.start_loc = item.name;
+        this.suggestions = [];
+        this.showSuggestions = false;
+        this.sendStartLoc(item.name);
+      },
+      clearInput() {
+        this.start_loc = "";
+        this.suggestions = [];
+        this.showSuggestions = false;
+      },
+      async fetchAddresses() {
+        try {
+          const response = await uniRequest.get(`http://localhost:8083/carsharing/get-user-addresses/${this.userId}`);
+          this.homeAddress = response.data.home;
+          this.companyAddress = response.data.company;
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/StartLoc.vue:168", "获取地址失败:", error);
+        }
+      },
+      setHomeCompanyStartLocation(type) {
+        if (type === "home" && this.homeAddress) {
+          this.start_loc = this.homeAddress;
+          this.setStartLoc(this.start_loc);
+        } else if (type === "company" && this.companyAddress) {
+          this.start_loc = this.companyAddress;
+          this.setStartLoc(this.start_loc);
+        } else {
+          uni.showToast({
+            title: `没有${type === "home" ? "家庭" : "公司"}地址`,
+            icon: "none"
+          });
+        }
+      },
+      navigateToAddressSetting() {
+        uni.switchTab({ url: "/pages/my/my" });
+      },
+      async fetchHistory() {
+        try {
+          const response = await uni.request({
+            url: "http://localhost:8083/carsharing/get-start-loc-history",
+            // 后端接口地址
+            method: "GET",
+            data: { userID: this.userID },
+            header: { "Content-Type": "application/json" }
+          });
+          if (response.statusCode === 200 && response.data.length > 0) {
+            let records = response.data.slice(0, 5);
+            for (let i = 0; i < records.length; i++) {
+              let { address, lat, lng } = await this.getAddressAndCoordinatesByName(records[i].name);
+              let currentLocation = await this.getCurrentLocation();
+              let distance = await this.calculateDistance(currentLocation.lat, currentLocation.lng, lat, lng);
+              records[i].address = address;
+              records[i].distance = distance;
+            }
+            this.history = records;
+          } else {
+            formatAppLog("warn", "at pages/customer/StartLoc.vue:217", "没有历史记录");
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/StartLoc.vue:220", "获取历史记录失败:", error);
+        }
+      },
+      // 根据名称获取详细地址和经纬度
+      async getAddressAndCoordinatesByName(name) {
+        try {
+          const encodedAddress = encodeURIComponent(name);
+          const geoResp = await uni.request({
+            url: `https://api.map.baidu.com/geocoding/v3/?ak=${this.ak}&address=${encodeURIComponent(name)}&output=json`
+          });
+          const { lat, lng } = geoResp.data.result.location;
+          const reverseResp = await uni.request({
+            url: `https://api.map.baidu.com/reverse_geocoding/v3/?ak=${this.ak}&location=${lat},${lng}&output=json`
+          });
+          const address = reverseResp.data.result.formatted_address;
+          return { address, lat, lng };
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/StartLoc.vue:239", "获取地址和坐标失败:", error);
+          return { address: "地址获取失败", lat: 0, lng: 0 };
+        }
+      },
+      // 获取当前定位
+      async getCurrentLocation() {
+        try {
+          const locationResponse = await uni.getLocation({ type: "gcj02" });
+          return { lat: locationResponse.latitude, lng: locationResponse.longitude };
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/StartLoc.vue:249", "获取当前位置失败:", error);
+          return { lat: 0, lng: 0 };
+        }
+      },
+      // 计算两点之间的距离（使用 Haversine 公式）
+      async calculateDistance(lat1, lng1, lat2, lng2) {
+        const toRad = (angle) => angle * (Math.PI / 180);
+        const R = 6371;
+        const dLat = toRad(lat2 - lat1);
+        const dLng = toRad(lng2 - lng1);
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+      },
+      async getLocationInfoByName(name) {
+        try {
+          const target = await this.getAddressAndCoordinatesByName(name);
+          const current = await this.getCurrentLocation();
+          const distance = await this.calculateDistance(
+            current.lat,
+            current.lng,
+            target.lat,
+            target.lng
+          );
+          return {
+            name,
+            address: target.address,
+            distance: Math.round(distance)
+            // 四舍五入到整数公里
+          };
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/StartLoc.vue:286", "处理地点信息失败:", error);
+          return {
+            name,
+            address: "获取失败",
+            distance: 0
+          };
+        }
+      },
       ...mapActions(["setStartLoc"]),
       sendStartLoc(location) {
-        const loc = location || this.start_loc;
-        this.setStartLoc(loc);
+        this.setStartLoc(location);
+        uni.switchTab({
+          url: "/pages/customer/customer"
+        });
       },
       handleLocationSelect(location) {
         this.start_loc = location;
         this.sendStartLoc(location);
       },
       goBack() {
-        uni.navigateBack();
+        uni.switchTab({ url: "/pages/customer/customer" });
+      }
+    },
+    async mounted() {
+      this.fetchHistory();
+      for (let city of this.cities) {
+        for (let station of city.stations) {
+          const info = await this.getLocationInfoByName(station.name);
+          station.address = info.address;
+          station.distance = info.distance;
+        }
       }
     }
   };
@@ -4554,32 +4887,122 @@ if (uni.restoreGlobal) {
           onClick: $options.goBack
         }, null, 8, ["onClick"]),
         vue.createElementVNode("span", { class: "status-dot" }),
-        vue.withDirectives(vue.createElementVNode(
-          "input",
-          {
-            "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.start_loc = $event),
-            placeholder: "您从哪上车",
-            class: "start-loc-input",
-            "confirm-type": "done",
-            onConfirm: _cache[1] || (_cache[1] = (...args) => $options.sendStartLoc && $options.sendStartLoc(...args))
-          },
-          null,
-          544
-          /* NEED_HYDRATION, NEED_PATCH */
-        ), [
-          [vue.vModelText, $data.start_loc]
+        vue.createElementVNode("view", { class: "input-wrapper" }, [
+          vue.withDirectives(vue.createElementVNode(
+            "input",
+            {
+              "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.start_loc = $event),
+              placeholder: "您要到哪去",
+              class: "start-loc-input",
+              "confirm-type": "done",
+              onConfirm: _cache[1] || (_cache[1] = (...args) => $options.sendStartLoc && $options.sendStartLoc(...args)),
+              onInput: _cache[2] || (_cache[2] = (...args) => $options.handleInput && $options.handleInput(...args))
+            },
+            null,
+            544
+            /* NEED_HYDRATION, NEED_PATCH */
+          ), [
+            [vue.vModelText, $data.start_loc]
+          ]),
+          vue.createVNode(_component_uni_icons, {
+            type: "clear",
+            size: "20",
+            class: "clear-icon",
+            onClick: $options.clearInput
+          }, null, 8, ["onClick"])
         ])
       ]),
-      vue.createElementVNode("div", { class: "address-settings" }, [
-        vue.createElementVNode("div", { class: "address-option" }, [
-          vue.createElementVNode("i", { class: "el-icon-house" }),
-          vue.createTextVNode(" 家 "),
-          vue.createElementVNode("span", { class: "desc" }, "设置家的地址")
+      vue.createCommentVNode(" 建议地址列表 "),
+      $data.suggestions.length > 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "suggestion-list"
+      }, [
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($data.suggestions.slice(0, 7), (item, index) => {
+            return vue.openBlock(), vue.createElementBlock("view", {
+              key: index,
+              class: "suggestion-item",
+              onClick: ($event) => $options.selectSuggestion(item)
+            }, [
+              vue.createElementVNode("div", { class: "sug-info" }, [
+                vue.createElementVNode(
+                  "span",
+                  { class: "sug-name" },
+                  vue.toDisplayString(item.name),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "span",
+                  { class: "sug-address" },
+                  vue.toDisplayString(item.address),
+                  1
+                  /* TEXT */
+                )
+              ]),
+              vue.createElementVNode(
+                "span",
+                { class: "sug-distance" },
+                vue.toDisplayString(item.distance) + " km",
+                1
+                /* TEXT */
+              )
+            ], 8, ["onClick"]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ])) : vue.createCommentVNode("v-if", true),
+      vue.createElementVNode("view", { class: "address-settings" }, [
+        vue.createCommentVNode(" 家 按钮 "),
+        vue.createElementVNode("view", {
+          class: "address-option",
+          onClick: _cache[3] || (_cache[3] = ($event) => $options.setHomeCompanyStartLocation("home"))
+        }, [
+          vue.createVNode(_component_uni_icons, {
+            type: "home",
+            size: "24"
+          }),
+          vue.createTextVNode(" 家 ")
         ]),
-        vue.createElementVNode("div", { class: "address-option" }, [
-          vue.createElementVNode("i", { class: "el-icon-office-building" }),
-          vue.createTextVNode(" 公司 "),
-          vue.createElementVNode("span", { class: "desc" }, "设置公司地址")
+        vue.createCommentVNode(" 家的地址 按钮 "),
+        vue.createElementVNode("view", {
+          class: "address-option address-text",
+          onClick: _cache[4] || (_cache[4] = ($event) => $options.navigateToAddressSetting())
+        }, [
+          vue.createElementVNode(
+            "text",
+            { class: "desc small-text" },
+            vue.toDisplayString($data.homeAddress || "设置家的地址"),
+            1
+            /* TEXT */
+          )
+        ]),
+        vue.createCommentVNode(" 公司 按钮 "),
+        vue.createElementVNode("view", {
+          class: "address-option",
+          onClick: _cache[5] || (_cache[5] = ($event) => $options.setHomeCompanyStartLocation("company"))
+        }, [
+          vue.createVNode(_component_uni_icons, {
+            type: "shop",
+            size: "24"
+          }),
+          vue.createTextVNode(" 公司 ")
+        ]),
+        vue.createCommentVNode(" 公司的地址 按钮 "),
+        vue.createElementVNode("view", {
+          class: "address-option address-text",
+          onClick: _cache[6] || (_cache[6] = ($event) => $options.navigateToAddressSetting())
+        }, [
+          vue.createElementVNode(
+            "text",
+            { class: "desc small-text" },
+            vue.toDisplayString($data.companyAddress || "设置公司地址"),
+            1
+            /* TEXT */
+          )
         ])
       ]),
       vue.createCommentVNode(" 复用 LocationList 组件 "),
@@ -4604,47 +5027,233 @@ if (uni.restoreGlobal) {
       ))
     ]);
   }
-  const PagesCustomerStartLoc = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-6cc13438"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/StartLoc.vue"]]);
+  const PagesCustomerStartLoc = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-6cc13438"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/customer/StartLoc.vue"]]);
   const _sfc_main$1 = {
     components: { LocationList },
+    computed: {
+      ...mapState(["userID"])
+      // 读取 Vuex 里的 userID
+    },
     data() {
       return {
-        endLoc: "",
-        history: [
-          { name: "上海虹桥站", address: "上海虹桥站的地址地址地址", distance: 15 },
-          { name: "北京南站", address: "北京南站的详细地址", distance: 10 }
-        ],
+        homeAddress: "",
+        companyAddress: "",
+        end_loc: "",
+        history: [],
+        suggestions: [],
+        showSuggestions: false,
+        ak: "qUvnqoxw0awJluKPaBmcvUam4wQYOHF7",
         cities: [
           {
-            name: "辽阳市",
+            name: "上海市",
             stations: [
-              { name: "辽阳站", address: "辽阳站的地址", distance: 12 },
-              { name: "灯塔站", address: "灯塔站的地址", distance: 18 }
-            ]
-          },
-          {
-            name: "沈阳市",
-            stations: [
-              { name: "沈阳站", address: "沈阳站的地址", distance: 10 },
-              { name: "沈阳北站", address: "沈阳北站的地址", distance: 13 },
-              { name: "沈阳南站", address: "沈阳南站的地址", distance: 20 }
+              { name: "上海交通大学", address: "", distance: 0 },
+              { name: "同济大学（嘉定校区）", address: "", distance: 0 },
+              { name: "外滩观景大道", address: "", distance: 0 },
+              { name: "复旦大学附属华山医院", address: "", distance: 0 },
+              { name: "虹桥国际机场", address: "", distance: 0 },
+              { name: "上海迪士尼乐园", address: "", distance: 0 }
             ]
           }
         ]
       };
     },
+    onLoad() {
+      this.fetchAddresses();
+    },
     methods: {
+      async handleInput(e) {
+        const keyword = e.detail.value;
+        if (!keyword) {
+          this.suggestions = [];
+          this.showSuggestions = false;
+          return;
+        }
+        try {
+          const res = await uni.request({
+            url: `https://api.map.baidu.com/place/v2/suggestion`,
+            method: "GET",
+            data: {
+              query: keyword,
+              region: "上海",
+              // 你也可以使用当前定位城市
+              output: "json",
+              ak: this.ak
+            }
+          });
+          if (res.data.status === 0) {
+            this.suggestions = await Promise.all(res.data.result.map(async (item) => {
+              let { address, lat, lng } = await this.getAddressAndCoordinatesByName(item.name);
+              let currentLocation = await this.getCurrentLocation();
+              let distance = await this.calculateDistance(currentLocation.lat, currentLocation.lng, lat, lng);
+              return {
+                name: item.name,
+                address,
+                // 获取的地址
+                distance
+                // 计算的距离
+              };
+            }));
+            this.showSuggestions = true;
+          } else {
+            formatAppLog("warn", "at pages/customer/EndLoc.vue:143", "百度 Suggestion 接口失败:", res.data.message);
+            this.suggestions = [];
+            this.showSuggestions = false;
+          }
+        } catch (err) {
+          formatAppLog("error", "at pages/customer/EndLoc.vue:148", "请求失败:", err);
+          this.suggestions = [];
+        }
+      },
+      selectSuggestion(item) {
+        this.end_loc = item.name;
+        this.suggestions = [];
+        this.showSuggestions = false;
+        this.sendEndLoc(item.name);
+      },
+      clearInput() {
+        this.end_loc = "";
+        this.suggestions = [];
+        this.showSuggestions = false;
+      },
+      async fetchAddresses() {
+        try {
+          const response = await uniRequest.get(`http://localhost:8083/carsharing/get-user-addresses/${this.userId}`);
+          this.homeAddress = response.data.home;
+          this.companyAddress = response.data.company;
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/EndLoc.vue:169", "获取地址失败:", error);
+        }
+      },
+      setHomeCompanyEndLocation(type) {
+        if (type === "home" && this.homeAddress) {
+          this.end_loc = this.homeAddress;
+          this.setEndLoc(this.end_loc);
+        } else if (type === "company" && this.companyAddress) {
+          this.end_loc = this.companyAddress;
+          this.setEndLoc(this.end_loc);
+        } else {
+          uni.showToast({
+            title: `没有${type === "home" ? "家庭" : "公司"}地址`,
+            icon: "none"
+          });
+        }
+      },
+      navigateToAddressSetting() {
+        uni.switchTab({ url: "/pages/my/my" });
+      },
+      async fetchHistory() {
+        try {
+          const response = await uni.request({
+            url: "http://localhost:8083/carsharing/get-end-loc-history",
+            // 后端接口地址
+            method: "GET",
+            data: { userID: this.userID },
+            header: { "Content-Type": "application/json" }
+          });
+          if (response.statusCode === 200 && response.data.length > 0) {
+            let records = response.data.slice(0, 5);
+            for (let i = 0; i < records.length; i++) {
+              let { address, lat, lng } = await this.getAddressAndCoordinatesByName(records[i].name);
+              let currentLocation = await this.getCurrentLocation();
+              let distance = await this.calculateDistance(currentLocation.lat, currentLocation.lng, lat, lng);
+              records[i].address = address;
+              records[i].distance = distance;
+            }
+            this.history = records;
+          } else {
+            formatAppLog("warn", "at pages/customer/EndLoc.vue:218", "没有历史记录");
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/EndLoc.vue:221", "获取历史记录失败:", error);
+        }
+      },
+      // 根据名称获取详细地址和经纬度
+      async getAddressAndCoordinatesByName(name) {
+        try {
+          const encodedAddress = encodeURIComponent(name);
+          const geoResp = await uni.request({
+            url: `https://api.map.baidu.com/geocoding/v3/?ak=${this.ak}&address=${encodeURIComponent(name)}&output=json`
+          });
+          const { lat, lng } = geoResp.data.result.location;
+          const reverseResp = await uni.request({
+            url: `https://api.map.baidu.com/reverse_geocoding/v3/?ak=${this.ak}&location=${lat},${lng}&output=json`
+          });
+          const address = reverseResp.data.result.formatted_address;
+          return { address, lat, lng };
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/EndLoc.vue:239", "获取地址和坐标失败:", error);
+          return { address: "地址获取失败", lat: 0, lng: 0 };
+        }
+      },
+      // 获取当前定位
+      async getCurrentLocation() {
+        try {
+          const locationResponse = await uni.getLocation({ type: "gcj02" });
+          return { lat: locationResponse.latitude, lng: locationResponse.longitude };
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/EndLoc.vue:249", "获取当前位置失败:", error);
+          return { lat: 0, lng: 0 };
+        }
+      },
+      // 计算两点之间的距离（使用 Haversine 公式）
+      async calculateDistance(lat1, lng1, lat2, lng2) {
+        const toRad = (angle) => angle * (Math.PI / 180);
+        const R = 6371;
+        const dLat = toRad(lat2 - lat1);
+        const dLng = toRad(lng2 - lng1);
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+      },
+      async getLocationInfoByName(name) {
+        try {
+          const target = await this.getAddressAndCoordinatesByName(name);
+          const current = await this.getCurrentLocation();
+          const distance = await this.calculateDistance(
+            current.lat,
+            current.lng,
+            target.lat,
+            target.lng
+          );
+          return {
+            name,
+            address: target.address,
+            distance: Math.round(distance)
+            // 四舍五入到整数公里
+          };
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/EndLoc.vue:286", "处理地点信息失败:", error);
+          return {
+            name,
+            address: "获取失败",
+            distance: 0
+          };
+        }
+      },
       ...mapActions(["setEndLoc"]),
       sendEndLoc(location) {
-        const loc = location || this.endLoc;
-        this.setEndLoc(loc);
+        this.setEndLoc(location);
+        uni.switchTab({
+          url: "/pages/customer/customer"
+        });
       },
       handleLocationSelect(location) {
-        this.endLoc = location;
+        this.end_loc = location;
         this.sendEndLoc(location);
       },
       goBack() {
-        uni.navigateBack();
+        uni.switchTab({ url: "pages/customer/customer" });
+      }
+    },
+    async mounted() {
+      this.fetchHistory();
+      for (let city of this.cities) {
+        for (let station of city.stations) {
+          const info = await this.getLocationInfoByName(station.name);
+          station.address = info.address;
+          station.distance = info.distance;
+        }
       }
     }
   };
@@ -4660,32 +5269,122 @@ if (uni.restoreGlobal) {
           onClick: $options.goBack
         }, null, 8, ["onClick"]),
         vue.createElementVNode("span", { class: "status-dot" }),
-        vue.withDirectives(vue.createElementVNode(
-          "input",
-          {
-            "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.endLoc = $event),
-            placeholder: "您要到哪去",
-            class: "end-loc-input",
-            "confirm-type": "done",
-            onConfirm: _cache[1] || (_cache[1] = (...args) => $options.sendEndLoc && $options.sendEndLoc(...args))
-          },
-          null,
-          544
-          /* NEED_HYDRATION, NEED_PATCH */
-        ), [
-          [vue.vModelText, $data.endLoc]
+        vue.createElementVNode("view", { class: "input-wrapper" }, [
+          vue.withDirectives(vue.createElementVNode(
+            "input",
+            {
+              "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.end_loc = $event),
+              placeholder: "您要到哪去",
+              class: "end-loc-input",
+              "confirm-type": "done",
+              onConfirm: _cache[1] || (_cache[1] = (...args) => $options.sendEndLoc && $options.sendEndLoc(...args)),
+              onInput: _cache[2] || (_cache[2] = (...args) => $options.handleInput && $options.handleInput(...args))
+            },
+            null,
+            544
+            /* NEED_HYDRATION, NEED_PATCH */
+          ), [
+            [vue.vModelText, $data.end_loc]
+          ]),
+          vue.createVNode(_component_uni_icons, {
+            type: "clear",
+            size: "20",
+            class: "clear-icon",
+            onClick: $options.clearInput
+          }, null, 8, ["onClick"])
         ])
       ]),
-      vue.createElementVNode("div", { class: "address-settings" }, [
-        vue.createElementVNode("div", { class: "address-option" }, [
-          vue.createElementVNode("i", { class: "el-icon-house" }),
-          vue.createTextVNode(" 家 "),
-          vue.createElementVNode("span", { class: "desc" }, "设置家的地址")
+      vue.createCommentVNode(" 建议地址列表 "),
+      $data.suggestions.length > 0 ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "suggestion-list"
+      }, [
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($data.suggestions.slice(0, 7), (item, index) => {
+            return vue.openBlock(), vue.createElementBlock("view", {
+              key: index,
+              class: "suggestion-item",
+              onClick: ($event) => $options.selectSuggestion(item)
+            }, [
+              vue.createElementVNode("div", { class: "sug-info" }, [
+                vue.createElementVNode(
+                  "span",
+                  { class: "sug-name" },
+                  vue.toDisplayString(item.name),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "span",
+                  { class: "sug-address" },
+                  vue.toDisplayString(item.address),
+                  1
+                  /* TEXT */
+                )
+              ]),
+              vue.createElementVNode(
+                "span",
+                { class: "sug-distance" },
+                vue.toDisplayString(item.distance) + " km",
+                1
+                /* TEXT */
+              )
+            ], 8, ["onClick"]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ])) : vue.createCommentVNode("v-if", true),
+      vue.createElementVNode("view", { class: "address-settings" }, [
+        vue.createCommentVNode(" 家 按钮 "),
+        vue.createElementVNode("view", {
+          class: "address-option",
+          onClick: _cache[3] || (_cache[3] = ($event) => $options.setHomeCompanyEndLocation("home"))
+        }, [
+          vue.createVNode(_component_uni_icons, {
+            type: "home",
+            size: "24"
+          }),
+          vue.createTextVNode(" 家 ")
         ]),
-        vue.createElementVNode("div", { class: "address-option" }, [
-          vue.createElementVNode("i", { class: "el-icon-office-building" }),
-          vue.createTextVNode(" 公司 "),
-          vue.createElementVNode("span", { class: "desc" }, "设置公司地址")
+        vue.createCommentVNode(" 家的地址 按钮 "),
+        vue.createElementVNode("view", {
+          class: "address-option address-text",
+          onClick: _cache[4] || (_cache[4] = ($event) => $options.navigateToAddressSetting())
+        }, [
+          vue.createElementVNode(
+            "text",
+            { class: "desc small-text" },
+            vue.toDisplayString($data.homeAddress || "设置家的地址"),
+            1
+            /* TEXT */
+          )
+        ]),
+        vue.createCommentVNode(" 公司 按钮 "),
+        vue.createElementVNode("view", {
+          class: "address-option",
+          onClick: _cache[5] || (_cache[5] = ($event) => $options.setHomeCompanyEndLocation("company"))
+        }, [
+          vue.createVNode(_component_uni_icons, {
+            type: "shop",
+            size: "24"
+          }),
+          vue.createTextVNode(" 公司 ")
+        ]),
+        vue.createCommentVNode(" 公司的地址 按钮 "),
+        vue.createElementVNode("view", {
+          class: "address-option address-text",
+          onClick: _cache[6] || (_cache[6] = ($event) => $options.navigateToAddressSetting())
+        }, [
+          vue.createElementVNode(
+            "text",
+            { class: "desc small-text" },
+            vue.toDisplayString($data.companyAddress || "设置公司地址"),
+            1
+            /* TEXT */
+          )
         ])
       ]),
       vue.createCommentVNode(" 复用 LocationList 组件 "),
@@ -4710,7 +5409,7 @@ if (uni.restoreGlobal) {
       ))
     ]);
   }
-  const PagesCustomerEndLoc = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-d057533e"], ["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/pages/customer/EndLoc.vue"]]);
+  const PagesCustomerEndLoc = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-d057533e"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/customer/EndLoc.vue"]]);
   __definePage("pages/index/launch", PagesIndexLaunch);
   __definePage("pages/customer/customer", PagesCustomerCustomer);
   __definePage("pages/driver/driver", PagesDriverDriver);
@@ -4742,7 +5441,7 @@ if (uni.restoreGlobal) {
       formatAppLog("log", "at App.vue:11", "App Hide");
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "D:/GitHub/Mobile-Carpooling-System/ridesharing/App.vue"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/App.vue"]]);
   const store = createStore({
     state() {
       return {

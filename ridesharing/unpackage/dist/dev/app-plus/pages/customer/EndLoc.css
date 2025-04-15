@@ -517,21 +517,95 @@
   padding: 10px;
   border-bottom: 1px solid #ddd;
   cursor: pointer;
+  align-items: center;
 }
-.location[data-v-ba39095f]:hover {
-  background-color: #f0f0f0;
+
+/* 使 name 和 address 纵向排列 */
+.loc-info[data-v-ba39095f] {
+  display: flex;
+  flex-direction: column;
+  width: 75%; /* 让 name + address 占据 75% 的宽度 */
+}
+
+/* name 大小适中 */
+.loc-name[data-v-ba39095f] {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* address 在 name 下方 */
+.loc-address[data-v-ba39095f] {
+  font-size: 12px;
+  color: #666666;
+  margin-top: 3px; /* 添加一点间距 */
+}
+
+/* 距离保持在右侧 */
+.distance[data-v-ba39095f] {
+  font-size: 12px;
+  color: #666666;
+  width: 25%; /* 让 distance 继续占据 25% 的宽度 */
+  text-align: right;
+}
+
+/* 没有地址记录时的样式 */
+.no-record[data-v-ba39095f] {
+  text-align: center;
+  color: #666666;
+  font-size: 14px;
+  padding: 20px;
 }
 
 
+.suggestion-item[data-v-d057533e] {
+	  display: flex;
+	  justify-content: space-between;
+	  padding: 10px;
+	  border-bottom: 1px solid #ddd;
+	  cursor: pointer;
+	  align-items: center;
+}
+	/* 使 name 和 address 纵向排列 */
+.sug-info[data-v-d057533e] {
+	  display: flex;
+	  flex-direction: column;
+	  width: 75%; /* 让 name + address 占据 75% 的宽度 */
+}
+	
+	/* name 大小适中 */
+.sug-name[data-v-d057533e] {
+	  font-size: 16px;
+	  font-weight: bold;
+}
+	
+	/* address 在 name 下方 */
+.sug-address[data-v-d057533e] {
+	  font-size: 12px;
+	  color: #666666;
+	  margin-top: 3px; /* 添加一点间距 */
+}
+	
+	/* 距离保持在右侧 */
+.sug-distance[data-v-d057533e] {
+	  font-size: 12px;
+	  color: #666666;
+	  width: 25%; /* 让 distance 继续占据 25% 的宽度 */
+	  text-align: right;
+}
 .container[data-v-d057533e] {
   font-family: Arial, sans-serif;
   padding: 20px;
+}
+.input-wrapper[data-v-d057533e] {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 .status-dot[data-v-d057533e] {
   display: inline-block;
   width: 8px;
   height: 8px;
-  background-color: green;
+  background-color: #da713c;
   border-radius: 50%;
   margin-right: 5px;
 }
@@ -547,21 +621,49 @@
   padding: 10px 0;
 }
 .address-option[data-v-d057533e] {
-  flex: 1;
-  padding: 5px;
-  background: #f5f5f5;
-  border-radius: 5px;
-  text-align: center;
-  margin: 0px;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 让文本和图标分开 */
+    min-height: 50px;
+    padding: 10px;
 }
-.address-option[data-v-d057533e]:hover {
-  background: #e0e0e0;
+.address-option.address-text[data-v-d057533e] {
+    flex-grow: 1;  /* 让文本部分自动占满 */
 }
 .back-icon[data-v-d057533e] {
   font-size: 20px;
   cursor: pointer;
   margin-right: 10px;
+}
+.small-text[data-v-d057533e] {
+    font-size: 12px; /* 设置较小的字体 */
+    color: #666666; /* 深灰色 */
+}
+.clear-icon[data-v-d057533e] {
+  position: absolute;
+  right: 0.625rem; /* 靠近输入框右侧 */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  z-index: 10;
+}
+.suggestion-list[data-v-d057533e] {
+  position: absolute;
+  top: 3.4375rem; /* 根据 header 实际高度可调 */
+  left: 0;
+  right: 0;
+  max-width: 21.875rem;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0.375rem;
+  z-index: 1000;
+  max-height: 31.25rem;
+  overflow-y: auto;
+  box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.1);
+}
+.suggestion-item[data-v-d057533e]:last-child {
+  border-bottom: none;
 }
 header[data-v-d057533e] {
   display: flex;
