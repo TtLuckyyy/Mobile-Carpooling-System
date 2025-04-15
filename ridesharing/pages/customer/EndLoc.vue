@@ -3,15 +3,41 @@
 		<header>
 			<uni-icons type="back" size="24" class="back-icon" @click="goBack"></uni-icons>
 			<span class="status-dot"></span>
+			<view class="input-wrapper">
 			<input 
 				v-model="end_loc" 
 				placeholder="您要到哪去" 
 				class="end-loc-input"
 				confirm-type="done" 
 				@confirm="sendEndLoc" 
+				@input="handleInput"
 			/>
+			<uni-icons			
+			  type="clear"
+			  size="20"
+			  class="clear-icon"
+			  @click="clearInput"
+			></uni-icons>
+			</view>
 		</header>
-
+		<!-- 建议地址列表 -->
+		<view
+		  v-if="suggestions.length > 0"
+		  class="suggestion-list"
+		>
+		  <view
+			v-for="(item, index) in suggestions.slice(0, 7)"
+			:key="index"
+			class="suggestion-item"
+			@click="selectSuggestion(item)"
+		  >
+			<div class="sug-info">
+			  <span class="sug-name">{{ item.name }}</span>
+			  <span class="sug-address">{{ item.address }}</span>
+			</div>
+			<span class="sug-distance">{{ item.distance }} km</span>
+		  </view>
+		</view>
 		<view class="address-settings">
 			<!-- 家 按钮 -->
 			<view class="address-option" @click="setHomeCompanyEndLocation('home')">
@@ -53,16 +79,19 @@ export default {
 			companyAddress: "",
 			end_loc: "",
 			history: [],
+			suggestions: [],
+			showSuggestions: false,
+			ak:'qUvnqoxw0awJluKPaBmcvUam4wQYOHF7',
 			cities: [
 				{
 					name: "上海市",
 					stations: [
-						{ name: "同济大学嘉定校区", address: "杨浦区四平路1239号", distance: 18 },
-						{ name: "同济大学四平校区", address: "嘉定区曹安公路4800号", distance: 8 },
-						{ name: "外滩", address: "黄浦区中山东一路", distance: 12 },
-						{ name: "复旦大学附属华山医院本部", address: "静安区乌鲁木齐中路12号", distance: 36 },
-						{ name: "上海城隍庙", address: "黄浦区方浜中路249号", distance: 29 },
-						{ name: "上海迪士尼乐园", address: "浦东新区川沙镇黄赵路310号", distance: 18 },
+						{ name: "上海交通大学", address: "", distance:0  },
+						{ name: "同济大学（嘉定校区）", address: "", distance:0 },
+						{ name: "外滩观景大道", address: "", distance: 0 },
+						{ name: "复旦大学附属华山医院", address: "", distance: 0 },
+						{ name: "虹桥国际机场", address: "", distance: 0 },
+						{ name: "上海迪士尼乐园", address: "", distance: 0},
 					],
 				}
 		  ],
@@ -72,6 +101,65 @@ export default {
 	    this.fetchAddresses();
 	},
 	methods: {
+		async handleInput(e) {
+			const keyword = e.detail.value;
+			if (!keyword) {
+				this.suggestions = [];
+				this.showSuggestions = false;
+				return;
+			}
+
+			// 请求百度地图 suggestion 接口
+			try {
+				const res = await uni.request({
+					url: `https://api.map.baidu.com/place/v2/suggestion`,
+					method: 'GET',
+					data: {
+						query: keyword,
+						region: '上海', // 你也可以使用当前定位城市
+						output: 'json',
+						ak: this.ak
+					}
+				});
+				if (res.data.status === 0) {
+					this.suggestions = await Promise.all(res.data.result.map(async (item) => {
+					      // 获取地址和坐标
+					      let { address, lat, lng } = await this.getAddressAndCoordinatesByName(item.name);
+					
+					      // 获取当前定位
+					      let currentLocation = await this.getCurrentLocation();
+					
+					      // 计算距离
+					      let distance = await this.calculateDistance(currentLocation.lat, currentLocation.lng, lat, lng);
+					
+					      return {
+					        name: item.name,
+					        address: address,    // 获取的地址
+					        distance: distance   // 计算的距离
+					      };
+					}));
+					this.showSuggestions = true;
+				} else {
+					console.warn('百度 Suggestion 接口失败:', res.data.message);
+					this.suggestions = [];
+					this.showSuggestions = false;
+				}
+			} catch (err) {
+				console.error('请求失败:', err);
+				this.suggestions = [];
+			}
+		},
+		selectSuggestion(item) {
+			this.end_loc = item.name;
+			this.suggestions = [];
+			this.showSuggestions = false;
+			this.sendEndLoc(item.name);
+		},
+		clearInput() {
+			this.end_loc = '';
+			this.suggestions = [];
+			this.showSuggestions = false;
+		},
 		async fetchAddresses() {
 		      try {
 		        const response = await uniRequest.get(`http://localhost:8083/carsharing/get-user-addresses/${this.userId}`);
@@ -137,20 +225,16 @@ export default {
 		async getAddressAndCoordinatesByName(name) {
 		    try {
 		        // 请求百度地图API获取地址和经纬度
-		        const baiduResponse = await uni.request({
-		            url: `https://api.map.baidu.com/geocoding/v3/?ak=你的百度地图AK&address=${name}&output=json`,
-		            method: 'GET'
+				const encodedAddress = encodeURIComponent(name);
+		        const geoResp = await uni.request({
+		          url: `https://api.map.baidu.com/geocoding/v3/?ak=${this.ak}&address=${encodeURIComponent(name)}&output=json`
 		        });
-		
-		        if (baiduResponse.statusCode === 200 && baiduResponse.data.status === 0) {
-		            const address = baiduResponse.data.result.formatted_address || '未知地址';
-		            const lat = baiduResponse.data.result.location.lat;  // 纬度
-		            const lng = baiduResponse.data.result.location.lng;  // 经度
-		
+		        const { lat, lng } = geoResp.data.result.location;
+				const reverseResp = await uni.request({
+				  url: `https://api.map.baidu.com/reverse_geocoding/v3/?ak=${this.ak}&location=${lat},${lng}&output=json`
+				});
+				const address = reverseResp.data.result.formatted_address;
 		            return { address, lat, lng };
-		        } else {
-		            return { address: '地址获取失败', lat: 0, lng: 0 }; // 如果获取失败，返回默认值
-		        }
 		    } catch (error) {
 		        console.error('获取地址和坐标失败:', error);
 		        return { address: '地址获取失败', lat: 0, lng: 0 }; // 如果出错，返回默认值
@@ -178,28 +262,107 @@ export default {
 		    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		    return R * c; // 返回距离，单位为 km
 		},
+		async getLocationInfoByName(name) {
+		    try {
+		        // 获取目标地点的坐标和地址
+		        const target = await this.getAddressAndCoordinatesByName(name);
+		        
+		        // 获取当前位置坐标
+		        const current = await this.getCurrentLocation();
+		        
+		        // 计算距离
+		        const distance = await this.calculateDistance(
+		            current.lat, current.lng,
+		            target.lat, target.lng
+		        );
+		
+		        // 返回格式化结果
+		        return {
+		            name: name,
+		            address: target.address,
+		            distance: Math.round(distance) // 四舍五入到整数公里
+		        };
+		    } catch (error) {
+		        console.error('处理地点信息失败:', error);
+		        return {
+		            name: name,
+		            address: '获取失败',
+		            distance: 0
+		        };
+		    }
+		},
 		...mapActions(['setEndLoc']),
 		sendEndLoc(location) {
-			this.setEndLoc(this.end_loc);
+			this.setEndLoc(location);
+			uni.switchTab({
+			    url: '/pages/customer/customer'
+			  });
 		},
 		handleLocationSelect(location) {
 			this.end_loc = location; // 更新输入框内容
 			this.sendEndLoc(location); // 自动提交
 		},
 		goBack() {
-			uni.navigateBack(); // 返回上一页
+			uni.switchTab({url: 'pages/customer/customer'});
 		},
 	},
-	mounted() {
+	async mounted() {
 		this.fetchHistory(); 
+		for (let city of this.cities) {
+		        for (let station of city.stations) {
+		            const info = await this.getLocationInfoByName(station.name);
+					station.address=info.address;
+		            station.distance = info.distance;  // 更新站点的距离
+		        }
+		    }
 	}
 };
 </script>
 
 <style scoped>
+	.suggestion-item {
+	  display: flex;
+	  justify-content: space-between;
+	  padding: 10px;
+	  border-bottom: 1px solid #ddd;
+	  cursor: pointer;
+	  align-items: center;
+	}
+	/* 使 name 和 address 纵向排列 */
+	.sug-info {
+	  display: flex;
+	  flex-direction: column;
+	  width: 75%; /* 让 name + address 占据 75% 的宽度 */
+	}
+	
+	/* name 大小适中 */
+	.sug-name {
+	  font-size: 16px;
+	  font-weight: bold;
+	}
+	
+	/* address 在 name 下方 */
+	.sug-address {
+	  font-size: 12px;
+	  color: #666666;
+	  margin-top: 3px; /* 添加一点间距 */
+	}
+	
+	/* 距离保持在右侧 */
+	.sug-distance {
+	  font-size: 12px;
+	  color: #666666;
+	  width: 25%; /* 让 distance 继续占据 25% 的宽度 */
+	  text-align: right;
+	}
 .container {
   font-family: Arial, sans-serif;
   padding: 20px;
+}
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 .status-dot {
   display: inline-block;
@@ -239,6 +402,36 @@ export default {
 .small-text {
     font-size: 12px; /* 设置较小的字体 */
     color: #666666; /* 深灰色 */
+}
+
+.clear-icon {
+  position: absolute;
+  right: 20rpx; /* 靠近输入框右侧 */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  z-index: 10;
+}
+
+.suggestion-list {
+  position: absolute;
+  top: 110rpx; /* 根据 header 实际高度可调 */
+  left: 0;
+  right: 0;
+  max-width: 700rpx;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12rpx;
+  z-index: 1000;
+  max-height: 1000rpx;
+  overflow-y: auto;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+
+.suggestion-item:last-child {
+  border-bottom: none;
 }
 header {
   display: flex;
