@@ -49,7 +49,7 @@
 				
 				// 发送请求到后端
 				const response = await uni.request({
-				  url: '/post-request', 
+				  url: 'http://localhost:8083/carsharing/post-request', 
 				  method: 'POST',
 				  data: requestData,
 				  header: {
@@ -58,7 +58,7 @@
 				})
 				
 				// 检查响应状态
-				if (response.statusCode === 200 || response.statusCode === 201) {
+				if (response.data.status === 'success') {
 				  const responseData = response.data
 				  
 				  // 将返回的 requestID 存储到 Vuex

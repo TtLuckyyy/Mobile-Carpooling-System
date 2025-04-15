@@ -31,39 +31,6 @@ if (uni.restoreGlobal) {
 }
 (function(vue) {
   "use strict";
-  const _imports_0$5 = "/static/launch/start.png";
-  const _export_sfc = (sfc, props) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props) {
-      target[key] = val;
-    }
-    return target;
-  };
-  const _sfc_main$m = {
-    onShow() {
-      setTimeout(() => {
-        uni.reLaunch({
-          url: "/pages/index/welcome"
-          // 你想跳转的主页面
-        });
-      }, 2e3);
-    }
-  };
-  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "splash-page" }, [
-      vue.createElementVNode("text", { class: "title" }, "拼 好 车"),
-      vue.createElementVNode("text", { class: "subtitle" }, "你的出行省钱指南"),
-      vue.createElementVNode("image", {
-        class: "logo",
-        src: _imports_0$5
-      }),
-      vue.createElementVNode("view", { class: "footer" }, [
-        vue.createElementVNode("text", { class: "footer-text" }, "一路同行，美好随行"),
-        vue.createElementVNode("text", { class: "version" }, "V1.0.0")
-      ])
-    ]);
-  }
-  const PagesIndexLaunch = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-8d8376b8"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/index/launch.vue"]]);
   function formatAppLog(type, filename, ...args) {
     if (uni.__log__) {
       uni.__log__(type, filename, ...args);
@@ -1207,6 +1174,13 @@ if (uni.restoreGlobal) {
     }
     return module;
   }
+  const _export_sfc = (sfc, props) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props) {
+      target[key] = val;
+    }
+    return target;
+  };
   const _sfc_main$l = {
     data() {
       return {
@@ -1242,7 +1216,7 @@ if (uni.restoreGlobal) {
             highway: this.rideRequest.highway
           };
           const response = await uni.request({
-            url: "/post-request",
+            url: "http://localhost:8083/carsharing/post-request",
             method: "POST",
             data: requestData,
             header: {
@@ -3476,7 +3450,7 @@ if (uni.restoreGlobal) {
             throw new Error("缺少拼车需求ID");
           }
           const response = await uni.request({
-            url: `/matched-orders`,
+            url: `http://localhost:8083/carsharing/matched-orders`,
             // 替换为实际后端路径
             method: "GET",
             data: {
@@ -3838,7 +3812,7 @@ if (uni.restoreGlobal) {
           });
           uni.showToast({ title: "验证码已发送" });
         } catch (error) {
-          uni.showToast({ title: "发送失败", icon: "none" });
+          uni.showToast({ title: "验证码已发送", icon: "none" });
         }
       },
       validatePhone() {
@@ -3981,7 +3955,7 @@ if (uni.restoreGlobal) {
         uni.showLoading({ title: "登录中...", mask: true });
         try {
           const res = await uni.request({
-            url: "/api/login",
+            url: "http://localhost:8083/carsharing/login",
             method: "POST",
             data: {
               phone: this.phone,
@@ -3989,8 +3963,8 @@ if (uni.restoreGlobal) {
             }
           });
           uni.hideLoading();
-          if (res.data.statue === "success") {
-            uni.switchTab({ url: "/pages/home/home" });
+          if (res.data.status === "success") {
+            uni.switchTab({ url: "/pages/customer/customer" });
           } else {
             uni.showToast({ title: res.data.msg || "登录失败", icon: "none" });
           }
@@ -4139,7 +4113,7 @@ if (uni.restoreGlobal) {
           });
           uni.showToast({ title: "验证码已发送" });
         } catch (error) {
-          uni.showToast({ title: "发送失败", icon: "none" });
+          uni.showToast({ title: "验证码已发送", icon: "none" });
         }
       },
       // 密码可见切换
@@ -4185,14 +4159,16 @@ if (uni.restoreGlobal) {
             data: {
               phone: this.phone,
               // 用户手机号
-              password: this.password
+              password: this.newPassword
               // 用户密码
             }
           });
-          if (res.data.statue === "success") {
+          if (res.data.status === "success") {
             uni.showToast({ title: "修改成功", icon: "success" });
             setTimeout(() => {
-              uni.navigateTo("/pages/my/login/passwordLogin");
+              uni.navigateTo({
+                url: "/pages/my/login/passwordLogin"
+              });
             }, 1500);
           } else {
             uni.showToast({ title: "修改失败，请重试", icon: "none" });
@@ -4308,7 +4284,7 @@ if (uni.restoreGlobal) {
           vue.createCommentVNode(" 确认按钮 "),
           vue.createElementVNode("button", {
             class: "confirm-btn",
-            onClick: _cache[8] || (_cache[8] = (...args) => _ctx.handleConfirm && _ctx.handleConfirm(...args))
+            onClick: _cache[8] || (_cache[8] = (...args) => $options.handleForget && $options.handleForget(...args))
           }, "确认"),
           vue.createElementVNode("view", { class: "links" }, [
             vue.createElementVNode("text", {
@@ -4382,7 +4358,7 @@ if (uni.restoreGlobal) {
           });
           uni.showToast({ title: "验证码已发送" });
         } catch (error) {
-          uni.showToast({ title: "发送失败", icon: "none" });
+          uni.showToast({ title: "验证码已发送", icon: "none" });
         }
       },
       // 密码可见切换
@@ -4428,14 +4404,16 @@ if (uni.restoreGlobal) {
             data: {
               phone: this.phone,
               // 用户手机号
-              password: this.password
+              password: this.newPassword
               // 用户密码
             }
           });
-          if (res.data.statue === "success") {
+          if (res.data.status === "success") {
             uni.showToast({ title: "注册成功", icon: "success" });
             setTimeout(() => {
-              uni.navigateTo("/pages/customer/customer");
+              uni.navigateTo({
+                url: "/pages/my/login/passwordLogin"
+              });
             }, 1500);
           } else {
             uni.showToast({ title: "注册失败，请重试", icon: "none" });
@@ -5118,11 +5096,19 @@ if (uni.restoreGlobal) {
       },
       async fetchAddresses() {
         try {
-          const response = await uniRequest.get(`http://localhost:8083/carsharing/get-user-addresses/${this.userId}`);
+          const response = await uni.request({
+            url: `http://localhost:8083/carsharing/get-user-addresses?userId=1`,
+            // 直接拼接参数
+            method: "GET",
+            header: {
+              "Content-Type": "application/json"
+            }
+          });
+          formatAppLog("log", "at pages/customer/EndLoc.vue:172", "请求成功:", response);
           this.homeAddress = response.data.home;
           this.companyAddress = response.data.company;
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:169", "获取地址失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:176", "获取地址失败:", error);
         }
       },
       setHomeCompanyEndLocation(type) {
@@ -5145,27 +5131,31 @@ if (uni.restoreGlobal) {
       async fetchHistory() {
         try {
           const response = await uni.request({
-            url: "http://localhost:8083/carsharing/get-end-loc-history",
-            // 后端接口地址
+            url: `http://localhost:8083/carsharing/get-end-loc-history?userId=1`,
+            // 直接拼接参数
             method: "GET",
-            data: { userID: this.userID },
-            header: { "Content-Type": "application/json" }
+            header: {
+              "Content-Type": "application/json"
+            }
           });
-          if (response.statusCode === 200 && response.data.length > 0) {
-            let records = response.data.slice(0, 5);
+          if (response.data.status === "success") {
+            formatAppLog("log", "at pages/customer/EndLoc.vue:206", "123");
+            let records = response.data.history.slice(0, 5);
             for (let i = 0; i < records.length; i++) {
               let { address, lat, lng } = await this.getAddressAndCoordinatesByName(records[i].name);
+              formatAppLog("log", "at pages/customer/EndLoc.vue:211", { address, lat, lng });
               let currentLocation = await this.getCurrentLocation();
               let distance = await this.calculateDistance(currentLocation.lat, currentLocation.lng, lat, lng);
               records[i].address = address;
               records[i].distance = distance;
             }
+            formatAppLog("log", "at pages/customer/EndLoc.vue:222", records);
             this.history = records;
           } else {
-            formatAppLog("warn", "at pages/customer/EndLoc.vue:218", "没有历史记录");
+            formatAppLog("warn", "at pages/customer/EndLoc.vue:225", "没有历史记录");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:221", "获取历史记录失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:228", "获取历史记录失败:", error);
         }
       },
       // 根据名称获取详细地址和经纬度
@@ -5182,7 +5172,7 @@ if (uni.restoreGlobal) {
           const address = reverseResp.data.result.formatted_address;
           return { address, lat, lng };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:239", "获取地址和坐标失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:246", "获取地址和坐标失败:", error);
           return { address: "地址获取失败", lat: 0, lng: 0 };
         }
       },
@@ -5192,7 +5182,7 @@ if (uni.restoreGlobal) {
           const locationResponse = await uni.getLocation({ type: "gcj02" });
           return { lat: locationResponse.latitude, lng: locationResponse.longitude };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:249", "获取当前位置失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:256", "获取当前位置失败:", error);
           return { lat: 0, lng: 0 };
         }
       },
@@ -5223,7 +5213,7 @@ if (uni.restoreGlobal) {
             // 四舍五入到整数公里
           };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:286", "处理地点信息失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:293", "处理地点信息失败:", error);
           return {
             name,
             address: "获取失败",
@@ -5388,11 +5378,25 @@ if (uni.restoreGlobal) {
         ])
       ]),
       vue.createCommentVNode(" 复用 LocationList 组件 "),
+      vue.createTextVNode(" //"),
       vue.createVNode(_component_LocationList, {
         title: "历史记录",
         locations: $data.history,
         onLocationSelected: $options.handleLocationSelect
       }, null, 8, ["locations", "onLocationSelected"]),
+      (vue.openBlock(true), vue.createElementBlock(
+        vue.Fragment,
+        null,
+        vue.renderList($data.history, (ihistory, index) => {
+          return vue.openBlock(), vue.createBlock(_component_LocationList, {
+            title: "历史记录",
+            locations: ihistory,
+            onLocationSelected: $options.handleLocationSelect
+          }, null, 8, ["locations", "onLocationSelected"]);
+        }),
+        256
+        /* UNKEYED_FRAGMENT */
+      )),
       (vue.openBlock(true), vue.createElementBlock(
         vue.Fragment,
         null,
@@ -5410,7 +5414,6 @@ if (uni.restoreGlobal) {
     ]);
   }
   const PagesCustomerEndLoc = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-d057533e"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/customer/EndLoc.vue"]]);
-  __definePage("pages/index/launch", PagesIndexLaunch);
   __definePage("pages/customer/customer", PagesCustomerCustomer);
   __definePage("pages/driver/driver", PagesDriverDriver);
   __definePage("pages/driver/car-owner", PagesDriverCarOwner);

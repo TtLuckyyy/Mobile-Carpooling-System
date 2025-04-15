@@ -120,7 +120,7 @@
 				
 				// 发送创建订单请求
 				const response = await uni.request({
-				  url: `/create-order`, 
+				  url: `http://localhost:8083/carsharing/post-request`, 
 				  method: 'POST',
 				  data: orderData,
 				  header: {
@@ -129,8 +129,8 @@
 				});
 				
 				// 处理响应
-				if (response[0] && response[0].statusCode === 200) {
-				  const orderId = response[0].data.order_id;
+				if (response.data.status==='success') {
+				  const orderId = response.data.Id;
 				  
 				  // 保存订单ID到Vuex
 				  this.setOrderId(orderId);
@@ -143,7 +143,7 @@
 				  // 添加跳转到订单详情页的逻辑
 				  // uni.navigateTo({ url: '/pages/order/detail' });
 				} else {
-				  throw new Error(response[0].data.message || '订单创建失败');
+				  throw new Error(response.data.message || '订单创建失败');
 				}
 			  } catch (error) {
 				console.error('创建订单失败:', error);

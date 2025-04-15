@@ -107,7 +107,7 @@
 				}
 				
 				const response = await uni.request({
-				  url: `/matched-orders`, // 替换为实际后端路径
+				  url: `http://localhost:8083/carsharing/matched-orders`, // 替换为实际后端路径
 				  method: 'GET',
 				  data: {
 					request_id: this.rideRequest.requestID // 传递当前拼车需求的ID
@@ -118,8 +118,8 @@
 				});
 				
 				// 处理响应数据
-				if (response[0] && response[0].statusCode === 200) {
-				  const res = response[0].data;
+				if (response.data.status === 'success') {
+				  const res = response.data;
 				  
 				  if (res.list_matched && res.list_matched.length > 0) {
 					this.listBlockItems = res.list_matched.map(item => ({

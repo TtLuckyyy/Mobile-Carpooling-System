@@ -160,10 +160,16 @@ export default {
 			this.showSuggestions = false;
 		},
 		async fetchAddresses() {
-		      try {
-		        const response = await uniRequest.get(`http://localhost:8083/carsharing/get-user-addresses/${this.userId}`);
-		        this.homeAddress = response.data.home;
-		        this.companyAddress = response.data.company;
+		     try {
+		       const response = await uni.request({
+		         url: `http://localhost:8083/carsharing/get-user-addresses?userId=1`, // 直接拼接参数
+		         method: 'GET',
+		         header: {
+		           'Content-Type': 'application/json'
+		         }
+		       });
+		       this.homeAddress = response.data.homeAddress;
+		       this.companyAddress = response.data.companyAddress;
 		      } catch (error) {
 		        console.error('获取地址失败:', error);
 		      }
@@ -188,34 +194,41 @@ export default {
 		async fetchHistory() {
 		    try {
 		        const response = await uni.request({
-		            url: 'http://localhost:8083/carsharing/get-start-loc-history', // 后端接口地址
-		            method: 'GET',
-		            data: { userID: this.userID }, 
-		            header: { 'Content-Type': 'application/json' }
+		          url: `http://localhost:8083/carsharing/get-start-loc-history?userId=1`, // 直接拼接参数
+		          method: 'GET',
+		          header: {
+		            'Content-Type': 'application/json'
+		          }
 		        });
+			if (response.data.status === 'success') {
 		
-		        if (response.statusCode === 200 && response.data.length > 0) {
-		            let records = response.data.slice(0, 5); // 获取最多五条记录
+			  let historyNames = response.data.history.slice(0, 5); // 取出前五条历史记录名称
 		
-		            for (let i = 0; i < records.length; i++) {
-		                // 根据name获取详细地址并解析经纬度
-		                let { address, lat, lng } = await this.getAddressAndCoordinatesByName(records[i].name);
+			  let records = [];
 		
-		                // 获取当前定位
-		                let currentLocation = await this.getCurrentLocation();
+			  for (let i = 0; i < historyNames.length; i++) {
+				let name = historyNames[i];		
+				// 获取地址和经纬度
+				let { address, lat, lng } = await this.getAddressAndCoordinatesByName(name);
 		
-		                // 计算距离
-		                let distance = await this.calculateDistance(currentLocation.lat, currentLocation.lng, lat, lng);
+				// 获取当前位置
+				let currentLocation = await this.getCurrentLocation();
 		
-		                // 更新历史记录
-		                records[i].address = address;
-		                records[i].distance = distance;
-		            }
+				// 计算距离
+				let distance = await this.calculateDistance(currentLocation.lat, currentLocation.lng, lat, lng);
 		
-		            this.history = records;
-		        } else {
-		            console.warn('没有历史记录');
-		        }
+				// 构造记录项
+				records.push({
+				  name,
+				  address,
+				  distance
+				});
+			  }
+		
+			  this.history = records;
+			} else {
+			  console.warn('没有历史记录');
+			}
 		    } catch (error) {
 		        console.error('获取历史记录失败:', error);
 		    }
@@ -295,7 +308,7 @@ export default {
 		sendStartLoc(location) {
 			this.setStartLoc(location);
 			uni.switchTab({
-			    url: '/pages/customer/customer'
+			    url: 'customer'
 			  });
 		},
 		handleLocationSelect(location) {
@@ -303,7 +316,7 @@ export default {
 			this.sendStartLoc(location); // 自动提交
 		},
 		goBack() {
-			uni.switchTab({url: '/pages/customer/customer'});
+			uni.switchTab({url: 'customer'});
 		},
 	},		  
 	async mounted() {
