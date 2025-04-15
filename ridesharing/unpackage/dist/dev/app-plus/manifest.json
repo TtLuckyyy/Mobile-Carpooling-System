@@ -17,6 +17,10 @@
     "url": ""
   },
   "permissions": {
+    "Geolocation": {},
+    "Maps": {
+      "coordType": "gcj02"
+    },
     "UniNView": {
       "description": "UniNView原生渲染"
     }
@@ -62,6 +66,24 @@
       },
       "apple": {},
       "plugins": {
+        "geolocation": {
+          "amap": {
+            "name": "amapTnWT7A67",
+            "__platform__": [
+              "ios",
+              "android"
+            ],
+            "appkey_ios": "17f597ad8d2ddf86ae2169eeb45570a8",
+            "appkey_android": "17f597ad8d2ddf86ae2169eeb45570a8"
+          }
+        },
+        "maps": {
+          "amap": {
+            "name": "amapTnWT7A67",
+            "appkey_ios": "17f597ad8d2ddf86ae2169eeb45570a8",
+            "appkey_android": "17f597ad8d2ddf86ae2169eeb45570a8"
+          }
+        },
         "audio": {
           "mp3": {
             "description": "Android平台录音支持MP3格式文件"

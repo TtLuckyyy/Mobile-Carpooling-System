@@ -16,7 +16,10 @@
             "autoclose" : true,
             "delay" : 0
         },
-        "modules" : {},
+        "modules" : {
+            "Geolocation" : {},
+            "Maps" : {}
+        },
         /* 模块配置 */
         "distribute" : {
             /* 应用发布信息 */
@@ -42,7 +45,23 @@
             },
             "ios" : {},
             /* ios打包配置 */
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "geolocation" : {
+                    "amap" : {
+                        "name" : "amapTnWT7A67",
+                        "__platform__" : [ "ios", "android" ],
+                        "appkey_ios" : "17f597ad8d2ddf86ae2169eeb45570a8",
+                        "appkey_android" : "17f597ad8d2ddf86ae2169eeb45570a8"
+                    }
+                },
+                "maps" : {
+                    "amap" : {
+                        "name" : "amapTnWT7A67",
+                        "appkey_ios" : "17f597ad8d2ddf86ae2169eeb45570a8",
+                        "appkey_android" : "17f597ad8d2ddf86ae2169eeb45570a8"
+                    }
+                }
+            }
         }
     },
     /* SDK配置 */

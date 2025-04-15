@@ -1184,15 +1184,16 @@ if (uni.restoreGlobal) {
   const _sfc_main$l = {
     data() {
       return {
-        statusBarHeight: uni.getSystemInfoSync().statusBarHeight
+        statusBarHeight: uni.getSystemInfoSync().statusBarHeight,
+        currentLocation: null,
+        startPoint: null,
+        endPoint: null
       };
     },
     computed: {
-      // 映射 Vuex state
       ...mapState(["userID", "rideRequest"])
     },
     methods: {
-      // 映射 Vuex actions
       ...mapActions([
         "login",
         "logout",
@@ -1204,6 +1205,53 @@ if (uni.restoreGlobal) {
         "toggleHighway",
         "resetRideRequest"
       ]),
+      // 处理 web-view 传回的消息
+      handleMapMessage(e) {
+        const { longitude, latitude, type, distance, duration } = e.detail.data;
+        if (type === "select") {
+          if (!this.startPoint) {
+            this.startPoint = [longitude, latitude];
+            uni.showToast({
+              title: `已记录起点: ${longitude}, ${latitude}`,
+              icon: "none"
+            });
+          } else if (!this.endPoint) {
+            this.endPoint = [longitude, latitude];
+            uni.showToast({
+              title: `已记录终点: ${longitude}, ${latitude}`,
+              icon: "none"
+            });
+          }
+        } else if (type === "location") {
+          this.currentLocation = [longitude, latitude];
+          uni.showToast({
+            title: `当前位置: ${longitude}, ${latitude}`,
+            icon: "none"
+          });
+        } else if (type === "route") {
+          uni.showToast({
+            title: `距离: ${distance}m, 时长: ${Math.round(duration / 60)}分钟`,
+            icon: "none"
+          });
+        }
+      },
+      // 获取当前位置
+      getCurrentLocation() {
+        const webview = this.$refs.webview;
+        webview.evalJS("getCurrentPosition()");
+      },
+      // 规划路径
+      startRoutePlanning() {
+        if (!this.rideRequest.startLoc || !this.rideRequest.endLoc) {
+          uni.showToast({
+            title: "请先设置起点和终点",
+            icon: "none"
+          });
+          return;
+        }
+        const webview = this.$refs.webview;
+        webview.evalJS(`planRoute(${this.rideRequest.startLoc[0]}, ${this.rideRequest.startLoc[1]}, ${this.rideRequest.endLoc[0]}, ${this.rideRequest.endLoc[1]})`);
+      },
       async publishDemand() {
         try {
           const requestData = {
@@ -1216,7 +1264,7 @@ if (uni.restoreGlobal) {
             highway: this.rideRequest.highway
           };
           const response = await uni.request({
-            url: "http://localhost:8083/carsharing/post-request",
+            url: "/post-request",
             method: "POST",
             data: requestData,
             header: {
@@ -1239,7 +1287,7 @@ if (uni.restoreGlobal) {
             throw new Error("请求失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/customer.vue:81", "发布失败:", error);
+          formatAppLog("error", "at pages/customer/customer.vue:136", "发布失败:", error);
           uni.showToast({
             title: "发布失败",
             icon: "none"
@@ -1283,34 +1331,49 @@ if (uni.restoreGlobal) {
         style: vue.normalizeStyle({ paddingTop: $data.statusBarHeight + "px" })
       },
       [
-        vue.createElementVNode("button", {
-          onClick: _cache[0] || (_cache[0] = (...args) => $options.ToInvitationMatch && $options.ToInvitationMatch(...args))
-        }, "发布"),
-        vue.createElementVNode("button", {
-          onClick: _cache[1] || (_cache[1] = (...args) => $options.publishDemand && $options.publishDemand(...args))
-        }, "这个按钮用于后端测试发布需求和跳转"),
-        vue.createElementVNode("button", {
-          onClick: _cache[2] || (_cache[2] = (...args) => $options.ToDetailRequest && $options.ToDetailRequest(...args))
-        }, "拼车需求"),
-        vue.createElementVNode("button", {
-          onClick: _cache[3] || (_cache[3] = (...args) => $options.ToStartLoc && $options.ToStartLoc(...args))
-        }, "你从哪上车"),
-        vue.createElementVNode("button", {
-          onClick: _cache[4] || (_cache[4] = (...args) => $options.ToEndLoc && $options.ToEndLoc(...args))
-        }, "你要到哪去"),
-        vue.createElementVNode(
-          "view",
-          null,
-          vue.toDisplayString(_ctx.userID),
-          1
-          /* TEXT */
-        )
+        vue.createCommentVNode(" 地图容器 "),
+        vue.createElementVNode("view", { class: "map-container" }, [
+          vue.createElementVNode(
+            "web-view",
+            {
+              src: "/static/map.html",
+              onMessage: _cache[0] || (_cache[0] = (...args) => $options.handleMapMessage && $options.handleMapMessage(...args))
+            },
+            null,
+            32
+            /* NEED_HYDRATION */
+          ),
+          vue.createCommentVNode(" 使用cover-view作为浮动按钮容器 "),
+          vue.createElementVNode("cover-view", { class: "floating-buttons" }, [
+            vue.createElementVNode("cover-view", {
+              class: "button",
+              onClick: _cache[1] || (_cache[1] = (...args) => $options.ToStartLoc && $options.ToStartLoc(...args))
+            }, "你从哪上车"),
+            vue.createElementVNode("cover-view", {
+              class: "button",
+              onClick: _cache[2] || (_cache[2] = (...args) => $options.ToEndLoc && $options.ToEndLoc(...args))
+            }, "你要到哪去"),
+            vue.createElementVNode("cover-view", {
+              class: "button",
+              onClick: _cache[3] || (_cache[3] = (...args) => $options.publishDemand && $options.publishDemand(...args))
+            }, "发布需求"),
+            vue.createElementVNode("cover-view", {
+              class: "button",
+              onClick: _cache[4] || (_cache[4] = (...args) => $options.ToDetailRequest && $options.ToDetailRequest(...args))
+            }, "拼车需求"),
+            vue.createElementVNode("cover-view", {
+              class: "button",
+              onClick: _cache[5] || (_cache[5] = (...args) => $options.ToInvitationMatch && $options.ToInvitationMatch(...args))
+            }, "邀请匹配"),
+            vue.createCommentVNode('        <cover-view class="button" @click="getCurrentLocation">获取当前位置</cover-view>\n        <cover-view class="button" @click="startRoutePlanning">规划路径</cover-view> ')
+          ])
+        ])
       ],
       4
       /* STYLE */
     );
   }
-  const PagesCustomerCustomer = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/customer/customer.vue"]]);
+  const PagesCustomerCustomer = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/customer/customer.vue"]]);
   const _imports_0$4 = "/static/icon_order.png";
   const _imports_1$1 = "/static/icon_safe.png";
   const _imports_2 = "/static/icon_cash.png";
@@ -1384,7 +1447,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesDriverDriver = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-da5dba0b"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/driver/driver.vue"]]);
+  const PagesDriverDriver = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-da5dba0b"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/driver.vue"]]);
   const _sfc_main$j = {
     data() {
       return {
@@ -1795,7 +1858,7 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const PagesDriverCarOwner = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-ba5a77be"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/driver/car-owner.vue"]]);
+  const PagesDriverCarOwner = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-ba5a77be"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/car-owner.vue"]]);
   const _sfc_main$i = {
     data() {
       return {
@@ -1934,7 +1997,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesDriverDriverSearch = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-f1865e65"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/driver/driver_search.vue"]]);
+  const PagesDriverDriverSearch = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-f1865e65"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/driver_search.vue"]]);
   const _sfc_main$h = {
     data() {
       return {
@@ -1954,7 +2017,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/index/index.vue"]]);
   const _imports_0$3 = "/static/tongji/school_badge.png";
   const _sfc_main$g = {
     data() {
@@ -2089,7 +2152,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyMy = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-2f1ef635"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/my/my.vue"]]);
+  const PagesMyMy = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-2f1ef635"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/my/my.vue"]]);
   const _imports_0$2 = "/static/left-arrow.png";
   const _sfc_main$f = {
     name: "PageHeader",
@@ -2139,7 +2202,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsPageHeader = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/components/PageHeader.vue"]]);
+  const ComponentsPageHeader = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/PageHeader.vue"]]);
   const fontData = [
     {
       "font_class": "arrow-down",
@@ -2859,7 +2922,7 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-d31e1c47"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-d31e1c47"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
   const _sfc_main$d = {
     name: "UniRate",
     props: {
@@ -3125,7 +3188,7 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-5c8fbdf3"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/uni_modules/uni-rate/components/uni-rate/uni-rate.vue"]]);
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-5c8fbdf3"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/uni_modules/uni-rate/components/uni-rate/uni-rate.vue"]]);
   function formatDateTime(dateStr) {
     if (!dateStr)
       return "";
@@ -3188,22 +3251,22 @@ if (uni.restoreGlobal) {
             // 订单费用
           };
           const response = await uni.request({
-            url: `/create-order`,
+            url: `http://localhost:8083/carsharing/post-request`,
             method: "POST",
             data: orderData,
             header: {
               "Content-Type": "application/json"
             }
           });
-          if (response[0] && response[0].statusCode === 200) {
-            const orderId = response[0].data.order_id;
+          if (response.data.status === "success") {
+            const orderId = response.data.Id;
             this.setOrderId(orderId);
             uni.showToast({
               title: "订单创建成功",
               icon: "success"
             });
           } else {
-            throw new Error(response[0].data.message || "订单创建失败");
+            throw new Error(response.data.message || "订单创建失败");
           }
         } catch (error) {
           formatAppLog("error", "at components/ListBlock.vue:149", "创建订单失败:", error);
@@ -3364,7 +3427,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsListBlock = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/components/ListBlock.vue"]]);
+  const ComponentsListBlock = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/ListBlock.vue"]]);
   const _sfc_main$b = {
     components: {
       PageHeader: ComponentsPageHeader,
@@ -3461,8 +3524,8 @@ if (uni.restoreGlobal) {
               "Content-Type": "application/json"
             }
           });
-          if (response[0] && response[0].statusCode === 200) {
-            const res = response[0].data;
+          if (response.data.status === "success") {
+            const res = response.data;
             if (res.list_matched && res.list_matched.length > 0) {
               this.listBlockItems = res.list_matched.map((item) => ({
                 id: item.id,
@@ -3530,7 +3593,7 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesCustomerInvitationMatch = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/customer/InvitationMatch.vue"]]);
+  const PagesCustomerInvitationMatch = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/customer/InvitationMatch.vue"]]);
   const _imports_0$1 = "/static/right-arrow-blue.png";
   const _sfc_main$a = {
     props: {
@@ -3624,7 +3687,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsRequestBlock = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/components/RequestBlock.vue"]]);
+  const ComponentsRequestBlock = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/RequestBlock.vue"]]);
   const _sfc_main$9 = {
     components: {
       PageHeader: ComponentsPageHeader,
@@ -3705,7 +3768,7 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesCustomerRequestList = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/customer/RequestList.vue"]]);
+  const PagesCustomerRequestList = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/customer/RequestList.vue"]]);
   const _imports_0 = "/static/launch/welcome0.png";
   const _imports_1 = "/static/launch/welcome1.png";
   const _sfc_main$8 = {
@@ -3772,7 +3835,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesIndexWelcome = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-c7aac77f"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/index/welcome.vue"]]);
+  const PagesIndexWelcome = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-c7aac77f"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/index/welcome.vue"]]);
   const _sfc_main$7 = {
     data() {
       return {
@@ -3924,7 +3987,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-dd394eb5"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/my/login/login.vue"]]);
+  const PagesMyLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-dd394eb5"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/my/login/login.vue"]]);
   const _sfc_main$6 = {
     data() {
       return {
@@ -4069,7 +4132,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyLoginPasswordLogin = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-ac03f4cd"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/my/login/passwordLogin.vue"]]);
+  const PagesMyLoginPasswordLogin = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-ac03f4cd"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/my/login/passwordLogin.vue"]]);
   const _sfc_main$5 = {
     data() {
       return {
@@ -4315,7 +4378,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyLoginForget = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-4a450a78"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/my/login/forget.vue"]]);
+  const PagesMyLoginForget = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-4a450a78"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/my/login/forget.vue"]]);
   const _sfc_main$4 = {
     data() {
       return {
@@ -4559,7 +4622,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesMyLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-013d98be"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/my/login/register.vue"]]);
+  const PagesMyLoginRegister = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-013d98be"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/my/login/register.vue"]]);
   const _sfc_main$3 = {
     props: {
       title: String,
@@ -4623,7 +4686,7 @@ if (uni.restoreGlobal) {
       ))
     ]);
   }
-  const LocationList = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-ba39095f"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/components/LocationList.vue"]]);
+  const LocationList = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-ba39095f"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/LocationList.vue"]]);
   const _sfc_main$2 = {
     components: { LocationList },
     computed: {
@@ -4714,11 +4777,18 @@ if (uni.restoreGlobal) {
       },
       async fetchAddresses() {
         try {
-          const response = await uniRequest.get(`http://localhost:8083/carsharing/get-user-addresses/${this.userId}`);
-          this.homeAddress = response.data.home;
-          this.companyAddress = response.data.company;
+          const response = await uni.request({
+            url: `http://localhost:8083/carsharing/get-user-addresses?userId=1`,
+            // 直接拼接参数
+            method: "GET",
+            header: {
+              "Content-Type": "application/json"
+            }
+          });
+          this.homeAddress = response.data.homeAddress;
+          this.companyAddress = response.data.companyAddress;
         } catch (error) {
-          formatAppLog("error", "at pages/customer/StartLoc.vue:168", "获取地址失败:", error);
+          formatAppLog("error", "at pages/customer/StartLoc.vue:174", "获取地址失败:", error);
         }
       },
       setHomeCompanyStartLocation(type) {
@@ -4741,27 +4811,33 @@ if (uni.restoreGlobal) {
       async fetchHistory() {
         try {
           const response = await uni.request({
-            url: "http://localhost:8083/carsharing/get-start-loc-history",
-            // 后端接口地址
+            url: `http://localhost:8083/carsharing/get-start-loc-history?userId=1`,
+            // 直接拼接参数
             method: "GET",
-            data: { userID: this.userID },
-            header: { "Content-Type": "application/json" }
+            header: {
+              "Content-Type": "application/json"
+            }
           });
-          if (response.statusCode === 200 && response.data.length > 0) {
-            let records = response.data.slice(0, 5);
-            for (let i = 0; i < records.length; i++) {
-              let { address, lat, lng } = await this.getAddressAndCoordinatesByName(records[i].name);
+          if (response.data.status === "success") {
+            let historyNames = response.data.history.slice(0, 5);
+            let records = [];
+            for (let i = 0; i < historyNames.length; i++) {
+              let name = historyNames[i];
+              let { address, lat, lng } = await this.getAddressAndCoordinatesByName(name);
               let currentLocation = await this.getCurrentLocation();
               let distance = await this.calculateDistance(currentLocation.lat, currentLocation.lng, lat, lng);
-              records[i].address = address;
-              records[i].distance = distance;
+              records.push({
+                name,
+                address,
+                distance
+              });
             }
             this.history = records;
           } else {
-            formatAppLog("warn", "at pages/customer/StartLoc.vue:217", "没有历史记录");
+            formatAppLog("warn", "at pages/customer/StartLoc.vue:230", "没有历史记录");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/StartLoc.vue:220", "获取历史记录失败:", error);
+          formatAppLog("error", "at pages/customer/StartLoc.vue:233", "获取历史记录失败:", error);
         }
       },
       // 根据名称获取详细地址和经纬度
@@ -4778,7 +4854,7 @@ if (uni.restoreGlobal) {
           const address = reverseResp.data.result.formatted_address;
           return { address, lat, lng };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/StartLoc.vue:239", "获取地址和坐标失败:", error);
+          formatAppLog("error", "at pages/customer/StartLoc.vue:252", "获取地址和坐标失败:", error);
           return { address: "地址获取失败", lat: 0, lng: 0 };
         }
       },
@@ -4788,7 +4864,7 @@ if (uni.restoreGlobal) {
           const locationResponse = await uni.getLocation({ type: "gcj02" });
           return { lat: locationResponse.latitude, lng: locationResponse.longitude };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/StartLoc.vue:249", "获取当前位置失败:", error);
+          formatAppLog("error", "at pages/customer/StartLoc.vue:262", "获取当前位置失败:", error);
           return { lat: 0, lng: 0 };
         }
       },
@@ -4819,7 +4895,7 @@ if (uni.restoreGlobal) {
             // 四舍五入到整数公里
           };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/StartLoc.vue:286", "处理地点信息失败:", error);
+          formatAppLog("error", "at pages/customer/StartLoc.vue:299", "处理地点信息失败:", error);
           return {
             name,
             address: "获取失败",
@@ -4831,7 +4907,7 @@ if (uni.restoreGlobal) {
       sendStartLoc(location) {
         this.setStartLoc(location);
         uni.switchTab({
-          url: "/pages/customer/customer"
+          url: "customer"
         });
       },
       handleLocationSelect(location) {
@@ -4839,7 +4915,7 @@ if (uni.restoreGlobal) {
         this.sendStartLoc(location);
       },
       goBack() {
-        uni.switchTab({ url: "/pages/customer/customer" });
+        uni.switchTab({ url: "customer" });
       }
     },
     async mounted() {
@@ -5005,7 +5081,7 @@ if (uni.restoreGlobal) {
       ))
     ]);
   }
-  const PagesCustomerStartLoc = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-6cc13438"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/customer/StartLoc.vue"]]);
+  const PagesCustomerStartLoc = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-6cc13438"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/customer/StartLoc.vue"]]);
   const _sfc_main$1 = {
     components: { LocationList },
     computed: {
@@ -5074,12 +5150,12 @@ if (uni.restoreGlobal) {
             }));
             this.showSuggestions = true;
           } else {
-            formatAppLog("warn", "at pages/customer/EndLoc.vue:143", "百度 Suggestion 接口失败:", res.data.message);
+            formatAppLog("warn", "at pages/customer/EndLoc.vue:142", "百度 Suggestion 接口失败:", res.data.message);
             this.suggestions = [];
             this.showSuggestions = false;
           }
         } catch (err) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:148", "请求失败:", err);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:147", "请求失败:", err);
           this.suggestions = [];
         }
       },
@@ -5104,11 +5180,10 @@ if (uni.restoreGlobal) {
               "Content-Type": "application/json"
             }
           });
-          formatAppLog("log", "at pages/customer/EndLoc.vue:172", "请求成功:", response);
-          this.homeAddress = response.data.home;
-          this.companyAddress = response.data.company;
+          this.homeAddress = response.data.homeAddress;
+          this.companyAddress = response.data.companyAddress;
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:176", "获取地址失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:174", "获取地址失败:", error);
         }
       },
       setHomeCompanyEndLocation(type) {
@@ -5139,23 +5214,25 @@ if (uni.restoreGlobal) {
             }
           });
           if (response.data.status === "success") {
-            formatAppLog("log", "at pages/customer/EndLoc.vue:206", "123");
-            let records = response.data.history.slice(0, 5);
-            for (let i = 0; i < records.length; i++) {
-              let { address, lat, lng } = await this.getAddressAndCoordinatesByName(records[i].name);
-              formatAppLog("log", "at pages/customer/EndLoc.vue:211", { address, lat, lng });
+            let historyNames = response.data.history.slice(0, 5);
+            let records = [];
+            for (let i = 0; i < historyNames.length; i++) {
+              let name = historyNames[i];
+              let { address, lat, lng } = await this.getAddressAndCoordinatesByName(name);
               let currentLocation = await this.getCurrentLocation();
               let distance = await this.calculateDistance(currentLocation.lat, currentLocation.lng, lat, lng);
-              records[i].address = address;
-              records[i].distance = distance;
+              records.push({
+                name,
+                address,
+                distance
+              });
             }
-            formatAppLog("log", "at pages/customer/EndLoc.vue:222", records);
             this.history = records;
           } else {
-            formatAppLog("warn", "at pages/customer/EndLoc.vue:225", "没有历史记录");
+            formatAppLog("warn", "at pages/customer/EndLoc.vue:232", "没有历史记录");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:228", "获取历史记录失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:235", "获取历史记录失败:", error);
         }
       },
       // 根据名称获取详细地址和经纬度
@@ -5172,7 +5249,7 @@ if (uni.restoreGlobal) {
           const address = reverseResp.data.result.formatted_address;
           return { address, lat, lng };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:246", "获取地址和坐标失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:253", "获取地址和坐标失败:", error);
           return { address: "地址获取失败", lat: 0, lng: 0 };
         }
       },
@@ -5182,7 +5259,7 @@ if (uni.restoreGlobal) {
           const locationResponse = await uni.getLocation({ type: "gcj02" });
           return { lat: locationResponse.latitude, lng: locationResponse.longitude };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:256", "获取当前位置失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:263", "获取当前位置失败:", error);
           return { lat: 0, lng: 0 };
         }
       },
@@ -5213,7 +5290,7 @@ if (uni.restoreGlobal) {
             // 四舍五入到整数公里
           };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:293", "处理地点信息失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:300", "处理地点信息失败:", error);
           return {
             name,
             address: "获取失败",
@@ -5225,7 +5302,7 @@ if (uni.restoreGlobal) {
       sendEndLoc(location) {
         this.setEndLoc(location);
         uni.switchTab({
-          url: "/pages/customer/customer"
+          url: "customer"
         });
       },
       handleLocationSelect(location) {
@@ -5233,7 +5310,7 @@ if (uni.restoreGlobal) {
         this.sendEndLoc(location);
       },
       goBack() {
-        uni.switchTab({ url: "pages/customer/customer" });
+        uni.switchTab({ url: "customer" });
       }
     },
     async mounted() {
@@ -5378,25 +5455,11 @@ if (uni.restoreGlobal) {
         ])
       ]),
       vue.createCommentVNode(" 复用 LocationList 组件 "),
-      vue.createTextVNode(" //"),
       vue.createVNode(_component_LocationList, {
         title: "历史记录",
         locations: $data.history,
         onLocationSelected: $options.handleLocationSelect
       }, null, 8, ["locations", "onLocationSelected"]),
-      (vue.openBlock(true), vue.createElementBlock(
-        vue.Fragment,
-        null,
-        vue.renderList($data.history, (ihistory, index) => {
-          return vue.openBlock(), vue.createBlock(_component_LocationList, {
-            title: "历史记录",
-            locations: ihistory,
-            onLocationSelected: $options.handleLocationSelect
-          }, null, 8, ["locations", "onLocationSelected"]);
-        }),
-        256
-        /* UNKEYED_FRAGMENT */
-      )),
       (vue.openBlock(true), vue.createElementBlock(
         vue.Fragment,
         null,
@@ -5413,7 +5476,7 @@ if (uni.restoreGlobal) {
       ))
     ]);
   }
-  const PagesCustomerEndLoc = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-d057533e"], ["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/pages/customer/EndLoc.vue"]]);
+  const PagesCustomerEndLoc = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-d057533e"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/customer/EndLoc.vue"]]);
   __definePage("pages/customer/customer", PagesCustomerCustomer);
   __definePage("pages/driver/driver", PagesDriverDriver);
   __definePage("pages/driver/car-owner", PagesDriverCarOwner);
@@ -5444,7 +5507,7 @@ if (uni.restoreGlobal) {
       formatAppLog("log", "at App.vue:11", "App Hide");
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "F:/同G文档/学期课程/大三下学期/软件工程/front/Mobile-Carpooling-System/ridesharing/App.vue"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/App.vue"]]);
   const store = createStore({
     state() {
       return {
