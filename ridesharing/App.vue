@@ -27,6 +27,9 @@
 	  --color-red: #d44240;      // 主红色
 	  --color-yellow: #F9CE45;
 	  --color-grey:#d8d8d8;
+	  --color-darkgrey:#bbbbbb;
+	  --color-lightyellow: #f8f6e8;
+	  --color-lightgreen:#bacb5b;
 	}
 	page {
 	  background-color: #f4f4f4;

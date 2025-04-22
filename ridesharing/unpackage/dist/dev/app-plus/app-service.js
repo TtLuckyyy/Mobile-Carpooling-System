@@ -1181,17 +1181,152 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
+  const _sfc_main$m = {
+    props: {
+      type: {
+        type: String,
+        default: "shared",
+        validator: (value) => ["shared", "exclusive"].includes(value)
+      },
+      isSelected: {
+        type: Boolean,
+        default: false
+      }
+    },
+    computed: {
+      typeName() {
+        return this.type === "shared" ? "拼座" : "独享";
+      },
+      typeDesc() {
+        return this.type === "shared" ? "超低价，低碳环保" : "不拼人，舒适省时";
+      }
+    },
+    methods: {
+      handleClick() {
+        formatAppLog("log", "at components/ShareOption.vue:47", this.type);
+        this.$emit("select", this.type);
+      }
+    }
+  };
+  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "cover-view",
+      {
+        class: vue.normalizeClass(["option-card", [$props.type, { selected: $props.isSelected }]]),
+        onClick: _cache[7] || (_cache[7] = (...args) => $options.handleClick && $options.handleClick(...args))
+      },
+      [
+        vue.createElementVNode("cover-view", {
+          class: "left",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.handleClick && $options.handleClick(...args))
+        }, [
+          vue.createElementVNode("cover-image", {
+            src: $props.type === "shared" ? "/static/shareoption/shared.png" : "/static/shareoption/exclusive.png"
+          }, null, 8, ["src"])
+        ]),
+        vue.createElementVNode("cover-view", {
+          class: "right",
+          onClick: _cache[6] || (_cache[6] = (...args) => $options.handleClick && $options.handleClick(...args))
+        }, [
+          vue.createElementVNode("cover-view", {
+            class: "firstrow",
+            onClick: _cache[4] || (_cache[4] = (...args) => $options.handleClick && $options.handleClick(...args))
+          }, [
+            vue.createElementVNode(
+              "cover-view",
+              {
+                class: "type-name",
+                onClick: _cache[1] || (_cache[1] = (...args) => $options.handleClick && $options.handleClick(...args))
+              },
+              vue.toDisplayString($options.typeName),
+              1
+              /* TEXT */
+            ),
+            vue.createElementVNode(
+              "cover-view",
+              {
+                class: vue.normalizeClass(["radio-button", { selected: $props.isSelected, [$props.type]: true }]),
+                onClick: _cache[3] || (_cache[3] = (...args) => $options.handleClick && $options.handleClick(...args))
+              },
+              [
+                $props.isSelected ? (vue.openBlock(), vue.createElementBlock("cover-view", {
+                  key: 0,
+                  class: "radio-inner",
+                  onClick: _cache[2] || (_cache[2] = (...args) => $options.handleClick && $options.handleClick(...args))
+                })) : vue.createCommentVNode("v-if", true)
+              ],
+              2
+              /* CLASS */
+            )
+          ]),
+          vue.createElementVNode(
+            "cover-view",
+            {
+              class: "type-desc",
+              onClick: _cache[5] || (_cache[5] = (...args) => $options.handleClick && $options.handleClick(...args))
+            },
+            vue.toDisplayString($options.typeDesc),
+            1
+            /* TEXT */
+          )
+        ])
+      ],
+      2
+      /* CLASS */
+    );
+  }
+  const ComponentsShareOption = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/ShareOption.vue"]]);
   const _sfc_main$l = {
+    components: {
+      ShareOption: ComponentsShareOption
+    },
     data() {
       return {
         statusBarHeight: uni.getSystemInfoSync().statusBarHeight,
         currentLocation: null,
         startPoint: null,
-        endPoint: null
+        endPoint: null,
+        selectedType: null,
+        selectedTime: null,
+        showTimePopup: false,
+        requestnumber: 0,
+        ordersnumber: 0,
+        currentOrders: [
+          {
+            id: 1,
+            distance: 10.5,
+            driverName: "张三",
+            driverRating: 4.8,
+            carModel: "特斯拉 Model",
+            carPlate: "京A12345",
+            startAt: "2025-04-21T10:00:00Z",
+            avatar: "@/static/1.png"
+          },
+          {
+            id: 2,
+            distance: 5.2,
+            driverName: "李四",
+            driverRating: 4.6,
+            carModel: "比亚迪汉",
+            carPlate: "京B67890",
+            startAt: "2025-04-21T11:30:00Z"
+          },
+          {
+            id: 3,
+            distance: 7.8,
+            driverName: "王五",
+            driverRating: 4.9,
+            carModel: "宝马 5 系",
+            carPlate: "京C56789",
+            startAt: "2025-04-21T12:45:00Z"
+          }
+        ]
       };
     },
     computed: {
       ...mapState(["userID", "rideRequest"])
+    },
+    onLoad() {
     },
     methods: {
       ...mapActions([
@@ -1205,7 +1340,6 @@ if (uni.restoreGlobal) {
         "toggleHighway",
         "resetRideRequest"
       ]),
-      // 处理 web-view 传回的消息
       handleMapMessage(e) {
         const { longitude, latitude, type, distance, duration } = e.detail.data;
         if (type === "select") {
@@ -1235,12 +1369,10 @@ if (uni.restoreGlobal) {
           });
         }
       },
-      // 获取当前位置
       getCurrentLocation() {
         const webview = this.$refs.webview;
         webview.evalJS("getCurrentPosition()");
       },
-      // 规划路径
       startRoutePlanning() {
         if (!this.rideRequest.startLoc || !this.rideRequest.endLoc) {
           uni.showToast({
@@ -1255,11 +1387,11 @@ if (uni.restoreGlobal) {
       async publishDemand() {
         try {
           const requestData = {
-            passenger_id: this.userID,
-            start_loc: this.rideRequest.startLoc,
-            end_loc: this.rideRequest.endLoc,
+            passengerId: this.userID,
+            startLoc: this.rideRequest.startLoc,
+            endLoc: this.rideRequest.endLoc,
             status: "pending",
-            start_at: this.rideRequest.startAt,
+            startAt: this.rideRequest.startAt,
             exclusive: this.rideRequest.exclusive,
             highway: this.rideRequest.highway
           };
@@ -1287,7 +1419,7 @@ if (uni.restoreGlobal) {
             throw new Error("请求失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/customer.vue:136", "发布失败:", error);
+          formatAppLog("error", "at pages/customer/customer.vue:248", "发布失败:", error);
           uni.showToast({
             title: "发布失败",
             icon: "none"
@@ -1321,10 +1453,186 @@ if (uni.restoreGlobal) {
           animationType: "slide-in-right",
           animationDuration: 300
         });
+      },
+      handleSelect(type) {
+        this.selectedType = type;
+      },
+      showTimePicker() {
+        uni.showActionSheet({
+          itemList: ["15分钟后", "30分钟后", "1小时后", "自定义时间"],
+          success: (res) => {
+            if (res.tapIndex === 3) {
+              this.showDateTimeInput();
+            } else {
+              const times = [15, 30, 60];
+              this.selectTime(times[res.tapIndex]);
+            }
+          }
+        });
+      },
+      showDateTimeInput() {
+        const now = /* @__PURE__ */ new Date();
+        const currentDateTime = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")} ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
+        uni.showModal({
+          title: "自定义出发时间",
+          content: `当前时间: ${currentDateTime}
+请输入出发时间(YYYY-MM-DD HH:MM)`,
+          editable: true,
+          placeholderText: "例如: " + this.getTomorrowDate(),
+          showCancel: false,
+          // 不显示取消按钮
+          confirmButtonText: "确定",
+          // 自定义确认按钮文字
+          confirmButtonColor: "#007AFF",
+          // 自定义确认按钮颜色
+          success: (res) => {
+            if (res.confirm) {
+              this.validateAndSetDateTime(res.content);
+            }
+          }
+        });
+      },
+      getTomorrowDate() {
+        const tomorrow = /* @__PURE__ */ new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        return `${tomorrow.getFullYear()}-${(tomorrow.getMonth() + 1).toString().padStart(2, "0")}-${tomorrow.getDate().toString().padStart(2, "0")} 09:00`;
+      },
+      validateAndSetDateTime(dateTimeStr) {
+        const dateTimeRegex = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/;
+        if (!dateTimeRegex.test(dateTimeStr)) {
+          uni.showToast({
+            title: "格式不正确，请使用YYYY-MM-DD HH:MM格式",
+            icon: "none"
+          });
+          return;
+        }
+        const [_, year, month, day, hours, minutes] = dateTimeStr.match(dateTimeRegex);
+        const targetTime = new Date(year, month - 1, day, hours, minutes);
+        const now = /* @__PURE__ */ new Date();
+        if (isNaN(targetTime.getTime())) {
+          uni.showToast({
+            title: "日期时间无效",
+            icon: "none"
+          });
+          return;
+        }
+        if (targetTime < now) {
+          uni.showToast({
+            title: "时间已过，请选择未来的时间",
+            icon: "none"
+          });
+          return;
+        }
+        const formattedDate = `${year}年${month}月${day}日 ${hours}:${minutes}`;
+        this.selectedTime = formattedDate;
+        this.setStartAt(targetTime.toISOString());
+        uni.showToast({
+          title: `已设置: ${formattedDate}`,
+          icon: "success"
+        });
+      },
+      selectTime(minutesLater) {
+        const now = /* @__PURE__ */ new Date();
+        const targetTime = new Date(now.getTime() + minutesLater * 6e4);
+        this.selectedTime = `${minutesLater}分钟后 (${targetTime.getHours()}:${targetTime.getMinutes().toString().padStart(2, "0")})`;
+        this.setStartAt(targetTime.toISOString());
+      },
+      async getRequests() {
+        this.isLoading = true;
+        this.error = null;
+        try {
+          if (!this.userID) {
+            throw new Error("用户未登录");
+          }
+          const response = await uni.request({
+            url: "http://localhost:8083/carsharing/get-requests",
+            method: "GET",
+            data: {
+              user_id: this.userID
+              // 传递当前用户ID
+            },
+            header: {
+              "Content-Type": "application/json"
+            }
+          });
+          if (response.data.status === "success") {
+            const res = response.data;
+            if (res.requests && res.requests.length > 0) {
+              this.requestnumber = res.requests.filter((request) => request.status === "pending").length;
+            } else {
+              this.requestnumber = 0;
+            }
+          } else {
+            throw new Error(response.data.message || "获取请求列表失败");
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/customer.vue:412", "获取请求列表失败:", error);
+          this.error = error.message || "获取请求列表失败";
+          this.requestnumber = 0;
+          uni.showToast({
+            title: this.error,
+            icon: "none"
+          });
+        } finally {
+          this.isLoading = false;
+        }
+      },
+      async getCurrentOrder() {
+        this.isLoading = true;
+        this.error = null;
+        try {
+          if (!this.userID) {
+            throw new Error("用户未登录");
+          }
+          const response = await uni.request({
+            url: "http://localhost:8083/carsharing/current-order",
+            method: "GET",
+            data: {
+              user_id: this.userID
+              // 传递当前用户ID
+            },
+            header: {
+              "Content-Type": "application/json"
+            }
+          });
+          if (response.data.status === "success") {
+            const res = response.data;
+            if (res.orders && res.orders.length > 0) {
+              this.ordersnumber = res.orders.length;
+              this.currentOrders = res.orders.map((order) => ({
+                id: order.id,
+                distance: order.distance,
+                driverName: order.real_name,
+                driverRating: order.rating,
+                carModel: order.verification_car_model || "未知车型",
+                carPlate: order.verification_car_plate || "未知车牌",
+                startAt: order.start_at || "未知时间",
+                avatar: order.avatar
+              }));
+            } else {
+              this.ordersnumber = 0;
+              this.currentOrders = [];
+            }
+          } else {
+            throw new Error(response.data.message || "获取当前订单失败");
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/customer.vue:470", "获取当前订单失败:", error);
+          this.error = error.message || "获取当前订单失败";
+          this.ordersnumber = 0;
+          this.currentOrders = [];
+          uni.showToast({
+            title: this.error,
+            icon: "none"
+          });
+        } finally {
+          this.isLoading = false;
+        }
       }
     }
   };
   function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_ShareOption = vue.resolveComponent("ShareOption");
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -1345,27 +1653,215 @@ if (uni.restoreGlobal) {
           ),
           vue.createCommentVNode(" 使用cover-view作为浮动按钮容器 "),
           vue.createElementVNode("cover-view", { class: "floating-buttons" }, [
-            vue.createElementVNode("cover-view", {
-              class: "button",
-              onClick: _cache[1] || (_cache[1] = (...args) => $options.ToStartLoc && $options.ToStartLoc(...args))
-            }, "你从哪上车"),
-            vue.createElementVNode("cover-view", {
-              class: "button",
-              onClick: _cache[2] || (_cache[2] = (...args) => $options.ToEndLoc && $options.ToEndLoc(...args))
-            }, "你要到哪去"),
-            vue.createElementVNode("cover-view", {
-              class: "button",
-              onClick: _cache[3] || (_cache[3] = (...args) => $options.publishDemand && $options.publishDemand(...args))
-            }, "发布需求"),
-            vue.createElementVNode("cover-view", {
-              class: "button",
-              onClick: _cache[4] || (_cache[4] = (...args) => $options.ToDetailRequest && $options.ToDetailRequest(...args))
-            }, "拼车需求"),
-            vue.createElementVNode("cover-view", {
-              class: "button",
-              onClick: _cache[5] || (_cache[5] = (...args) => $options.ToInvitationMatch && $options.ToInvitationMatch(...args))
-            }, "邀请匹配"),
-            vue.createCommentVNode('        <cover-view class="button" @click="getCurrentLocation">获取当前位置</cover-view>\n        <cover-view class="button" @click="startRoutePlanning">规划路径</cover-view> ')
+            vue.createElementVNode("cover-view", { class: "start_end_loc" }, [
+              vue.createElementVNode("cover-view", { class: "first-row" }, [
+                vue.createElementVNode("cover-view", {
+                  class: "location-row start",
+                  onClick: _cache[3] || (_cache[3] = (...args) => $options.ToStartLoc && $options.ToStartLoc(...args))
+                }, [
+                  vue.createElementVNode("cover-view", {
+                    class: "icon start-icon",
+                    onClick: _cache[1] || (_cache[1] = (...args) => $options.ToStartLoc && $options.ToStartLoc(...args))
+                  }),
+                  vue.createElementVNode(
+                    "cover-view",
+                    {
+                      class: "location-text",
+                      onClick: _cache[2] || (_cache[2] = (...args) => $options.ToStartLoc && $options.ToStartLoc(...args))
+                    },
+                    vue.toDisplayString(_ctx.rideRequest.startLoc ? _ctx.rideRequest.startLoc.join(", ") : "你从哪上车"),
+                    1
+                    /* TEXT */
+                  )
+                ]),
+                vue.createElementVNode("cover-view", {
+                  class: "location-row end",
+                  onClick: _cache[6] || (_cache[6] = (...args) => $options.ToEndLoc && $options.ToEndLoc(...args))
+                }, [
+                  vue.createElementVNode("cover-view", {
+                    class: "icon end-icon",
+                    onClick: _cache[4] || (_cache[4] = (...args) => $options.ToEndLoc && $options.ToEndLoc(...args))
+                  }),
+                  vue.createElementVNode(
+                    "cover-view",
+                    {
+                      class: "location-text",
+                      onClick: _cache[5] || (_cache[5] = (...args) => $options.ToEndLoc && $options.ToEndLoc(...args))
+                    },
+                    vue.toDisplayString(_ctx.rideRequest.endLoc ? _ctx.rideRequest.endLoc.join(", ") : "你要到哪去"),
+                    1
+                    /* TEXT */
+                  )
+                ])
+              ]),
+              vue.createElementVNode("cover-view", { class: "second-row" }, [
+                vue.createElementVNode("cover-view", { class: "share-option" }, [
+                  vue.createVNode(_component_ShareOption, {
+                    type: "shared",
+                    isSelected: $data.selectedType === "shared",
+                    onSelect: $options.handleSelect
+                  }, null, 8, ["isSelected", "onSelect"]),
+                  vue.createVNode(_component_ShareOption, {
+                    type: "exclusive",
+                    isSelected: $data.selectedType === "exclusive",
+                    onSelect: $options.handleSelect
+                  }, null, 8, ["isSelected", "onSelect"])
+                ]),
+                vue.createElementVNode("cover-view", { class: "publish-button-container" }, [
+                  vue.createElementVNode(
+                    "cover-view",
+                    {
+                      class: vue.normalizeClass(["time-selector", { "has-time": $data.selectedTime }]),
+                      onClick: _cache[9] || (_cache[9] = (...args) => $options.showTimePicker && $options.showTimePicker(...args))
+                    },
+                    [
+                      vue.createElementVNode(
+                        "cover-view",
+                        {
+                          class: "time-text",
+                          onClick: _cache[7] || (_cache[7] = (...args) => $options.showTimePicker && $options.showTimePicker(...args))
+                        },
+                        vue.toDisplayString($data.selectedTime || "一会出发？选择出发时间"),
+                        1
+                        /* TEXT */
+                      ),
+                      vue.withDirectives(vue.createElementVNode(
+                        "cover-view",
+                        {
+                          class: "time-line",
+                          onClick: _cache[8] || (_cache[8] = (...args) => $options.showTimePicker && $options.showTimePicker(...args))
+                        },
+                        null,
+                        512
+                        /* NEED_PATCH */
+                      ), [
+                        [vue.vShow, !$data.selectedTime]
+                      ])
+                    ],
+                    2
+                    /* CLASS */
+                  ),
+                  vue.createElementVNode("cover-view", {
+                    class: "publish-button",
+                    onClick: _cache[10] || (_cache[10] = (...args) => $options.publishDemand && $options.publishDemand(...args))
+                  }, "发布")
+                ])
+              ])
+            ]),
+            $data.currentOrders.length > 0 ? (vue.openBlock(), vue.createElementBlock("cover-view", {
+              key: 0,
+              class: "order-request"
+            }, [
+              vue.createElementVNode("cover-view", { class: "order-card" }, [
+                vue.createElementVNode("cover-view", { class: "order-header" }, [
+                  vue.createElementVNode("cover-view", {
+                    class: "order-title",
+                    style: { "font-size": "18px" }
+                  }, [
+                    vue.createElementVNode("cover-view", null, "正在"),
+                    vue.createElementVNode("cover-view", { style: { "color": "var(--color-green)" } }, "进行中"),
+                    vue.createElementVNode("cover-view", null, "的订单")
+                  ]),
+                  vue.createElementVNode("cover-view", { class: "order-detail-btn" }, "详情 >>")
+                ]),
+                vue.createElementVNode("cover-view", { class: "order-content" }, [
+                  vue.createElementVNode("cover-view", { class: "order-distance" }, [
+                    vue.createElementVNode("cover-view", null, "剩余"),
+                    vue.createElementVNode("cover-view", {
+                      class: "km",
+                      style: { "display": "flex", "flex-direction": "row", "align-items": "flex-end" }
+                    }, [
+                      vue.createElementVNode(
+                        "cover-view",
+                        { style: { "color": "var(--color-red)", "font-size": "24px" } },
+                        vue.toDisplayString($data.currentOrders[0].distance),
+                        1
+                        /* TEXT */
+                      ),
+                      vue.createElementVNode("cover-view", { style: { "color": "var(--color-red)", "margin-left": "4px" } }, "km")
+                    ])
+                  ]),
+                  vue.createElementVNode("cover-view", { class: "driver-info" }, [
+                    vue.createElementVNode("cover-view", { class: "driver-rating" }, [
+                      vue.createElementVNode("cover-view", { class: "stars" }, "★★★★★"),
+                      vue.createElementVNode("cover-view", { class: "driver-detail" }, [
+                        vue.createElementVNode(
+                          "cover-view",
+                          { class: "driver-name" },
+                          vue.toDisplayString($data.currentOrders[0].driverName),
+                          1
+                          /* TEXT */
+                        ),
+                        vue.createElementVNode(
+                          "cover-view",
+                          { class: "driver-avator" },
+                          vue.toDisplayString($data.currentOrders[0].avator),
+                          1
+                          /* TEXT */
+                        )
+                      ])
+                    ]),
+                    vue.createElementVNode("cover-view", { class: "car-info" }, [
+                      vue.createElementVNode(
+                        "cover-view",
+                        { class: "car-plate" },
+                        vue.toDisplayString($data.currentOrders[0].carPlate),
+                        1
+                        /* TEXT */
+                      ),
+                      vue.createElementVNode(
+                        "cover-view",
+                        { class: "car-detail" },
+                        "🔍 " + vue.toDisplayString($data.currentOrders[0].carColor || "黑色") + " | " + vue.toDisplayString($data.currentOrders[0].carModel),
+                        1
+                        /* TEXT */
+                      )
+                    ])
+                  ])
+                ])
+              ]),
+              vue.createElementVNode("cover-view", {
+                class: "request-info",
+                onClick: _cache[17] || (_cache[17] = (...args) => $options.ToDetailRequest && $options.ToDetailRequest(...args))
+              }, [
+                vue.createElementVNode("cover-view", {
+                  class: "request-title",
+                  onClick: _cache[11] || (_cache[11] = (...args) => $options.ToDetailRequest && $options.ToDetailRequest(...args))
+                }, [
+                  vue.createElementVNode("cover-view", null, "拼车"),
+                  vue.createElementVNode("cover-view", { style: { "color": "var(--color-orange)" } }, "需求")
+                ]),
+                vue.createElementVNode("cover-view", {
+                  class: "request-status",
+                  onClick: _cache[12] || (_cache[12] = (...args) => $options.ToDetailRequest && $options.ToDetailRequest(...args))
+                }, "已发布待匹配"),
+                vue.createElementVNode("cover-view", {
+                  class: "request-detail",
+                  onClick: _cache[16] || (_cache[16] = (...args) => $options.ToDetailRequest && $options.ToDetailRequest(...args))
+                }, [
+                  vue.createElementVNode("cover-view", {
+                    style: { "display": "flex", "flex-direction": "row", "align-items": "flex-end" },
+                    onClick: _cache[14] || (_cache[14] = (...args) => $options.ToDetailRequest && $options.ToDetailRequest(...args))
+                  }, [
+                    vue.createElementVNode(
+                      "cover-view",
+                      {
+                        class: "request-count",
+                        onClick: _cache[13] || (_cache[13] = (...args) => $options.ToDetailRequest && $options.ToDetailRequest(...args))
+                      },
+                      vue.toDisplayString($data.requestnumber),
+                      1
+                      /* TEXT */
+                    ),
+                    vue.createElementVNode("cover-view", null, "条")
+                  ]),
+                  vue.createElementVNode("cover-view", {
+                    class: "order-detail-btn",
+                    onClick: _cache[15] || (_cache[15] = (...args) => $options.ToDetailRequest && $options.ToDetailRequest(...args))
+                  }, "详情 >>")
+                ])
+              ])
+            ])) : vue.createCommentVNode("v-if", true)
           ])
         ])
       ],
@@ -3243,15 +3739,15 @@ if (uni.restoreGlobal) {
         try {
           this.isPressed = true;
           const orderData = {
-            offer_id: this.item.id,
+            offerId: this.item.id,
             // 拼车邀请的id
-            request_id: this.$store.state.rideRequest.requestID,
+            requestId: this.$store.state.rideRequest.requestID,
             // 拼车需求的id
             price: this.item.price
             // 订单费用
           };
           const response = await uni.request({
-            url: `http://localhost:8083/carsharing/post-request`,
+            url: `http://localhost:8083/carsharing/create-order`,
             method: "POST",
             data: orderData,
             header: {
@@ -3695,6 +4191,7 @@ if (uni.restoreGlobal) {
     },
     data() {
       return {
+        requestnumber: 0,
         RequestBlockItems: [
           {
             startAt: "2023-05-15 08:30",
@@ -3714,28 +4211,53 @@ if (uni.restoreGlobal) {
     onLoad() {
     },
     methods: {
-      // 获取匹配订单
-      getRequests() {
-        uni.request({
-          url: "https://example.com/api/get-requests",
-          // 需替换为实际API地址
-          method: "GET",
-          success: (res) => {
-            if (res.statusCode === 200) {
-              this.RequestBlockItems = res.data.requests.map((item) => ({
-                startAt: item.start_at,
-                startLoc: item.start_loc,
-                endLoc: item.end_loc,
-                status: item.status
-              }));
-            } else {
-              formatAppLog("error", "at pages/customer/RequestList.vue:60", "请求失败:", res);
-            }
-          },
-          fail: (err) => {
-            formatAppLog("error", "at pages/customer/RequestList.vue:64", "网络请求失败:", err);
+      async getRequests() {
+        this.isLoading = true;
+        this.error = null;
+        try {
+          if (!this.userID) {
+            throw new Error("用户未登录");
           }
-        });
+          const response = await uni.request({
+            url: "http://localhost:8083/carsharing/get-requests",
+            method: "GET",
+            data: {
+              user_id: this.userID
+              // 传递当前用户ID
+            },
+            header: {
+              "Content-Type": "application/json"
+            }
+          });
+          if (response.data.status === "success") {
+            const res = response.data;
+            if (res.requests && res.requests.length > 0) {
+              this.RequestBlockItems = res.requests.map((item) => ({
+                startAt: item.start_at || "未知时间",
+                startLoc: item.start_loc || ["未知位置"],
+                endLoc: item.end_loc || ["未知位置"],
+                status: item.status || "未知状态"
+              }));
+              this.requestnumber = res.requests.length;
+            } else {
+              this.RequestBlockItems = [];
+              this.requestnumber = 0;
+            }
+          } else {
+            throw new Error(response.data.message || "获取请求列表失败");
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/RequestList.vue:88", "获取请求列表失败:", error);
+          this.error = error.message || "获取请求列表失败";
+          this.RequestBlockItems = [];
+          this.requestnumber = 0;
+          uni.showToast({
+            title: this.error,
+            icon: "none"
+          });
+        } finally {
+          this.isLoading = false;
+        }
       }
     }
   };
@@ -5495,6 +6017,7 @@ if (uni.restoreGlobal) {
   __definePage("pages/my/login/register", PagesMyLoginRegister);
   __definePage("pages/customer/StartLoc", PagesCustomerStartLoc);
   __definePage("pages/customer/EndLoc", PagesCustomerEndLoc);
+  __definePage("components/ShareOption", ComponentsShareOption);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("warn", "at App.vue:4", "当前组件仅支持 uni_modules 目录结构 ，请升级 HBuilderX 到 3.1.0 版本以上！");

@@ -21,8 +21,9 @@
 			PageHeader,
 			RequestBlock
 		},
-data() {
+		data() {
 			return {
+				requestnumber:0,
 				RequestBlockItems: [
 					{
 						startAt: '2023-05-15 08:30',
@@ -43,27 +44,58 @@ data() {
 			// this.getRequests();
 		},
 		methods: {
-			// 获取匹配订单
-			getRequests() {
-				uni.request({
-					url: 'https://example.com/api/get-requests', // 需替换为实际API地址
-					method: 'GET',
-					success: (res) => {
-						if (res.statusCode === 200) {
-							this.RequestBlockItems = res.data.requests.map(item => ({
-								startAt: item.start_at,
-								startLoc: item.start_loc,
-								endLoc: item.end_loc,
-								status:item.status,
-							}));
-						} else {
-							console.error('请求失败:', res);
-						}
-					},
-					fail: (err) => {
-						console.error('网络请求失败:', err);		
-					}
-				});
+			async getRequests() {
+			  this.isLoading = true;
+			  this.error = null;
+			  
+			  try {
+			    // 检查是否有用户ID
+			    if (!this.userID) {
+			      throw new Error('用户未登录');
+			    }
+			    
+			    const response = await uni.request({
+			      url: 'http://localhost:8083/carsharing/get-requests',
+			      method: 'GET',
+			      data: {
+			        user_id: this.userID // 传递当前用户ID
+			      },
+			      header: {
+			        'Content-Type': 'application/json'
+			      }
+			    });
+			    
+			    // 处理响应数据
+			    if (response.data.status === 'success') {
+			      const res = response.data;
+			      
+			      if (res.requests && res.requests.length > 0) {
+			        this.RequestBlockItems = res.requests.map(item => ({
+			          startAt: item.start_at || '未知时间',
+			          startLoc: item.start_loc || ['未知位置'],
+			          endLoc: item.end_loc || ['未知位置'],
+			          status: item.status || '未知状态',
+			        }));
+			        this.requestnumber = res.requests.length;
+			      } else {
+			        this.RequestBlockItems = [];
+			        this.requestnumber = 0;
+			      }
+			    } else {
+			      throw new Error(response.data.message || '获取请求列表失败');
+			    }
+			  } catch (error) {
+			    console.error('获取请求列表失败:', error);
+			    this.error = error.message || '获取请求列表失败';
+			    this.RequestBlockItems = [];
+			    this.requestnumber = 0;
+			    uni.showToast({
+			      title: this.error,
+			      icon: 'none'
+			    });
+			  } finally {
+			    this.isLoading = false;
+			  }
 			},
 		}
 	}

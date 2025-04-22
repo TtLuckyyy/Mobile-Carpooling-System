@@ -1,31 +1,376 @@
 
+.option-card {
+  width: 120px;
+  height: 30px;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+}
+.left {
+  width: 30px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.left uni-cover-image {
+  width: 100%;
+}
+.right {
+  margin-left: 5px;
+}
+.firstrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 2px;
+}
+.type-name {
+  font-size: 14px;
+  font-family: "Microsoft YaHei";
+  font-weight: 900;
+}
+.shared .type-name {
+  color: var(--color-green);
+}
+.exclusive .type-name {
+  color: var(--color-orange);
+}
+.type-desc {
+  font-size: 10px;
+  color: var(--color-darkgrey);
+  text-align: left;
+}
+
+/* 单选按钮样式 */
+.radio-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid #CCCCCC;
+  background-color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+}
+.radio-button.shared.selected {
+  border-color: var(--color-green);
+}
+.radio-button.exclusive.selected {
+  border-color: var(--color-orange);
+}
+.radio-inner {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-green);
+}
+.radio-button.exclusive .radio-inner {
+  background-color: var(--color-orange);
+}
+
+/* 未选中状态 */
+.option-card.shared {
+  border: 1px solid #E0E0E0;
+}
+.option-card.exclusive {
+  border: 1px solid #E0E0E0;
+}
+
+/* 选中状态 */
+.option-card.selected {
+  transform: translateY(-2px);
+}
+.option-card.shared.selected {
+  background-color: #F0FAF0;
+}
+.option-card.exclusive.selected {
+  border: 1px solid var(--color-orange);
+  background-color: #FFF5E6;
+}
+
+
 .map-container {
   position: relative;
   width: 100%;
   height: 100vh;
 }
-
-/* 浮动按钮组样式 */
 .floating-buttons {
- position: fixed;
-/*  top: 20px;
+  position: fixed;
+  bottom: 20px;
   left: 10px;
-  right: 10px; */
+  right: 10px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   z-index: 9999;
 }
-
-/* 单个按钮样式 */
 .button {
- background-color: #007AFF;
+  background-color: #007AFF;
   color: white;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 16px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  width: 95%;
+  max-width: 400px;
+}
+.start_end_loc {
+  width: 95%;
+  max-width: 400px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.location-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: var(--color-lightyellow);
+  border-radius: 8px;
+}
+.location-row.start {
+  margin-bottom: 8px;
+}
+.icon {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.start-icon {
+  background-color: var(--color-green);
+}
+.end-icon {
+  background-color: var(--color-orange);
+}
+.location-text {
+  color: black;
+  font-size: 14px;
+  flex: 1;
+  font-weight: bold;
+}
+.share-option {
+  display: flex;
+  flex-direction: row;
+}
+.second-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
+.publish-button-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+  margin-left: 6px;
+}
+.publish-button {
+  background-color: white;
+  color: var(--color-green);
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  min-width: 70px;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-green);
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+.time-selector {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 0px;
+  margin-bottom: 8px;
+  position: relative;
+  flex-direction: column;
+}
+.time-text {
+  font-size: 10px;
+  color: var(--color-darkgrey);
+  position: relative;
+  display: inline-block;
+  padding-bottom: 3px;
+}
+.time-line {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-grey);
+}
+.time-selector.has-time .time-text {
+  color: var(--color-green);
+  font-weight: bold;
+}
+.order-request {
+  height: 100px;
+  width: 97%;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  gap:5px;
+  justify-content: space-between;
+}
+.order-card {
+	font-family: "Microsoft YaHei";
+	font-weight: bold;
+	width: 60%;
+	background-color: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.order-title {
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  color:black;
+}
+.order-distance {
+  font-size: 14px;
+  color: var(--color-darkgrey);
+}
+.order-detail-btn {
+  font-size: 12px;
+  color: var(--color-lightgreen);
+}
+.driver-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 10px;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.driver-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+.stars {
+  color: #FFCC00;
+  font-size: 14px;
+}
+.driver-name {
+	color:var(--color-darkgrey);
+  font-size: 12px;
+  font-weight: bold;
+}
+.car-info {
+  align-items: flex-end; /* 这将使子元素靠右对齐 */
+  display: flex;
+  flex-direction: column;
+  gap: 8x;
+}
+.car-plate {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+.car-detail {
+  font-size: 10px;
+  color: var(--color-darkgrey);
+}
+.request-info {
+  font-family: "Microsoft YaHei";
+  font-weight: bold;
+  width: 30%;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+}
+.request-title{
+	font-size: 18px;
+	font-weight: bold;
+	display: flex;
+	flex-direction: row;
+	color:black;
+	align-items: flex-end;
+}
+.request-status{
+	margin-top: 4px;
+	font-size: 12px;
+	color: var(--color-darkgrey);
+	align-items: flex-end;
+}
+.request-detail{
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	width: 100%; /* 确保宽度撑满父容器 */
+}
+.request-count {
+  font-size: 36px;
+  color: var(--color-red);
+}
+
+
+
+/* 左侧 "X条" 的容器 */
+.request-detail > uni-cover-view:first-child {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+/* 右侧 "详情" 文本 */
+.request-detail > uni-cover-view:last-child {
+  font-size: 12px;
+  color: var(--color-darkgrey); /* 可选：调整颜色 */
+}
+.no-order-message {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+}
+.order-content{
+	margin-top: 4px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
 uni-web-view {
   width: 100%;

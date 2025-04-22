@@ -131,6 +131,13 @@
 		{
 			"navigationBarTitleText" : ""
 		}
+	},
+	{
+		"path" : "components/ShareOption",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
 	}
 	],
 	"globalStyle": {

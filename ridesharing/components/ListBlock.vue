@@ -113,14 +113,14 @@
 				
 				// 构建请求数据
 				const orderData = {
-				  offer_id: this.item.id, // 拼车邀请的id
-				  request_id: this.$store.state.rideRequest.requestID, // 拼车需求的id
+				  offerId: this.item.id, // 拼车邀请的id
+				  requestId: this.$store.state.rideRequest.requestID, // 拼车需求的id
 				  price: this.item.price // 订单费用
 				};
 				
 				// 发送创建订单请求
 				const response = await uni.request({
-				  url: `http://localhost:8083/carsharing/post-request`, 
+				  url: `http://localhost:8083/carsharing/create-order`, 
 				  method: 'POST',
 				  data: orderData,
 				  header: {
