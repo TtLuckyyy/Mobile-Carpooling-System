@@ -55,6 +55,13 @@
 		}
 	},
 	{
+		"path" : "components/PageHeader_cover",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
 		"path" : "pages/customer/InvitationMatch",
 		"style" : 
 		{
@@ -134,6 +141,13 @@
 	},
 	{
 		"path" : "components/ShareOption",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/customer/OrderDetail",
 		"style" : 
 		{
 			"navigationBarTitleText" : ""

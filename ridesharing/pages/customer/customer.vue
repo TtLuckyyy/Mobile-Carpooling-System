@@ -33,19 +33,19 @@
 		
 		
 		<cover-view class="order-request" v-if="currentOrders.length > 0">
-			  <cover-view class="order-card" >
-			    <cover-view class="order-header">
-			      <cover-view class="order-title" style="font-size: 18px;">
+			  <cover-view class="order-card"   @click="ToOrderDetail">
+			    <cover-view class="order-header"  @click="ToOrderDetail">
+			      <cover-view class="order-title" style="font-size: 18px;"  @click="ToOrderDetail">
 					  <cover-view>正在</cover-view>
 					  <cover-view style="color: var(--color-green);">进行中</cover-view>
 					  <cover-view>的订单</cover-view>
 				  </cover-view>
 			      
-			      <cover-view class="order-detail-btn">详情 >></cover-view>
+			      <cover-view class="order-detail-btn" @click="ToOrderDetail">详情 >></cover-view>
 			    </cover-view>
 			    
-				<cover-view class="order-content">
-					<cover-view class="order-distance">
+				<cover-view class="order-content"  @click="ToOrderDetail">
+					<cover-view class="order-distance"  @click="ToOrderDetail">
 						<cover-view>剩余</cover-view> 
 						<cover-view class="km" style="display: flex;flex-direction: row; align-items: flex-end;">
 							<cover-view style="color: var(--color-red); font-size: 24px;">{{currentOrders[0].distance}}</cover-view>
@@ -53,7 +53,7 @@
 						</cover-view>
 					</cover-view>
 					
-					<cover-view class="driver-info">
+					<cover-view class="driver-info" @click="ToOrderDetail">
 					  <cover-view class="driver-rating">
 					    <cover-view class="stars">★★★★★</cover-view>
 						<cover-view class="driver-detail">
@@ -61,7 +61,7 @@
 							<cover-view class="driver-avator">{{currentOrders[0].avator}}</cover-view>
 						</cover-view>
 					  </cover-view>
-					  <cover-view class="car-info">
+					  <cover-view class="car-info"  @click="ToOrderDetail">
 					    <cover-view class="car-plate">{{currentOrders[0].carPlate}}</cover-view>
 					    <cover-view class="car-detail">🔍 {{currentOrders[0].carColor || '黑色'}} | {{currentOrders[0].carModel}}</cover-view>
 					  </cover-view>
@@ -142,7 +142,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['userID', 'rideRequest']),
+    ...mapState(['userID', 'rideRequest','orderID']),
   },
   onLoad() {
 	// this.getRequests();
@@ -159,6 +159,7 @@ export default {
       'toggleExclusive',
       'toggleHighway',
       'resetRideRequest',
+	  'setOrderId',
     ]),
 
     handleMapMessage(e) {
@@ -426,57 +427,86 @@ export default {
 	  this.error = null;
 	  
 	  try {
-		// 检查是否有用户ID
-		if (!this.userID) {
-		  throw new Error('用户未登录');
-		}
-		
-		const response = await uni.request({
-		  url: 'http://localhost:8083/carsharing/current-order',
-		  method: 'GET',
-		  data: {
-			user_id: this.userID // 传递当前用户ID
-		  },
-		  header: {
-			'Content-Type': 'application/json'
-		  }
-		});
-		
-		// 处理响应数据
-		if (response.data.status === 'success') {
-		  const res = response.data;
-		  
-		  if (res.orders && res.orders.length > 0) {
-			this.ordersnumber = res.orders.length;
-			// 映射订单数据，类似getMatchedOrders的处理方式
-			this.currentOrders = res.orders.map(order => ({
-			  id: order.id, 
-			  distance: order.distance, 
-			  driverName: order.real_name,
-			  driverRating: order.rating,
-			  carModel: order.verification_car_model|| '未知车型',
-			  carPlate: order.verification_car_plate|| '未知车牌',
-			  startAt: order.start_at || '未知时间',
-			  avatar:order.avatar,
-			}));
-		  } else {
-			this.ordersnumber = 0;
-			this.currentOrders = []; // 清空数组，显示空状态
-		  }
-		} else { // 返回的 code 错误
-		  throw new Error(response.data.message || '获取当前订单失败');
-		}
+	    if (!this.userID) {
+	      throw new Error('用户未登录');
+	    }
+	    
+	    const response = await uni.request({
+	      url: 'http://localhost:8083/carsharing/current-order',
+	      method: 'GET',
+	      data: {
+	        user_id: this.userID
+	      },
+	      header: {
+	        'Content-Type': 'application/json'
+	      }
+	    });
+	    
+	    if (response.data.status === 'success') {
+	      const res = response.data;
+	      const now = new Date();
+	      
+	      if (res.orders && res.orders.length > 0) {
+	        // 筛选出开始时间在当前时间之前的订单，并按开始时间降序排序
+	        const pastOrders = res.orders
+	          .filter(order => new Date(order.start_at) < now)
+	          .sort((a, b) => new Date(b.start_at) - new Date(a.start_at));
+	        
+	        // 只取最近的一个订单
+	        this.currentOrders = pastOrders.length > 0 
+	          ? [{
+	              id: pastOrders[0].id, 
+	              distance: pastOrders[0].distance, 
+	              driverName: pastOrders[0].real_name,
+	              driverRating: pastOrders[0].rating,
+	              carModel: pastOrders[0].verification_car_model || '未知车型',
+	              carPlate: pastOrders[0].verification_car_plate || '未知车牌',
+	              startAt: pastOrders[0].start_at || '未知时间',
+	              avatar: pastOrders[0].avatar,
+	            }]
+	          : [];
+	        
+	        this.ordersnumber = this.currentOrders.length;
+	      } else {
+	        this.ordersnumber = 0;
+	        this.currentOrders = [];
+	      }
+	    } else {
+	      throw new Error(response.data.message || '获取当前订单失败');
+	    }
 	  } catch (error) {
-		console.error('获取当前订单失败:', error);
-		this.error = error.message || '获取当前订单失败';
-		this.ordersnumber = 0;
-		this.currentOrders = [];
+	    console.error('获取当前订单失败:', error);
+	    this.error = error.message || '获取当前订单失败';
+	    this.ordersnumber = 0;
+	    this.currentOrders = [];
+	    uni.showToast({
+	      title: this.error,
+	      icon: 'none'
+	    });
+	  } finally {
+	    this.isLoading = false;
+	  }
+	},
+	
+	ToOrderDetail(){
+	  // 确保有当前订单数据
+	  if(this.currentOrders.length > 0) {
+		// 获取第一个订单的ID（根据你的数据结构）
+		const orderId = this.currentOrders[0].id;
+		// 调用Vuex action更新orderID
+		this.setOrderId(orderId);
+		
+		// 如果需要跳转到详情页，可以在这里添加导航逻辑
+		uni.navigateTo({
+		  url: './OrderDetail', // 替换为你的订单详情页面路径
+		  animationType: 'slide-in-right',
+		  animationDuration: 300
+		});
+	  } else {
 		uni.showToast({
-		  title: this.error,
+		  title: '没有可查看的订单',
 		  icon: 'none'
 		});
-	  } finally {
-		this.isLoading = false;
 	  }
 	},
   },

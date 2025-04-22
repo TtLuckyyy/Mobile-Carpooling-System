@@ -141,7 +141,11 @@
 				  });
 				  
 				  // 添加跳转到订单详情页的逻辑
-				  // uni.navigateTo({ url: '/pages/order/detail' });
+				  uni.navigateTo({
+				    url: '../pages/customer/OrderDetail',
+				    animationType: 'slide-in-right',
+				    animationDuration: 300,
+				  });
 				} else {
 				  throw new Error(response.data.message || '订单创建失败');
 				}
