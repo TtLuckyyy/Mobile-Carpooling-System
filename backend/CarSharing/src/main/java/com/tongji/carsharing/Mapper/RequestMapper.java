@@ -1,6 +1,7 @@
 package com.tongji.carsharing.Mapper;
 
 import com.tongji.carsharing.Entity.Request;
+import com.tongji.carsharing.enums.enums;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.session.RowBounds;
 
@@ -27,4 +28,9 @@ public interface RequestMapper
     //查询时间最近的五条终点地点记录
     @Select("SELECT end_loc FROM carpool_request WHERE passenger_id = #{userId} ORDER BY created_at DESC")
     List<String> findTop5EndLocByUserIdOrderByCreatedAtDesc(@Param("userId") Integer userId, RowBounds rowBounds);
+
+    // 更新需求表的状态
+    @Update("UPDATE carpool_request SET status = #{status} WHERE id = #{id}")
+    int updateRequestStatus(@Param("id") int id, @Param("status") enums.PDStatus status);
+
 }

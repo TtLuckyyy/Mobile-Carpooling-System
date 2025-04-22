@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -59,12 +60,16 @@ public class OrderController {
         Map<String, Object> response = new HashMap<>();
         Timestamp createdAt = new Timestamp(System.currentTimeMillis());
         Integer driverId = offermapper.getDriverIdByOfferId(order.getOfferId());
-
         order.setDriverId(driverId);
         order.setCreatedAt(createdAt);
-        order.setStatus(enums.PDStatus.PENDING);
+        order.setStatus(enums.PDStatus.ONGOING);
 
+        // 创建新的订单
         int orderId=ordermapper.insertOrder(order);
+
+        // 更新需求表和邀请表的状态
+        requestmapper.updateRequestStatus(order.getRequestId(), enums.PDStatus.ONGOING);
+        offermapper.updateOfferStatus(order.getOfferId(), enums.PDStatus.ONGOING);
 
         if (orderId !=0) {
             response.put("status", "success");
@@ -78,4 +83,19 @@ public class OrderController {
         return response;
     }
 
+    // 获取当前进行中的订单
+    @GetMapping("/current-order")
+    public Map<String, Object> ongoingOrders(@RequestParam Integer userId) {
+        Map<String, Object> response = new HashMap<>();
+        List<Map<String, Object>> ongoingOrders = ordermapper.selectOngoingOrdersByUserId(userId);
+        if (ongoingOrders!= null) {
+            response.put("status", "success");
+            response.put("message", "获取当前进行中的订单成功！");
+            response.put("orders", ongoingOrders);
+        } else {
+            response.put("status", "error");
+            response.put("message", "获取当前进行中的订单失败！");
+        }
+        return response;
+    }
 }
