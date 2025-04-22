@@ -1,9 +1,9 @@
 <template>
   <cover-view class="floating-buttons">
     <cover-view class="header">
-      <cover-view class="back-btn" @tap="handleBack">
-        <cover-image src="/static/left-arrow.png"></cover-image>
-        <cover-view class="back-text">{{ backText }}</cover-view>
+      <cover-view class="back-btn" @click="handleBack">
+        <cover-image src="/static/left-arrow.png" @click="handleBack"></cover-image>
+        <cover-view class="back-text" @click="handleBack">{{ backText }}</cover-view>
       </cover-view>
     </cover-view>
   </cover-view>

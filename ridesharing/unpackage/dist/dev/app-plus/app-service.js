@@ -2768,12 +2768,18 @@ if (uni.restoreGlobal) {
       vue.createElementVNode("cover-view", { class: "header" }, [
         vue.createElementVNode("cover-view", {
           class: "back-btn",
-          onClick: _cache[0] || (_cache[0] = (...args) => $options.handleBack && $options.handleBack(...args))
+          onClick: _cache[2] || (_cache[2] = (...args) => $options.handleBack && $options.handleBack(...args))
         }, [
-          vue.createElementVNode("cover-image", { src: _imports_0$3 }),
+          vue.createElementVNode("cover-image", {
+            src: _imports_0$3,
+            onClick: _cache[0] || (_cache[0] = (...args) => $options.handleBack && $options.handleBack(...args))
+          }),
           vue.createElementVNode(
             "cover-view",
-            { class: "back-text" },
+            {
+              class: "back-text",
+              onClick: _cache[1] || (_cache[1] = (...args) => $options.handleBack && $options.handleBack(...args))
+            },
             vue.toDisplayString($props.backText),
             1
             /* TEXT */
