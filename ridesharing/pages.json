@@ -89,7 +89,20 @@
 			"navigationBarTitleText" : ""
 		}
 	},
-
+        	{
+		"path" : "components/TripList",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/driver/driverTripList",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
 	{
 		"path" : "pages/index/welcome",
 		"style" : 
