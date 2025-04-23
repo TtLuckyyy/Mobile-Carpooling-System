@@ -21,6 +21,13 @@
 		}
 	},
 	{
+		"path" : "pages/my/change/change",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
 		"path": "pages/driver/car-owner",
 		"style": {
 			"navigationBarTitleText": "车主认证"

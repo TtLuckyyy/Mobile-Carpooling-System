@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import store from '@/store/index.js'
 export default {
   data() {
     return {
@@ -87,9 +88,9 @@ export default {
 
     async handleLogin() {
       if (!this.validateForm()) return
-      
+
       uni.showLoading({ title: '登录中...', mask: true })
-      
+
       try {
         const res = await uni.request({
           url: 'http://localhost:8083/carsharing/login',
@@ -99,9 +100,11 @@ export default {
             password: this.password
           }
         })
-        
+
         uni.hideLoading()
         if (res.data.status === "success") {
+          const userID = res.data.data.userID  // 取出 userID
+          store.dispatch('login', userID)      // 调用 Vuex 保存 userID
           uni.switchTab({ url: '/pages/customer/customer' })
         } else {
           uni.showToast({ title: res.data.msg || '登录失败', icon: 'none' })
@@ -111,6 +114,7 @@ export default {
         uni.showToast({ title: '网络错误，请重试', icon: 'none' })
       }
     },
+
     navigateTo(url) {
       uni.navigateTo({ url })
     }

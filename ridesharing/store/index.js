@@ -3,16 +3,18 @@ import { createStore } from 'vuex'
 export default createStore({
   state() {
     return {
-		userID: '未登录用户',
+		userID: '1',
 		rideRequest: {  // 拼车需求数据
-	        startLoc: '',
-	        endLoc: '',
-	        startAt: '',
+	        startLoc: '华东理工大学',
+	        endLoc: '上海财经大学',
+	        startAt: new Date('2025-04-14 00:00:00'),
 	        exclusive: false,
 	        highway: false,
 			requestID:null,
 		},
-		orderID:null
+		rideOrder: {  
+			orderID:null,
+		},
     }
   },
   mutations: {
@@ -52,8 +54,9 @@ export default createStore({
 		requestID: null
 	  }
 	},
-	SET_ORDER_ID(state, orderID) {
-	    state.orderID = orderID;
+	SET_ORDER_ID(state, id) {
+	    state.rideOrder.orderID = id;
+		console.log("111",state.rideOrder.orderID);
 	}
   },
   actions: {
@@ -85,8 +88,8 @@ export default createStore({
 	resetRideRequest({ commit }) {
 	  commit('RESET_RIDE_REQUEST')
 	},
-	setOrderId({ commit }, orderID) {
-	  commit('SET_ORDER_ID', orderID);
+	setOrderId({ commit }, id) {
+	  commit('SET_ORDER_ID', id);
 	}
   }
 })

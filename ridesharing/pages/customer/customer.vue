@@ -110,43 +110,43 @@ export default {
 	  requestnumber:0,
 	  ordersnumber:0,
 	  currentOrders:[
-		        {
-		          id: 1,
-		          distance: 10.5,
-		          driverName: "张三",
-		          driverRating: 4.8,
-		          carModel: "特斯拉 Model",
-		          carPlate: "京A12345",
-		          startAt: "2025-04-21T10:00:00Z",
-				  avatar:"@/static/1.png"
-		        },
-		        {
-		          id: 2,
-		          distance: 5.2,
-		          driverName: "李四",
-		          driverRating: 4.6,
-		          carModel: "比亚迪汉",
-		          carPlate: "京B67890",
-		          startAt: "2025-04-21T11:30:00Z",
-		        },
-		        {
-		          id: 3,
-		          distance: 7.8,
-		          driverName: "王五",
-		          driverRating: 4.9,
-		          carModel: "宝马 5 系",
-		          carPlate: "京C56789",
-		          startAt: "2025-04-21T12:45:00Z",
-		        }
+		    //     {
+		    //       id: 1,
+		    //       distance: 10.5,
+		    //       driverName: "张三",
+		    //       driverRating: 4.8,
+		    //       carModel: "特斯拉 Model",
+		    //       carPlate: "京A12345",
+		    //       startAt: "2025-04-21T10:00:00Z",
+				  // avatar:"@/static/1.png"
+		    //     },
+		    //     {
+		    //       id: 2,
+		    //       distance: 5.2,
+		    //       driverName: "李四",
+		    //       driverRating: 4.6,
+		    //       carModel: "比亚迪汉",
+		    //       carPlate: "京B67890",
+		    //       startAt: "2025-04-21T11:30:00Z",
+		    //     },
+		    //     {
+		    //       id: 3,
+		    //       distance: 7.8,
+		    //       driverName: "王五",
+		    //       driverRating: 4.9,
+		    //       carModel: "宝马 5 系",
+		    //       carPlate: "京C56789",
+		    //       startAt: "2025-04-21T12:45:00Z",
+		    //     }
 	  ],
     };
   },
   computed: {
-    ...mapState(['userID', 'rideRequest','orderID']),
+    ...mapState(['userID', 'rideRequest','rideOrder']),
   },
   onLoad() {
 	// this.getRequests();
-	// this.getCurrentOrder();
+	this.getCurrentOrder();
   },
   methods: {
     ...mapActions([
@@ -215,22 +215,22 @@ export default {
           passengerId: this.userID,
           startLoc: this.rideRequest.startLoc,
           endLoc: this.rideRequest.endLoc,
-          status: 'pending',
+          status: 'PENDING',
           startAt: this.rideRequest.startAt,
           exclusive: this.rideRequest.exclusive,
           highway: this.rideRequest.highway,
         };
 
         const response = await uni.request({
-          url: '/post-request',
+          url: 'http://localhost:8083/carsharing/post-request',
           method: 'POST',
           data: requestData,
           header: {
             'Content-Type': 'application/json',
           },
         });
-
-        if (response.statusCode === 200 || response.statusCode === 201) {
+		console.log(requestData);
+        if (response.data.status === 'success') {
           const responseData = response.data;
           if (responseData.requestID) {
             this.setRequestId(responseData.requestID);
@@ -432,36 +432,33 @@ export default {
 	    }
 	    
 	    const response = await uni.request({
-	      url: 'http://localhost:8083/carsharing/current-order',
+	      url: `http://localhost:8083/carsharing/current-order?userId=${this.userID}`,
 	      method: 'GET',
-	      data: {
-	        user_id: this.userID
-	      },
 	      header: {
 	        'Content-Type': 'application/json'
 	      }
 	    });
-	    
 	    if (response.data.status === 'success') {
 	      const res = response.data;
 	      const now = new Date();
 	      
+		  console.log(res.orders);
 	      if (res.orders && res.orders.length > 0) {
 	        // 筛选出开始时间在当前时间之前的订单，并按开始时间降序排序
 	        const pastOrders = res.orders
-	          .filter(order => new Date(order.start_at) < now)
-	          .sort((a, b) => new Date(b.start_at) - new Date(a.start_at));
-	        
+	          .filter(order => new Date(order.startAt) < now)
+	          .sort((a, b) => new Date(b.startAt) - new Date(a.startAt));
+	        console.log(pastOrders);
 	        // 只取最近的一个订单
 	        this.currentOrders = pastOrders.length > 0 
 	          ? [{
 	              id: pastOrders[0].id, 
 	              distance: pastOrders[0].distance, 
-	              driverName: pastOrders[0].real_name,
+	              driverName: pastOrders[0].realName,
 	              driverRating: pastOrders[0].rating,
-	              carModel: pastOrders[0].verification_car_model || '未知车型',
-	              carPlate: pastOrders[0].verification_car_plate || '未知车牌',
-	              startAt: pastOrders[0].start_at || '未知时间',
+	              carModel: pastOrders[0].verificationCarModel || '未知车型',
+	              carPlate: pastOrders[0].verificationCarPlate || '未知车牌',
+	              startAt: pastOrders[0].startAt || '未知时间',
 	              avatar: pastOrders[0].avatar,
 	            }]
 	          : [];
@@ -492,9 +489,11 @@ export default {
 	  // 确保有当前订单数据
 	  if(this.currentOrders.length > 0) {
 		// 获取第一个订单的ID（根据你的数据结构）
-		const orderId = this.currentOrders[0].id;
+		const orderid = this.currentOrders[0].id;
+		console.log(orderid);//4
 		// 调用Vuex action更新orderID
-		this.setOrderId(orderId);
+		this.setOrderId(orderid);
+		console.log(this.rideOrder.orderID);
 		
 		// 如果需要跳转到详情页，可以在这里添加导航逻辑
 		uni.navigateTo({

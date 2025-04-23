@@ -93,7 +93,7 @@
 			}
 		},
 	    computed: {
-		    ...mapState(['rideRequest']) // 获取Vuex中的rideRequest
+		    ...mapState(['rideRequest','userID']) // 获取Vuex中的rideRequest
 	    },
 		methods: {
 			...mapActions(['setOrderId']),
@@ -115,7 +115,8 @@
 				const orderData = {
 				  offerId: this.item.id, // 拼车邀请的id
 				  requestId: this.$store.state.rideRequest.requestID, // 拼车需求的id
-				  price: this.item.price // 订单费用
+				  price: this.item.price,// 订单费用
+				  passengerId:this.userID,
 				};
 				
 				// 发送创建订单请求
@@ -142,7 +143,7 @@
 				  
 				  // 添加跳转到订单详情页的逻辑
 				  uni.navigateTo({
-				    url: '../pages/customer/OrderDetail',
+				    url: '/pages/customer/OrderDetail',
 				    animationType: 'slide-in-right',
 				    animationDuration: 300,
 				  });

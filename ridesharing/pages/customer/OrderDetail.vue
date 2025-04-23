@@ -22,12 +22,12 @@
             
             <cover-view class="second-item" style="display: flex;gap: 5px;align-items: flex-start;flex-direction: column;">
               <cover-view class="car-info"style="display: flex;align-items: flex-start;flex-direction: column;">
-                <cover-view class="car-plate">{{ orderInfo.verification_car_plate}}</cover-view>
-                <cover-view class="car-detail">{{ carColor }} | {{ orderInfo.verification_car_model}}</cover-view>
+                <cover-view class="car-plate">{{ orderInfo.verificationCarPlate}}</cover-view>
+                <cover-view class="car-detail">{{ carColor }} | {{ orderInfo.verificationCarModel}}</cover-view>
               </cover-view>
               
               <cover-view class="driver-info">
-                <cover-view class="driver-name">{{ orderInfo.real_name}}</cover-view>
+                <cover-view class="driver-name">{{ orderInfo.realName}}</cover-view>
                 <cover-view class="driver-rating">{{ formatRating(orderInfo.rating) }}</cover-view>
               </cover-view>
             </cover-view>
@@ -35,7 +35,7 @@
 			<cover-view class="third-item"  style="display: flex;gap: 5px;align-items: flex-end;flex-direction: column;">
 			  <cover-view class="distance-info"  style="display: flex;gap: 5px;align-items: flex-end;flex-direction: column;">
 				<cover-view style="font-size: 14px;color: var(--color-darkgrey);">总距离</cover-view>
-			    <cover-view style="font-size: 30px;color: var(--color-red);">{{orderInfo.distance}}</cover-view>
+			    <cover-view style="font-size: 30px;color: var(--color-red);">{{orderInfo.distance}}km</cover-view>
 			  </cover-view>
 			</cover-view>
           </cover-view>
@@ -44,12 +44,12 @@
 			<cover-view class="route-info">
 			  <cover-view class="icon start-icon"></cover-view>
 			  <cover-view class="route-text-container">
-				<cover-view class="route-from">{{ orderInfo.start_loc }}</cover-view>
+				<cover-view class="route-from">{{ orderInfo.startLoc }}</cover-view>
 			  </cover-view>
 			  <cover-view class="route-separator">----------</cover-view>
 			  <cover-view class="icon end-icon"></cover-view>
 			  <cover-view class="route-text-container">
-				<cover-view class="route-to">{{ orderInfo.end_loc }}</cover-view>
+				<cover-view class="route-to">{{ orderInfo.endLoc }}</cover-view>
 			  </cover-view>
 			</cover-view>
           
@@ -95,10 +95,10 @@ export default {
     }
   },
   computed: {
-	...mapState(['userID', 'rideRequest','orderID']),
+	...mapState(['userID', 'rideRequest','rideOrder']),
   },
   created() {
-    // await this.fetchOrderInfo();
+    this.fetchOrderInfo();
     this.startCountdown();
   },
   beforeDestroy() {
@@ -113,32 +113,25 @@ export default {
       this.error = null;
       
       try {
+		console.log(this.rideOrder.orderID);
         // 检查是否有订单ID
-        if (!this.orderId) {
+        if (!this.rideOrder.orderID) {
           throw new Error('未获取到订单ID');
         }
         
         const response = await uni.request({
-          url: 'http://localhost:8083/carsharing/get-certain-order',
+		  url: `http://localhost:8083/carsharing/get-certain-order?orderId=${this.rideOrder.orderID}`,
           method: 'GET',
-          data: {
-            order_id: this.orderId
-          },
           header: {
             'Content-Type': 'application/json'
           }
         });
-        
-        // 注意：uni.request返回的是一个数组，第一个元素是错误信息，第二个是响应数据
-        const [error, res] = response;
-        
-        if (error) {
-          throw error;
-        }
-        
+        console.log(response);
+
+
         // 处理响应数据
-        if (res.data.status === 'success') {
-          this.orderInfo = res.data.data;
+        if (response.data.status === 'success') {
+          this.orderInfo = response.data.history;
         } else {
           throw new Error(res.data.message || '获取订单信息失败');
         }

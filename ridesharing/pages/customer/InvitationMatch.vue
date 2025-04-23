@@ -26,34 +26,34 @@
 		data() {
 			return {
 				listBlockItems: [
-					{
-						startAt: '2023-05-15 08:30',
-						startLoc: '北京市海淀区中关村',
-						endLoc: '北京市朝阳区国贸',
-						seats: 3,
-						realName: '张师傅',
-						verificationCarPlate: '京A12345',
-						price: 45.00,
-						offset:1.2,
-						avatar: '/static/logo.png',
-						verificationColor:'黑色',
-						verificationCarModel:'奥迪A6',
-						rating:4.3,
-					},
-					{
-						startAt: '2023-05-15 09:15',
-						startLoc: '北京市海淀区五道口',
-						endLoc: '北京市西城区金融街',
-						seats: 2,
-						realName: '李师傅',
-						verificationCarPlate: '京B67890',
-						price: 35.50,
-						offset:3.2,
-						avatar: '/static/logo.png',
-						verificationColor:'白色',
-						verificationCarModel:'本田雅阁',
-						rating:5.0,
-					},
+					// {
+					// 	startAt: '2023-05-15 08:30',
+					// 	startLoc: '北京市海淀区中关村',
+					// 	endLoc: '北京市朝阳区国贸',
+					// 	seats: 3,
+					// 	realName: '张师傅',
+					// 	verificationCarPlate: '京A12345',
+					// 	price: 45.00,
+					// 	offset:1.2,
+					// 	avatar: '/static/logo.png',
+					// 	verificationColor:'黑色',
+					// 	verificationCarModel:'奥迪A6',
+					// 	rating:4.3,
+					// },
+					// {
+					// 	startAt: '2023-05-15 09:15',
+					// 	startLoc: '北京市海淀区五道口',
+					// 	endLoc: '北京市西城区金融街',
+					// 	seats: 2,
+					// 	realName: '李师傅',
+					// 	verificationCarPlate: '京B67890',
+					// 	price: 35.50,
+					// 	offset:3.2,
+					// 	avatar: '/static/logo.png',
+					// 	verificationColor:'白色',
+					// 	verificationCarModel:'本田雅阁',
+					// 	rating:5.0,
+					// },
 					],
 					isLoading: false,
 			        error: null
@@ -63,7 +63,7 @@
 			...mapState(['rideRequest'])
 		},
 		mounted() {
-			// this.getMatchedOrders();
+			this.getMatchedOrders();
 		},
 		methods: {
 			// 获取匹配订单
@@ -116,13 +116,12 @@
 					'Content-Type': 'application/json'
 				  }
 				});
-				
 				// 处理响应数据
 				if (response.data.status === 'success') {
 				  const res = response.data;
 				  
-				  if (res.list_matched && res.list_matched.length > 0) {
-					this.listBlockItems = res.list_matched.map(item => ({
+				  if (res.matched_orders && res.matched_orders.length > 0) {
+					this.listBlockItems = res.matched_orders.map(item => ({
 					  id: item.id, // 拼车邀请的id
 					  startAt: item.start_at,
 					  startLoc: item.start_loc,

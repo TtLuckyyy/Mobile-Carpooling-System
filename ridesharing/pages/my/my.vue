@@ -2,9 +2,9 @@
   <view class="mine-page" :style="{ paddingTop: statusBarHeight + 'px' }">
     <!-- 用户信息栏 -->
     <view class="profile">
-      <image class="avatar" src="/static/tongji/school_badge.png" mode="aspectFill" />
+      <image class="avatar" :src="avatar" mode="aspectFill" />
       <view class="info">
-        <text class="phone">{{ username }}</text>
+        <text class="phone">{{ phone }}</text>
         <text class="mileage">里程值 <text class="green">{{ total_mileage }}</text>/60</text>
       </view>
     </view>
@@ -23,18 +23,18 @@
 </template>
 
 <script>
-import { mapState} from 'vuex'
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
-      username: '未知用户',
+      phone: '未知用户',
       total_mileage: 0,
-	  statusBarHeight: uni.getSystemInfoSync().statusBarHeight,
+      avatar: '/static/default_avatar.png',  // 默认头像
+	  statusBarHeight: uni.getSystemInfoSync().statusBarHeight || 0,
       menuItems: [
         { icon: '🕒', text: '我的行程' },
         { icon: '🎟️', text: '优惠券' },
-		{ icon: '🔑', text: '登录' }, 
-		{ icon: '📝', text: '修改个人信息' },
+        { icon: '📝', text: '修改个人信息' },
         { icon: '🛡️', text: '账号与安全' },
         { icon: '🎧', text: '联系客服' },
         { icon: '⚙️', text: '设置' }
@@ -42,20 +42,30 @@ export default {
     }
   },
   computed: {
-      ...mapState(['userID'])
-    },
-   onLoad() {
-    this.fetchUserInfo()
+    ...mapState(['userID'])
+  },
+  watch: {
+    userID(newVal) {
+      if (newVal && newVal !== '未登录用户') {
+        this.fetchUserInfo()
+      }
+    }
+  },
+  onLoad() {
+    if (this.userID && this.userID !== '未登录用户') {
+      this.fetchUserInfo()
+    }
   },
   methods: {
     fetchUserInfo() {
       uni.request({
-        url: `http://localhost:8083/carsharing/get-name-mile?userID=${this.userID}`, // 替换成你的后端地址
+        url: `http://localhost:8083/carsharing/my?userID=${this.userID}`, // 修改为你的接口
         method: 'GET',
         success: (res) => {
-          if (res.statusCode === 200 && res.data) {
-            this.username = res.data.username || '未命名用户'
+          if (res.data.statue === "success" && res.data) {
+            this.phone = res.data.phone || '未命名用户'
             this.total_mileage = res.data.total_mileage || 0
+            this.avatar = res.data.avatar || '/static/default_avatar.png'
           } else {
             uni.showToast({ title: '用户信息加载失败', icon: 'none' })
           }
@@ -69,8 +79,7 @@ export default {
       const pages = [
         '/pages/my/trip',
         '/pages/my/coupon',
-		'/pages/my/login/login',  
-		'/pages/my/change/change',
+        '/pages/my/change/change',
         '/pages/my/account',
         '/pages/my/support',
         '/pages/my/setting'
@@ -82,7 +91,6 @@ export default {
   }
 }
 </script>
-
 
 <style scoped>
 .mine-page {
