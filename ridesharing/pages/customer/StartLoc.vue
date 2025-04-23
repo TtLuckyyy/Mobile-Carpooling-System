@@ -162,6 +162,7 @@ export default {
 		async fetchAddresses() {
 		     try {
 		       const response = await uni.request({
+				//url: `http://localhost:8083/carsharing/get-user-addresses?userId=${this.userID}`,
 		         url: `http://localhost:8083/carsharing/get-user-addresses?userId=1`, // 直接拼接参数
 		         method: 'GET',
 		         header: {
@@ -194,6 +195,7 @@ export default {
 		async fetchHistory() {
 		    try {
 		        const response = await uni.request({
+				  //url: `http://localhost:8083/carsharing/get-start-loc-history?userId=${this.userID}`,
 		          url: `http://localhost:8083/carsharing/get-start-loc-history?userId=1`, // 直接拼接参数
 		          method: 'GET',
 		          header: {
@@ -381,7 +383,7 @@ export default {
   display: inline-block;
   width: 8px;
   height: 8px;
-  background-color: #da713c;
+  background-color: #5c9267;
   border-radius: 50%;
   margin-right: 5px;
 }
