@@ -31,7 +31,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // 用户注册
+    // 用户注册（已测试）
     @PostMapping("/register")
     public Map<String, Object> Register(@RequestBody User user) {
         Map<String, Object> response = new HashMap<>();
@@ -62,7 +62,7 @@ public class UserController {
         return response;
     }
 
-    // 用户登录
+    // 用户登录（已测试）
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody Map<String, String> data) {
         Map<String, Object> response = new HashMap<>();
@@ -85,7 +85,7 @@ public class UserController {
         return response;
     }
 
-    //忘记密码
+    //忘记密码（已测试）
     @PostMapping("/forget")
     public Map<String, Object> forgetPassword(@RequestBody Map<String, String> data) {
         Map<String, Object> response = new HashMap<>();
@@ -104,5 +104,24 @@ public class UserController {
 
         return response;
     }
+
+    // 获取个人信息
+    @GetMapping("/my")
+    public Map<String, Object> getUserInfo(@RequestBody Integer userId) {
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> userInfo = usermapper.getUserBasicInfo(userId);
+        if (userInfo!= null ) {
+            response.put("status", "success");
+            response.put("message", "密码修改成功！");
+            response.put("userInfo", userInfo);
+        } else {
+            response.put("status", "error");
+            response.put("message", "密码修改失败！");
+        }
+
+        return response;
+    }
+
+    // 修改用户信息
 
 }

@@ -40,7 +40,12 @@ public class OrderService {
 
         for (Offer offerdto : potentialOffers) {
             double offsetDistance = calculatetool.calculateOffsetDistance(request, offerdto);
-
+            try {
+                Thread.sleep(1000); // 延迟100毫秒（你可以根据需要调整）
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(offsetDistance);
             if (offsetDistance <= MAX_OFFSET && offerdto.getStatus() == request.getStatus()) {
                 Verification verification = verimapper.getVerificationByUserId(offerdto.getDriverId());
                 if (verification == null) continue;
@@ -60,12 +65,14 @@ public class OrderService {
                 match.put("verification_color", verification.getVerificationColor());
                 match.put("rating", verification.getRating());
                 match.put("avatar", avatar);
-                match.put("offset_distance", offsetDistance);
+                match.put("offset", offsetDistance);
                 match.put("price", request.getPrice());
 
                 matchedOffers.add(match);
             }
         }
+        // 打印匹配到的订单的长度
+        System.out.println("匹配到的订单的长度：" + matchedOffers.size());
 
         if (matchedOffers.isEmpty()) {
             return Map.of("error", "没有符合偏差范围的拼车订单");
