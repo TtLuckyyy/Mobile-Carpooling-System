@@ -1688,7 +1688,7 @@ if (uni.restoreGlobal) {
                       class: "location-text",
                       onClick: _cache[2] || (_cache[2] = (...args) => $options.ToStartLoc && $options.ToStartLoc(...args))
                     },
-                    vue.toDisplayString(_ctx.rideRequest.startLoc ? _ctx.rideRequest.startLoc.join(", ") : "你从哪上车"),
+                    vue.toDisplayString(_ctx.rideRequest.startLoc ? _ctx.rideRequest.startLoc : "你从哪上车"),
                     1
                     /* TEXT */
                   )
@@ -1707,7 +1707,7 @@ if (uni.restoreGlobal) {
                       class: "location-text",
                       onClick: _cache[5] || (_cache[5] = (...args) => $options.ToEndLoc && $options.ToEndLoc(...args))
                     },
-                    vue.toDisplayString(_ctx.rideRequest.endLoc ? _ctx.rideRequest.endLoc.join(", ") : "你要到哪去"),
+                    vue.toDisplayString(_ctx.rideRequest.endLoc ? _ctx.rideRequest.endLoc : "你要到哪去"),
                     1
                     /* TEXT */
                   )
@@ -5395,6 +5395,7 @@ if (uni.restoreGlobal) {
       async fetchAddresses() {
         try {
           const response = await uni.request({
+            //url: `http://localhost:8083/carsharing/get-user-addresses?userId=${this.userID}`,
             url: `http://localhost:8083/carsharing/get-user-addresses?userId=1`,
             // 直接拼接参数
             method: "GET",
@@ -5405,7 +5406,7 @@ if (uni.restoreGlobal) {
           this.homeAddress = response.data.homeAddress;
           this.companyAddress = response.data.companyAddress;
         } catch (error) {
-          formatAppLog("error", "at pages/customer/StartLoc.vue:174", "获取地址失败:", error);
+          formatAppLog("error", "at pages/customer/StartLoc.vue:175", "获取地址失败:", error);
         }
       },
       setHomeCompanyStartLocation(type) {
@@ -5428,6 +5429,7 @@ if (uni.restoreGlobal) {
       async fetchHistory() {
         try {
           const response = await uni.request({
+            //url: `http://localhost:8083/carsharing/get-start-loc-history?userId=${this.userID}`,
             url: `http://localhost:8083/carsharing/get-start-loc-history?userId=1`,
             // 直接拼接参数
             method: "GET",
@@ -5451,10 +5453,10 @@ if (uni.restoreGlobal) {
             }
             this.history = records;
           } else {
-            formatAppLog("warn", "at pages/customer/StartLoc.vue:230", "没有历史记录");
+            formatAppLog("warn", "at pages/customer/StartLoc.vue:232", "没有历史记录");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/StartLoc.vue:233", "获取历史记录失败:", error);
+          formatAppLog("error", "at pages/customer/StartLoc.vue:235", "获取历史记录失败:", error);
         }
       },
       // 根据名称获取详细地址和经纬度
@@ -5471,7 +5473,7 @@ if (uni.restoreGlobal) {
           const address = reverseResp.data.result.formatted_address;
           return { address, lat, lng };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/StartLoc.vue:252", "获取地址和坐标失败:", error);
+          formatAppLog("error", "at pages/customer/StartLoc.vue:254", "获取地址和坐标失败:", error);
           return { address: "地址获取失败", lat: 0, lng: 0 };
         }
       },
@@ -5481,7 +5483,7 @@ if (uni.restoreGlobal) {
           const locationResponse = await uni.getLocation({ type: "gcj02" });
           return { lat: locationResponse.latitude, lng: locationResponse.longitude };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/StartLoc.vue:262", "获取当前位置失败:", error);
+          formatAppLog("error", "at pages/customer/StartLoc.vue:264", "获取当前位置失败:", error);
           return { lat: 0, lng: 0 };
         }
       },
@@ -5512,7 +5514,7 @@ if (uni.restoreGlobal) {
             // 四舍五入到整数公里
           };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/StartLoc.vue:299", "处理地点信息失败:", error);
+          formatAppLog("error", "at pages/customer/StartLoc.vue:301", "处理地点信息失败:", error);
           return {
             name,
             address: "获取失败",
@@ -5790,6 +5792,7 @@ if (uni.restoreGlobal) {
       async fetchAddresses() {
         try {
           const response = await uni.request({
+            //url: `http://localhost:8083/carsharing/get-user-addresses?userId=${this.userID}`,
             url: `http://localhost:8083/carsharing/get-user-addresses?userId=1`,
             // 直接拼接参数
             method: "GET",
@@ -5800,7 +5803,7 @@ if (uni.restoreGlobal) {
           this.homeAddress = response.data.homeAddress;
           this.companyAddress = response.data.companyAddress;
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:174", "获取地址失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:175", "获取地址失败:", error);
         }
       },
       setHomeCompanyEndLocation(type) {
@@ -5823,6 +5826,7 @@ if (uni.restoreGlobal) {
       async fetchHistory() {
         try {
           const response = await uni.request({
+            //url: `http://localhost:8083/carsharing/get-end-loc-history?userId=${this.userID}`,
             url: `http://localhost:8083/carsharing/get-end-loc-history?userId=1`,
             // 直接拼接参数
             method: "GET",
@@ -5846,10 +5850,10 @@ if (uni.restoreGlobal) {
             }
             this.history = records;
           } else {
-            formatAppLog("warn", "at pages/customer/EndLoc.vue:232", "没有历史记录");
+            formatAppLog("warn", "at pages/customer/EndLoc.vue:234", "没有历史记录");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:235", "获取历史记录失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:237", "获取历史记录失败:", error);
         }
       },
       // 根据名称获取详细地址和经纬度
@@ -5866,7 +5870,7 @@ if (uni.restoreGlobal) {
           const address = reverseResp.data.result.formatted_address;
           return { address, lat, lng };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:253", "获取地址和坐标失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:255", "获取地址和坐标失败:", error);
           return { address: "地址获取失败", lat: 0, lng: 0 };
         }
       },
@@ -5876,7 +5880,7 @@ if (uni.restoreGlobal) {
           const locationResponse = await uni.getLocation({ type: "gcj02" });
           return { lat: locationResponse.latitude, lng: locationResponse.longitude };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:263", "获取当前位置失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:265", "获取当前位置失败:", error);
           return { lat: 0, lng: 0 };
         }
       },
@@ -5907,7 +5911,7 @@ if (uni.restoreGlobal) {
             // 四舍五入到整数公里
           };
         } catch (error) {
-          formatAppLog("error", "at pages/customer/EndLoc.vue:300", "处理地点信息失败:", error);
+          formatAppLog("error", "at pages/customer/EndLoc.vue:302", "处理地点信息失败:", error);
           return {
             name,
             address: "获取失败",

@@ -9,11 +9,11 @@
           <cover-view class="first-row">
             <cover-view class="location-row start" @click="ToStartLoc">
               <cover-view class="icon start-icon" @click="ToStartLoc"></cover-view>
-              <cover-view class="location-text" @click="ToStartLoc">{{ rideRequest.startLoc ? rideRequest.startLoc.join(', ') : '你从哪上车' }}</cover-view>
+              <cover-view class="location-text" @click="ToStartLoc">{{ rideRequest.startLoc ? rideRequest.startLoc : '你从哪上车' }}</cover-view>
             </cover-view>
             <cover-view class="location-row end" @click="ToEndLoc">
               <cover-view class="icon end-icon" @click="ToEndLoc"></cover-view>
-              <cover-view class="location-text" @click="ToEndLoc">{{ rideRequest.endLoc ? rideRequest.endLoc.join(', ') : '你要到哪去' }}</cover-view>
+              <cover-view class="location-text" @click="ToEndLoc">{{ rideRequest.endLoc ? rideRequest.endLoc : '你要到哪去' }}</cover-view>
             </cover-view>
           </cover-view>
           <cover-view class="second-row">
