@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface RequestMapper
@@ -33,4 +34,17 @@ public interface RequestMapper
     @Update("UPDATE carpool_request SET status = #{status} WHERE id = #{id}")
     int updateRequestStatus(@Param("id") int id, @Param("status") enums.PDStatus status);
 
+
+    // 根据用户ID查询所有拼车需求
+    @Select("""
+        SELECT 
+            start_at, 
+            start_loc, 
+            end_loc, 
+            status
+        FROM carpool_request
+        WHERE user_id = #{userId}
+        ORDER BY start_at DESC
+    """)
+    List<Map<String, Object>> selectRequestsByUserId(@Param("userId") Integer userId);
 }

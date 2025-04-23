@@ -36,7 +36,7 @@ public class OrderController {
 
     @Autowired
     private OrderMapper ordermapper;
-    //乘客发布需求后的匹配订单
+    //乘客发布需求后的匹配订单(完毕)
     @GetMapping("/matched-orders")
     public Map<String, Object> matchedOrders(@RequestParam Integer request_id) {
         Map<String, Object> response = new HashMap<>();
@@ -53,8 +53,8 @@ public class OrderController {
         }
         return response;
     }
-    //测试
-    //订单创建
+
+    //订单创建（已测试）
     @PostMapping("/create-order")
     public Map<String, Object> createOrder(@RequestBody Order order) {
         Map<String, Object> response = new HashMap<>();
@@ -95,6 +95,22 @@ public class OrderController {
         } else {
             response.put("status", "error");
             response.put("message", "获取当前进行中的订单失败！");
+        }
+        return response;
+    }
+
+    // 根据订单ID查询订单
+    @GetMapping("/get-certain-order")
+    public Map<String, Object> getCertainOrder(@RequestParam Integer orderId) {
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> history = ordermapper.selectCertainOrderInfo(orderId);
+        if (history!= null) {
+            response.put("status", "success");
+            response.put("message", "获取当前订单成功！");
+            response.put("history", history);
+        } else {
+            response.put("status", "error");
+            response.put("message", "获取当前订单失败！");
         }
         return response;
     }

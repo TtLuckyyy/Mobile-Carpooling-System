@@ -39,17 +39,20 @@ public class CalculateTool {
         double offerEndLat = offerEnd.get("latitude");
         double offerEndLng = offerEnd.get("longitude");
 
+
+
         // 使用 Haversine 计算起点偏差和终点偏差
         double startOffset = haversine(requestStartLat, requestStartLng, offerStartLat, offerStartLng);
         double endOffset = haversine(requestEndLat, requestEndLng, offerEndLat, offerEndLng);
 
-        return startOffset + endOffset; // 总偏差距离（单位：公里）
+        return (startOffset+endOffset); // 总偏差距离（单位：公里）
     }
 
     public double calculateTripDistance(Request request) {
         // 获取 Request 的起点、终点经纬度
         Map<String, Double> startCoords = BaiduMapAPI.getGeolocation(request.getStartLoc());
         Map<String, Double> endCoords = BaiduMapAPI.getGeolocation(request.getEndLoc());
+
 
         // 确保经纬度获取成功
         if (startCoords.isEmpty() || endCoords.isEmpty()) {

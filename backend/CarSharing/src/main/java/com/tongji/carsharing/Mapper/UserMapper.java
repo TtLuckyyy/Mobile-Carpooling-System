@@ -5,6 +5,7 @@ import com.tongji.carsharing.Entity.User;
 import org.apache.ibatis.annotations.*;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 @Mapper
 public interface UserMapper {
@@ -41,4 +42,14 @@ public interface UserMapper {
         @Select("SELECT * FROM users WHERE phone = #{phone} AND password = #{password}")
         User login(@Param("phone") String phone, @Param("password") String password);
 
+        // 获取用户当前信息
+        @Select("""
+        SELECT 
+            phone, 
+            total_mileage, 
+            avatar 
+        FROM users 
+        WHERE id = #{userId}
+    """)
+        Map<String, Object> getUserBasicInfo(@Param("userId") Integer userId);
 }

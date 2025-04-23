@@ -34,4 +34,24 @@ public interface OrderMapper {
           AND o.status = 'ONGOING'
     """)
     List<Map<String, Object>> selectOngoingOrdersByUserId(@Param("userId") int userId);
+
+    // 根据订单ID获取订单详情
+    @Select("""
+        SELECT 
+            r.distance AS distance,
+            d.real_name AS realName,
+            d.rating AS rating,
+            d.verification_car_model AS verificationCarModel,
+            d.verification_car_plate AS verificationCarPlate,
+            u.avatar AS avatar,
+            r.start_loc AS startLoc,
+            r.end_loc AS endLoc,
+            r.price AS price
+        FROM carpool_order o
+        JOIN carpool_request r ON o.request_id = r.id
+        JOIN verification d ON o.driver_id = d.verification_user_id
+        JOIN users u ON d.verification_user_id = u.id
+        WHERE o.id = #{orderId}
+    """)
+    Map<String, Object> selectCertainOrderInfo(@Param("orderId") Integer orderId);
 }

@@ -10,7 +10,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 public class BaiduMapAPI {
-    private static final String API_KEY = "qUvnqoxw0awJluKPaBmcvUam4wQYOHF7";
+    private static final String API_KEY = "EtqTJ1MT40bg44IsZf2fFe2eJmCD2l2e";
     private static final String BASE_URL = "https://api.map.baidu.com/geocoding/v3/?";
 
     public static Map<String, Double> getGeolocation(String address) {
@@ -34,8 +34,9 @@ public class BaiduMapAPI {
             int status = jsonResponse.getInt("status");
 
             if (status != 0) {
-                // 如果 API 调用失败，打印错误信息
-                System.out.println("Error: " + jsonResponse.getString("msg"));
+                // 更安全的处理方式
+                System.out.println("Error: API 调用失败，status = " + status);
+                System.out.println("完整响应：" + jsonResponse.toString());
             } else {
                 // 正常解析
                 JSONObject location = jsonResponse.getJSONObject("result").getJSONObject("location");

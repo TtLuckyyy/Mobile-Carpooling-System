@@ -29,11 +29,10 @@ public class RequestController {
     @Autowired
     private RequestService requestservice;
 
-    // 发布拼车需求
+    // 发布拼车需求（已测试）
     @PostMapping("/post-request")
     public Map<String, Object> PostCarpoolRequest(@RequestBody Request request) {
         Map<String, Object> response = new HashMap<>();
-        System.out.println(request);
 
         Timestamp createdAt = new Timestamp(System.currentTimeMillis());
         request.setCreatedAt(createdAt);
@@ -44,7 +43,7 @@ public class RequestController {
         if (request_id > 0) {
             response.put("status", "success");
             response.put("message", "拼车需求发布成功！");
-            response.put("id", request_id);
+            response.put("requestID", request_id);
         } else {
             response.put("status", "error");
             response.put("message", "拼车需求发布失败！");
@@ -53,6 +52,7 @@ public class RequestController {
         return response;
     }
 
+    // 查询需求表中的起始地点（已测试）
     @GetMapping("/get-start-loc-history")
     public Map<String, Object> getStartLocHistory(@RequestParam Integer userId) {  //使用方法：后端路径/参数，而非后端路径/?key=value
         Map<String, Object> response = new HashMap<>();
@@ -69,6 +69,7 @@ public class RequestController {
         return response;
     }
 
+    //查询需求表中的目标地点（已测试）
     @GetMapping("/get-end-loc-history")
     public Map<String, Object> getEndLocHistory(@RequestParam Integer userId) {  //使用方法：后端路径/参数，而非后端路径/?key=value
         Map<String, Object> response = new HashMap<>();
@@ -85,5 +86,20 @@ public class RequestController {
         return response;
     }
 
-
+    //获取用户当前所有的拼车需求
+    @GetMapping("/get-requests")
+    public Map<String, Object> getUserRequests(@RequestParam("userId") Integer userId) {
+        Map<String, Object> response = new HashMap<>();
+        List<Map<String, Object>> history = requestmapper.selectRequestsByUserId(userId);
+        if (!history.isEmpty()) {
+            response.put("status","success");
+            response.put("message", "拼车需求查询成功!");
+            response.put("history", history);
+        }
+        else{
+            response.put("status","error");
+            response.put("message","拼车需求查询失败！");
+        }
+        return response;
+    }
 }
