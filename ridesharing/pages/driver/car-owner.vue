@@ -128,195 +128,212 @@
 
 <script>
 export default {
-	data() {
-		return {
-			selectedCity: '上海市', // 固定为上海市
-			uploadItems: [
-				{ label: '驾驶证', desc: '准驾车型：至少包含A1, A2, A3, B1, B2, C1, C2', certified: false },
-				{ label: '行驶证', desc: '本人车辆或亲友车辆均可认证', certified: false },
-				{ label: '车辆照片', desc: '使用真实照片，座位数7座及以下', certified: false }
-			],
-			realNameCertified: false,
-			realName: '',
-			idNumber: '',
-			showAgreementDialog: false, // 控制协议弹窗显示
-			showUploadDialog: false, // 控制上传弹窗显示
-			currentUploadIndex: null, // 当前上传的项的索引
-			uploadedImage: '', // 存储上传的图片路径
-			agreeProtocol1: false, // 第一个协议勾选状态
-			agreeProtocol2: false, // 第二个协议勾选状态
-			isSubmitting: false // 防止重复点击
-		};
-	},
-	computed: {
-		currentUploadItem() {
-			return this.currentUploadIndex !== null ? this.uploadItems[this.currentUploadIndex] : null;
-		},
-		idNumberDisplay() {
-			if (!this.idNumber) return '';
-			return this.idNumber.slice(0, 1) + '*'.repeat(this.idNumber.length - 2) + this.idNumber.slice(-1);
-		},
-		isAllCertified() {
-			return this.realNameCertified && this.uploadItems.every(item => item.certified);
-		},
-		isAllAgreed() {
-			return this.agreeProtocol1 && this.agreeProtocol2;
-		}
-	},
-	methods: {
-		goBack() {
-			uni.navigateBack();
-		},
-		openAuthDialog() {
-			uni.showModal({
-				title: '实名认证 - 姓名',
-				content: '请输入您的姓名',
-				showCancel: true,
-				editable: true,
-				placeholderText: '请输入姓名',
-				success: res => {
-					if (res.confirm && res.content) {
-						this.realName = res.content.trim();
-						if (!this.realName) {
-							uni.showToast({
-								title: '姓名不能为空',
-								icon: 'none'
-							});
-							return;
-						}
-						uni.showModal({
-							title: '实名认证 - 身份证号',
-							content: '请输入您的身份证号',
-							showCancel: true,
-							editable: true,
-							placeholderText: '请输入身份证号',
-							success: res2 => {
-								if (res2.confirm && res2.content) {
-									this.idNumber = res2.content.trim();
-									// 验证长度
-									if (this.idNumber.length !== 18) {
-										uni.showToast({
-											title: '身份证号必须为18位',
-											icon: 'none'
-										});
-										return;
-									}
-									// 正则表达式验证身份证号格式
-									const idNumberRegex = /^[1-9]\d{16}(\d|X)$/i;
-									if (!idNumberRegex.test(this.idNumber)) {
-										uni.showToast({
-											title: '身份证号格式不正确',
-											icon: 'none'
-										});
-										return;
-									}
-									if (this.realName && this.idNumber.length === 18) {
-										this.realNameCertified = true;
-									} else {
-										uni.showToast({
-											title: '请输入有效信息',
-											icon: 'none'
-										});
-									}
-								}
-							}
-						});
-					} else if (res.confirm && !res.content) {
-						uni.showToast({
-							title: '姓名不能为空',
-							icon: 'none'
-						});
-					}
-				}
-			});
-		},
-		showAgreement() {
-			this.showAgreementDialog = true;
-		},
-		hideAgreement() {
-			this.showAgreementDialog = false;
-		},
-		openUploadDialog(index) {
-			this.currentUploadIndex = index;
-			this.uploadedImage = ''; // 重置上传图片
-			this.showUploadDialog = true;
-		},
-		closeUploadDialog() {
-			this.showUploadDialog = false;
-			this.currentUploadIndex = null;
-			this.uploadedImage = '';
-		},
-		chooseImage() {
-			uni.chooseImage({
-				count: 1,
-				sizeType: ['original', 'compressed'],
-				sourceType: ['album', 'camera'],
-				success: res => {
-					this.uploadedImage = res.tempFilePaths[0];
-				},
-				fail: err => {
-					uni.showToast({
-						title: '选择图片失败',
-						icon: 'none'
-					});
-				}
-			});
-		},
-		confirmUpload() {
-			if (this.currentUploadIndex !== null) {
-				this.uploadItems[this.currentUploadIndex].certified = true; // 标记为已认证
-			}
-			this.closeUploadDialog();
-		},
-		handleProtocolChange(e) {
-			const values = e.detail.value; // 获取勾选的值数组
-			this.agreeProtocol1 = values.includes('protocol1');
-			this.agreeProtocol2 = values.includes('protocol2');
-			// 调试：打印勾选状态
-			console.log('agreeProtocol1:', this.agreeProtocol1, 'agreeProtocol2:', this.agreeProtocol2);
-		},
-		submit() {
-			if (this.isSubmitting) return; // 防止重复点击
-			this.isSubmitting = true;
-			console.log('isAllCertified:', this.isAllCertified);
-			console.log('isAllAgreed:', this.isAllAgreed);
-			if (!this.isAllCertified) {
-				uni.showToast({
-					title: '请完成所有认证和上传',
-					icon: 'none'
-				});
-				this.isSubmitting = false;
-				return;
-			}
-			if (!this.isAllAgreed) {
-				uni.showToast({
-					title: '请同意所有协议',
-					icon: 'none'
-				});
-				this.isSubmitting = false;
-				return;
-			}
-			// 所有条件满足，跳转到 driver_search.vue
-			uni.redirectTo({
-				url: '/pages/driver/driver_search', // 修正路径
-				success: res => {
-					console.log('跳转成功:', res);
-				},
-				fail: err => {
-					console.error('跳转失败:', err);
-					uni.showToast({
-						title: '跳转失败，请检查路径',
-						icon: 'none'
-					});
-					this.isSubmitting = false;
-				},
-				complete: () => {
-					// 无论成功或失败，complete 都会执行
-					// 这里可以留空，或者添加其他逻辑
-				}
-			});
-		}
-	}
+  data() {
+    return {
+      selectedCity: '上海市', // 固定为上海市
+      uploadItems: [
+        { label: '驾驶证', desc: '准驾车型：至少包含A1, A2, A3, B1, B2, C1, C2', certified: false },
+        { label: '行驶证', desc: '本人车辆或亲友车辆均可认证', certified: false },
+        { label: '车辆照片', desc: '使用真实照片，座位数7座及以下', certified: false }
+      ],
+      realNameCertified: false,
+      realName: '',
+      idNumber: '',
+      showAgreementDialog: false, // 控制协议弹窗显示
+      showUploadDialog: false, // 控制上传弹窗显示
+      currentUploadIndex: null, // 当前上传的项的索引
+      uploadedImage: '', // 存储上传的图片路径
+      agreeProtocol1: false, // 第一个协议勾选状态
+      agreeProtocol2: false, // 第二个协议勾选状态
+      isSubmitting: false // 防止重复点击
+    };
+  },
+  computed: {
+    currentUploadItem() {
+      return this.currentUploadIndex !== null ? this.uploadItems[this.currentUploadIndex] : null;
+    },
+    idNumberDisplay() {
+      if (!this.idNumber) return '';
+      return this.idNumber.slice(0, 1) + '*'.repeat(this.idNumber.length - 2) + this.idNumber.slice(-1);
+    },
+    isAllCertified() {
+      return this.realNameCertified && this.uploadItems.every(item => item.certified);
+    },
+    isAllAgreed() {
+      return this.agreeProtocol1 && this.agreeProtocol2;
+    }
+  },
+  methods: {
+    goBack() {
+      uni.navigateBack();
+    },
+    openAuthDialog() {
+      uni.showModal({
+        title: '实名认证 - 姓名',
+        content: '请输入您的姓名',
+        showCancel: true,
+        editable: true,
+        placeholderText: '请输入姓名',
+        success: res => {
+          if (res.confirm && res.content) {
+            this.realName = res.content.trim();
+            if (!this.realName) {
+              uni.showToast({
+                title: '姓名不能为空',
+                icon: 'none'
+              });
+              return;
+            }
+            uni.showModal({
+              title: '实名认证 - 身份证号',
+              content: '请输入您的身份证号',
+              showCancel: true,
+              editable: true,
+              placeholderText: '请输入身份证号',
+              success: res2 => {
+                if (res2.confirm && res2.content) {
+                  this.idNumber = res2.content.trim();
+                  // 验证长度
+                  if (this.idNumber.length !== 18) {
+                    uni.showToast({
+                      title: '身份证号必须为18位',
+                      icon: 'none'
+                    });
+                    return;
+                  }
+                  // 正则表达式验证身份证号格式
+                  const idNumberRegex = /^[1-9]\d{16}(\d|X)$/i;
+                  if (!idNumberRegex.test(this.idNumber)) {
+                    uni.showToast({
+                      title: '身份证号格式不正确',
+                      icon: 'none'
+                    });
+                    return;
+                  }
+                  if (this.realName && this.idNumber.length === 18) {
+                    this.realNameCertified = true;
+                  } else {
+                    uni.showToast({
+                      title: '请输入有效信息',
+                      icon: 'none'
+                    });
+                  }
+                }
+              }
+            });
+          } else if (res.confirm && !res.content) {
+            uni.showToast({
+              title: '姓名不能为空',
+              icon: 'none'
+            });
+          }
+        }
+      });
+    },
+    showAgreement() {
+      this.showAgreementDialog = true;
+    },
+    hideAgreement() {
+      this.showAgreementDialog = false;
+    },
+    openUploadDialog(index) {
+      this.currentUploadIndex = index;
+      this.uploadedImage = ''; // 重置上传图片
+      this.showUploadDialog = true;
+    },
+    closeUploadDialog() {
+      this.showUploadDialog = false;
+      this.currentUploadIndex = null;
+      this.uploadedImage = '';
+    },
+    chooseImage() {
+      uni.chooseImage({
+        count: 1,
+        sizeType: ['original', 'compressed'],
+        sourceType: ['album', 'camera'],
+        success: res => {
+          this.uploadedImage = res.tempFilePaths[0];
+        },
+        fail: err => {
+          uni.showToast({
+            title: '选择图片失败',
+            icon: 'none'
+          });
+        }
+      });
+    },
+    confirmUpload() {
+      if (this.currentUploadIndex !== null) {
+        this.uploadItems[this.currentUploadIndex].certified = true; // 标记为已认证
+      }
+      this.closeUploadDialog();
+    },
+    handleProtocolChange(e) {
+      const values = e.detail.value; // 获取勾选的值数组
+      this.agreeProtocol1 = values.includes('protocol1');
+      this.agreeProtocol2 = values.includes('protocol2');
+      // 调试：打印勾选状态
+      console.log('agreeProtocol1:', this.agreeProtocol1, 'agreeProtocol2:', this.agreeProtocol2);
+    },
+    submit() {
+      if (this.isSubmitting) return; // 防止重复点击
+      this.isSubmitting = true;
+
+      if (!this.isAllCertified) {
+        uni.showToast({
+          title: '请完成所有认证和上传',
+          icon: 'none'
+        });
+        this.isSubmitting = false;
+        return;
+      }
+
+      if (!this.isAllAgreed) {
+        uni.showToast({
+          title: '请同意所有协议',
+          icon: 'none'
+        });
+        this.isSubmitting = false;
+        return;
+      }
+
+      // 保存认证状态为已认证
+      uni.setStorageSync('isAuthenticated', true);  // 认证状态保存到本地
+
+      // 所有条件满足，跳转到 driver_search 页面
+      uni.navigateTo({
+        url: '/pages/driver/driver_search', // 修正路径
+        success: res => {
+          console.log('跳转成功:', res);
+        },
+        fail: err => {
+          console.error('跳转失败:', err);
+          uni.showToast({
+            title: '跳转失败，请检查路径',
+            icon: 'none'
+          });
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          // 无论成功或失败，complete 都会执行
+          this.isSubmitting = false;
+        }
+      });
+    }
+  },
+  
+  // 页面加载时检查认证状态
+  onLoad() {
+    // 检查是否已经认证过
+    const isAuthenticated = uni.getStorageSync('isAuthenticated');
+
+    if (isAuthenticated) {
+      // 如果已认证，跳过认证页面，直接跳转到 driver_search 页面
+      uni.switchTab({
+        url: '/pages/driver/driver_search'
+      });
+    }
+  }
 };
 </script>
 

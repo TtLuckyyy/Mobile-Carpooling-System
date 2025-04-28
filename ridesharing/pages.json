@@ -40,6 +40,12 @@
 	      }
 	},
 	{
+	      "path": "pages/driver/invitations",
+	      "style": {
+	        "navigationBarTitleText": ""
+	      }
+	},
+	{
 		"path" : "pages/index/index",
 		"style" : 
 		{
