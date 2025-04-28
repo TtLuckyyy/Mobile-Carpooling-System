@@ -44,12 +44,25 @@ public interface UserMapper {
 
         // 获取用户当前信息
         @Select("""
-        SELECT 
-            phone, 
-            total_mileage, 
-            avatar 
-        FROM users 
-        WHERE id = #{userId}
-    """)
+        SELECT phone, total_mileage, avatar FROM users WHERE id = #{userId}""")
         Map<String, Object> getUserBasicInfo(@Param("userId") Integer userId);
+
+        // 获取用户详细信息
+        @Select("SELECT username, email, avatar, home_address, company_address FROM users WHERE id = #{userId}")
+        User selectDetailInfoById(Integer userId);
+
+        // 更新用户信息
+        @Mapper
+        @Update("UPDATE users SET username = #{username}, email = #{email}, avatar = #{avatar}, " +
+                "home_address = #{homeAddress}, company_address = #{companyAddress} " +
+                "WHERE id = #{userId}")
+        int updateUserInfo(
+                @Param("userId") Integer userId,
+                @Param("username") String username,
+                @Param("email") String email,
+                @Param("avatar") String avatar,
+                @Param("homeAddress") String homeAddress,
+                @Param("companyAddress") String companyAddress
+        );
+
 }
