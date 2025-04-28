@@ -20,6 +20,7 @@ public class AddressController {
         @Autowired
         private UserMapper usermapper;
 
+        // 获取用户常用地址
         @GetMapping("/get-user-addresses")
         public Map<String, Object> getUserAddresses(@RequestParam Integer userId) {
             Map<String, Object> response = new HashMap<>();

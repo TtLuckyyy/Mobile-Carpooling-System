@@ -29,7 +29,7 @@ public class RequestController {
     @Autowired
     private RequestService requestservice;
 
-    // 发布拼车需求（已测试）
+    // 发布拼车需求
     @PostMapping("/post-request")
     public Map<String, Object> PostCarpoolRequest(@RequestBody Request request) {
         Map<String, Object> response = new HashMap<>();
@@ -52,7 +52,7 @@ public class RequestController {
         return response;
     }
 
-    // 查询需求表中的起始地点（已测试）
+    // 查询需求表中的起始地点
     @GetMapping("/get-start-loc-history")
     public Map<String, Object> getStartLocHistory(@RequestParam Integer userId) {  //使用方法：后端路径/参数，而非后端路径/?key=value
         Map<String, Object> response = new HashMap<>();
@@ -69,7 +69,7 @@ public class RequestController {
         return response;
     }
 
-    //查询需求表中的目标地点（已测试）
+    //查询需求表中的目标地点
     @GetMapping("/get-end-loc-history")
     public Map<String, Object> getEndLocHistory(@RequestParam Integer userId) {  //使用方法：后端路径/参数，而非后端路径/?key=value
         Map<String, Object> response = new HashMap<>();

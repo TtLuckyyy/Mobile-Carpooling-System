@@ -36,7 +36,7 @@ public class OrderController {
 
     @Autowired
     private OrderMapper ordermapper;
-    //乘客发布需求后的匹配订单(完毕)
+    //乘客发布需求后的匹配订单
     @GetMapping("/matched-orders")
     public Map<String, Object> matchedOrders(@RequestParam Integer request_id) {
         Map<String, Object> response = new HashMap<>();
@@ -54,7 +54,7 @@ public class OrderController {
         return response;
     }
 
-    //订单创建（已测试）
+    //订单创建
     @PostMapping("/create-order")
     public Map<String, Object> createOrder(@RequestBody Order order) {
         Map<String, Object> response = new HashMap<>();
