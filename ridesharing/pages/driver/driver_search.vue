@@ -1,16 +1,13 @@
 <template>
   <view class="app-container">
-    <!-- 页面主体（添加了顶部间距） -->
     <view class="main-content">
-      <!-- 搜索表单容器 -->
+      <!-- 搜索表单 -->
       <view class="search-form-container">
-        <!-- Tab按钮 -->
         <view class="location-tabs">
           <view class="tab" :class="{ active: activeTab === '市内' }" @click="activeTab = '市内'">市内</view>
           <view class="tab" :class="{ active: activeTab === '城际' }" @click="activeTab = '城际'">城际</view>
         </view>
 
-        <!-- 表单输入 -->
         <view class="search-form">
           <view class="input-group">
             <view class="dot green"></view>
@@ -21,27 +18,23 @@
             <input type="text" v-model="endLocation" placeholder="您的目的地" class="form-input" />
           </view>
 
-          <!-- 位置标签 -->
           <view class="location-tags">
             <view class="tag" v-for="(tag, index) in locationTags" :key="index" @click="selectLocation(tag)">
               {{ tag }}
             </view>
           </view>
 
-          <!-- 时间选择器 -->
           <view class="time-picker" @click="showTimePicker">
             <text class="clock-icon">🕘</text>
             <text>{{ formattedTime }}</text>
           </view>
 
-          <!-- 搜索按钮 -->
           <button class="search-button" @click="searchRides">发布并搜索</button>
         </view>
       </view>
 
-      <!-- 添加新的中间导航模块 -->
+      <!-- 导航卡片 -->
       <view class="navigation-cards">
-        <!-- 拼车邀请卡片 -->
         <view class="nav-card invitation-card" @click="goToInvitations">
           <view class="nav-card-content">
             <view class="nav-card-title">拼车邀请</view>
@@ -51,52 +44,40 @@
             <text class="count-number">{{ invitationCount }}</text>
             <text class="count-unit">条</text>
           </view>
-          <view class="nav-card-detail">
-            详情 >
-          </view>
+          <view class="nav-card-detail">详情 ></view>
         </view>
 
-        <!-- 我的行程卡片 -->
         <view class="nav-card trip-card" @click="goToMyTrips">
           <view class="nav-card-content">
             <view class="nav-card-title">我的行程</view>
             <view class="nav-card-subtitle">历史拼车订单</view>
           </view>
-          <view class="nav-card-detail">
-            详情 >
-          </view>
+          <view class="nav-card-detail">详情 ></view>
         </view>
       </view>
 
       <!-- 路线标签 -->
       <view class="route-tabs">
-        <view class="route-tab" :class="{ active: activeRouteTab === '市内路线' }" @click="activeRouteTab = '市内路线'">
-          市内路线
-        </view>
-        <view class="route-tab" :class="{ active: activeRouteTab === '城际路线' }" @click="activeRouteTab = '城际路线'">
-          城际路线
-        </view>
+        <view class="route-tab" :class="{ active: activeRouteTab === '市内路线' }" @click="activeRouteTab = '市内路线'">市内路线</view>
+        <view class="route-tab" :class="{ active: activeRouteTab === '城际路线' }" @click="activeRouteTab = '城际路线'">城际路线</view>
       </view>
 
       <!-- 行程列表 -->
       <view v-if="tripListItems.length > 0">
-        <TripList v-for="(item, index) in tripListItems" :key="index" :item="item" />
+        <InvitationList v-for="(item, index) in tripListItems" :key="index" :item="item" />
       </view>
-      
       <view v-else class="empty-tips">
-        <text>暂无可用行程</text>
+        <text>暂无拼车邀请</text>
       </view>
     </view>
   </view>
 </template>
 
 <script>
-import TripList from "@/components/TripList.vue";
+import InvitationList from "@/components/InvitationList.vue";
 
 export default {
-  components: {
-    TripList
-  },
+  components: { InvitationList },
   data() {
     return {
       activeTab: '市内',
@@ -105,30 +86,8 @@ export default {
       endLocation: '',
       selectedTime: new Date(),
       locationTags: ['上海南站', '虹桥1', '虹桥2', '浦东3', '浦东4'],
-      invitationCount: 3, // 拼车邀请数量
-      tripListItems: [
-        {
-          startAt: "2024-03-17 10:55",
-          startLoc: "汽车港",
-          endLoc: "上海市交通大学",
-          phone: "13812345678",
-          price: 45.80
-        },
-        {
-          startAt: "2024-03-17 12:30",
-          startLoc: "龙阳路地铁站",
-          endLoc: "复旦大学",
-          phone: "13987654321",
-          price: 38.50
-        },
-        {
-          startAt: "2024-03-17 15:20",
-          startLoc: "人民广场",
-          endLoc: "上海交通大学",
-          phone: "13765432198",
-          price: 32.00
-        }
-      ]
+      invitationCount: 3,
+      tripListItems: [],
     }
   },
   computed: {
@@ -136,31 +95,25 @@ export default {
       const now = this.selectedTime;
       const today = new Date();
       let prefix = '今天';
-      
       if (now.getDate() !== today.getDate()) {
         prefix = `${now.getMonth() + 1}月${now.getDate()}日`;
       }
-      
       const hours = now.getHours().toString().padStart(2, '0');
       const minutes = now.getMinutes().toString().padStart(2, '0');
-      
       return `${prefix}${hours}:${minutes}`;
     }
   },
   methods: {
     selectLocation(tag) {
-      // 可以根据需要决定是设置出发地还是目的地
       if (!this.startLocation) {
         this.startLocation = tag;
       } else if (!this.endLocation) {
         this.endLocation = tag;
       } else {
-        // 如果两个都已经有值，可以选择更新其中一个
         this.startLocation = tag;
       }
     },
     showTimePicker() {
-      // 显示时间选择器的逻辑
       uni.showDatePicker({
         date: this.selectedTime.toISOString(),
         success: (res) => {
@@ -169,68 +122,47 @@ export default {
       });
     },
     searchRides() {
-      // 搜索逻辑
-      // 实际开发中，这里会调用API获取数据
-      uni.showLoading({
-        title: '搜索中...'
-      });
-      
-      setTimeout(() => {
-        uni.hideLoading();
-        uni.showToast({
-          title: '搜索成功',
-          icon: 'success'
-        });
-      }, 1500);
+      this.getRides();
     },
     goToInvitations() {
-      // 跳转到拼车邀请页面
-      uni.navigateTo({
-        url: '/pages/driver/invitations'
-      });
+      uni.navigateTo({ url: '/pages/driver/invitations' });
     },
     goToMyTrips() {
-      // 跳转到我的行程页面
-      uni.navigateTo({
-        url: '/pages/driver/driverTripList'
-      });
+      uni.navigateTo({ url: '/pages/driver/driverTripList' });
     },
     async getRides() {
       try {
         const response = await uni.request({
-          url: 'http://localhost:8083/carsharing/search-rides',
-          method: 'POST',
-          header: {
-            'Content-Type': 'application/json'
-          },
-          data: {
-            startLocation: this.startLocation,
-            endLocation: this.endLocation,
-            time: this.selectedTime.toISOString(),
-            type: this.activeTab
-          }
+          url: 'http://localhost:8083/get-all-invitations',
+          method: 'GET',
+          header: { 'Content-Type': 'application/json' }
         });
-        
-        if (response.data.status === 'success') {
-          this.tripListItems = response.data.rides.map(item => ({
-            startAt: item.start_time || '未知时间',
-            startLoc: item.start_location || '未知位置',
-            endLoc: item.end_location || '未知位置',
-            status: item.status || 'ONGOING',
-            phone: item.phone || '00000000000',
-            price: item.price || 0.00
+
+        if (response.data && response.data.length > 0) {
+          this.tripListItems = response.data.map(item => ({
+            startAt: item.start_at,
+            startLoc: item.start_loc,
+            endLoc: item.end_loc,
+            distance: item.distance,
+            price: item.price,
+            status: item.status,
+            exclusive: item.exclusive,
+            highway: item.highway
           }));
         } else {
-          throw new Error(response.data.message || '搜索失败');
+          this.tripListItems = [];
         }
       } catch (error) {
-        console.error('搜索失败:', error);
+        console.error('拉取失败:', error);
         uni.showToast({
-          title: error.message || '搜索失败',
+          title: '拉取失败',
           icon: 'none'
         });
       }
     }
+  },
+  onLoad() {
+    this.getRides();
   }
 }
 </script>
@@ -383,7 +315,7 @@ export default {
 }
 
 .nav-card-title {
-  font-size: 16px;
+  font-size: 22px;
   font-weight: bold;
   margin-bottom: 4px;
 }

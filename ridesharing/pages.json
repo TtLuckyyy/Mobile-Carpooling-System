@@ -110,6 +110,20 @@
 		}
 	},
 	{
+		"path" : "components/InvitationList",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "components/DriverInvitationList",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
 		"path" : "pages/driver/driverTripList",
 		"style" : 
 		{

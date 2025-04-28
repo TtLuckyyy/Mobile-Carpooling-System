@@ -500,7 +500,7 @@
 }
 @font-face {
   font-family: uniicons;
-  src: url("../../assets/uniicons.32e978a5.ttf");
+  src: url("../assets/uniicons.32e978a5.ttf");
 }
 .uni-icons[data-v-d31e1c47] {
   font-family: uniicons;
@@ -509,7 +509,7 @@
 }
 
 /* 邻接样式：字体大小、加粗、颜色一一对应 */
-.block[data-v-4846c26a] {
+.block[data-v-b8211e3d] {
   background: #fff;
   padding: 15px 20px;
   margin: 10px 15px;
@@ -519,38 +519,38 @@
   flex-direction: column;
   position: relative;
 }
-.time-text[data-v-4846c26a] {
+.time-text[data-v-b8211e3d] {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
 }
-.location-row[data-v-4846c26a] {
+.location-row[data-v-b8211e3d] {
   display: flex;
   align-items: center;
   position: relative;
   margin-bottom: 10px;
 }
-.location-section[data-v-4846c26a] {
+.location-section[data-v-b8211e3d] {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
-.location-item[data-v-4846c26a] {
+.location-item[data-v-b8211e3d] {
   display: flex;
   align-items: center;
   margin-bottom: 4px;
 }
-.location-text[data-v-4846c26a] {
+.location-text[data-v-b8211e3d] {
   margin-left: 8px;
   font-size: 14px;
   font-weight: bold;
 }
-.dashed-line[data-v-4846c26a] {
+.dashed-line[data-v-b8211e3d] {
   height: 18px;
   border-left: 1px dashed #ccc;
   margin: 4px 12px;
 }
-.amount-on-right[data-v-4846c26a] {
+.amount-on-right[data-v-b8211e3d] {
   position: absolute;
   right: 15px;
   top: 50%;
@@ -559,230 +559,31 @@
   display: flex;
   align-items: center;
 }
-.price-number[data-v-4846c26a] {
+.price-number[data-v-b8211e3d] {
   color: var(--color-red);
   font-size: 30px;
   font-weight: bold;
 }
-.price-unit[data-v-4846c26a] {
+.price-unit[data-v-b8211e3d] {
   color: var(--color-blue);
   font-size: 16px;
   font-weight: bold;
   margin-left: 2px;
 }
-.tags-row[data-v-4846c26a] {
+.tags-row[data-v-b8211e3d] {
   display: flex;
   flex-wrap: wrap;
   margin-top: 5px;
   gap: 8px;
 }
-.tag[data-v-4846c26a] {
+.tag[data-v-b8211e3d] {
   background: #f5f5f5;
   padding: 4px 8px;
   font-size: 12px;
   border-radius: 5px;
   color: #666;
 }
-.tag-blue[data-v-4846c26a] {
+.tag-blue[data-v-b8211e3d] {
   background-color: #e0f0ff;
   color: #007aff;
-}
-
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-.app-container {
-  width: 100%;
-  min-height: 100vh;
-  background-color: #f5f5f5;
-  position: relative;
-  max-width: 500px;
-  margin: 0 auto;
-}
-.main-content {
-  padding: 50px 0 60px; /* 顶部增加间距，底部为tabBar留出空间 */
-}
-
-/* 搜索表单容器 */
-.search-form-container {
-  background-color: #fffbeb;
-  margin: 0 15px;
-  border-radius: 20px;
-  padding: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  position: relative;
-}
-
-/* 位置标签 */
-.location-tabs {
-  display: flex;
-  margin-bottom: 15px;
-}
-.tab {
-  padding: 5px 10px;
-  font-weight: bold;
-  flex: 1;
-  text-align: center;
-  font-size: 18px;
-  color: #aaa;
-}
-.tab.active {
-  color: #000;
-}
-
-/* 搜索表单输入 */
-.input-group {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  padding: 12px 15px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-.dot.green {
-  background-color: #3ea87a;
-}
-.dot.orange {
-  background-color: #f17a3d;
-}
-.form-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 14px;
-}
-.input-icon {
-  font-size: 16px;
-  color: #bbb;
-}
-
-/* 位置标签 */
-.location-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 15px 0;
-}
-.tag {
-  background-color: #f5f5f5;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  color: #666;
-}
-
-/* 时间选择器 */
-.time-picker {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 15px 0;
-  font-size: 14px;
-}
-
-/* 搜索按钮 */
-.search-button {
-  width: 100%;
-  background-color: #3ea87a;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 12px;
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-/* 中间导航卡片 */
-.navigation-cards {
-  display: flex;
-  margin: 15px;
-  gap: 10px;
-}
-.nav-card {
-  flex: 1;
-  background-color: white;
-  border-radius: 10px;
-  padding: 15px;
-  display: flex;
-  position: relative;
-  min-height: 80px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-.nav-card-content {
-  flex-grow: 1;
-}
-.nav-card-title {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 4px;
-}
-.nav-card-subtitle {
-  font-size: 12px;
-  color: #666;
-}
-.invitation-card {
-  border-top: 3px solid #e74c3c;
-}
-.trip-card {
-  border-top: 3px solid #3498db;
-}
-.nav-card-count {
-  display: flex;
-  align-items: center;
-  color: #e74c3c;
-}
-.count-number {
-  font-size: 32px;
-  font-weight: bold;
-  margin-right: 2px;
-}
-.count-unit {
-  font-size: 14px;
-}
-.nav-card-detail {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  font-size: 12px;
-  color: #3498db;
-}
-
-/* 路线标签 */
-.route-tabs {
-  display: flex;
-  margin: 15px 0;
-  padding: 0 15px;
-}
-.route-tab {
-  padding: 8px 0;
-  margin-right: 20px;
-  font-weight: bold;
-  position: relative;
-  font-size: 16px;
-}
-.route-tab.active {
-  color: #000;
-  border-bottom: 3px solid #000;
-}
-.route-tab:not(.active) {
-  color: #999;
-}
-
-/* 空提示 */
-.empty-tips {
-  text-align: center;
-  padding: 30px 0;
-  color: #999;
-  font-size: 14px;
 }
