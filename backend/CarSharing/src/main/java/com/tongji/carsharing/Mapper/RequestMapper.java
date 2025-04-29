@@ -43,7 +43,7 @@ public interface RequestMapper
             end_loc, 
             status
         FROM carpool_request
-        WHERE user_id = #{userId}
+        WHERE id = #{userId}
         ORDER BY start_at DESC
     """)
     List<Map<String, Object>> selectRequestsByUserId(@Param("userId") Integer userId);
