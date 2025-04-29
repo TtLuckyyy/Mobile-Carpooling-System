@@ -25,23 +25,23 @@
 			return {
 				requestnumber:0,
 				RequestBlockItems: [
-					{
-						startAt: '2023-05-15 08:30',
-						startLoc: '北京市海淀区中关村',
-						endLoc: '北京市朝阳区国贸',
-						status:'pending',
-					},
-					{
-						startAt: '2023-05-15 09:15',
-						startLoc: '北京市海淀区五道口',
-						endLoc: '北京市西城区金融街',
-						status:'completed',
-					},
+					// {
+					// 	startAt: '2023-05-15 08:30',
+					// 	startLoc: '北京市海淀区中关村',
+					// 	endLoc: '北京市朝阳区国贸',
+					// 	status:'pending',
+					// },
+					// {
+					// 	startAt: '2023-05-15 09:15',
+					// 	startLoc: '北京市海淀区五道口',
+					// 	endLoc: '北京市西城区金融街',
+					// 	status:'completed',
+					// },
 					],
 			}
 		},
 		onLoad() {
-			// this.getRequests();
+			this.getRequests();
 		},
 		methods: {
 			async getRequests() {
@@ -50,33 +50,30 @@
 			  
 			  try {
 			    // 检查是否有用户ID
-			    if (!this.userID) {
-			      throw new Error('用户未登录');
-			    }
+			    // if (!this.userID) {
+			    //   throw new Error('用户未登录');
+			    // }
 			    
 			    const response = await uni.request({
-			      url: 'http://localhost:8083/carsharing/get-requests',
+			      url: 'http://localhost:8083/carsharing/get-requests?userId=1',
 			      method: 'GET',
-			      data: {
-			        user_id: this.userID // 传递当前用户ID
-			      },
 			      header: {
 			        'Content-Type': 'application/json'
 			      }
 			    });
-			    
+				
 			    // 处理响应数据
 			    if (response.data.status === 'success') {
-			      const res = response.data;
+			      const res = response.data.history;
 			      
-			      if (res.requests && res.requests.length > 0) {
-			        this.RequestBlockItems = res.requests.map(item => ({
-			          startAt: item.start_at || '未知时间',
-			          startLoc: item.start_loc || ['未知位置'],
-			          endLoc: item.end_loc || ['未知位置'],
+			      if (res && res.length > 0) {
+			        this.RequestBlockItems = res.map(item => ({
+			          startAt: item.startAt || '未知时间',
+			          startLoc: item.startLoc || ['未知位置'],
+			          endLoc: item.endLoc || ['未知位置'],
 			          status: item.status || '未知状态',
 			        }));
-			        this.requestnumber = res.requests.length;
+			        this.requestnumber = res.length;
 			      } else {
 			        this.RequestBlockItems = [];
 			        this.requestnumber = 0;

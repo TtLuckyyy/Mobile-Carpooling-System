@@ -20,7 +20,7 @@
 			</view>
 			
 			<view class="right">
-				<view class="edit-btn" v-if="item.status === 'pending' || item.status === 'matched'">
+				<view class="edit-btn" v-if="item.status === 'PENDING' || item.status === 'MATCHED'">
 					<text class="edit-text">修改</text>
 				    <image src="/static/right-arrow-blue.png" class="right-arrow"@click="editRequest"></image>
 				</view>
@@ -28,10 +28,10 @@
 				
 				  <text class="status" :class="'status-' + item.status">
 					{{ 
-					  item.status === 'pending' ? '待接单' : 
-					  item.status === 'matched' ? '进行中' : 
-					  item.status === 'completed' ? '已完成' : 
-					  item.status === 'canceled' ? '已取消' : ''
+					  item.status === 'PENDING' ? '待接单' : 
+					  item.status === 'MATCHED' ? '进行中' : 
+					  item.status === 'COMPLETED' ? '已完成' : 
+					  item.status === 'CANCELED' ? '已取消' : ''
 					}}
 				  </text>
 			</view>
@@ -142,19 +142,19 @@
 }
 
 /* 不同状态的具体样式 */
-.status-pending {
+.status-PENDING {
   background-color: var(--color-orange); /* 待接单 - 橙色 */
 }
 
-.status-matched {
+.status-MATCHED {
   background-color: var(--color-green); /* 进行中 - 绿色 */
 }
 
-.status-completed {
+.status-COMPLETED {
   background-color: var(--color-blue); /* 已完成 - 蓝色 */
 }
 
-.status-canceled {
+.status-CANCELED {
   background-color: var(--color-grey); /* 已取消 - 灰色 */
 }
 </style>

@@ -96,7 +96,7 @@
 			"navigationBarTitleText" : ""
 		}
 	},
-        	{
+    {
 		"path" : "components/TripList",
 		"style" : 
 		{
@@ -104,7 +104,21 @@
 		}
 	},
 	{
+		"path" : "components/InvitationList",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
 		"path" : "pages/driver/driverTripList",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/driver/invitations",
 		"style" : 
 		{
 			"navigationBarTitleText" : ""

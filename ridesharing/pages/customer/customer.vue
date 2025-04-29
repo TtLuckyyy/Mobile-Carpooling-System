@@ -145,7 +145,7 @@ export default {
     ...mapState(['userID', 'rideRequest','rideOrder']),
   },
   onLoad() {
-	// this.getRequests();
+	this.getRequests();
 	this.getCurrentOrder();
   },
   methods: {
@@ -381,16 +381,13 @@ export default {
 	  
 	  try {
 		// 检查是否有用户ID
-		if (!this.userID) {
-		  throw new Error('用户未登录');
-		}
+		// if (!this.userID) {
+		//   throw new Error('用户未登录');
+		// }
 		
 		const response = await uni.request({
-		  url: 'http://localhost:8083/carsharing/get-requests',
+		  url: 'http://localhost:8083/carsharing/get-requests?userId=1',
 		  method: 'GET',
-		  data: {
-			user_id: this.userID // 传递当前用户ID
-		  },
 		  header: {
 			'Content-Type': 'application/json'
 		  }
@@ -398,11 +395,11 @@ export default {
 		
 		// 处理响应数据
 		if (response.data.status === 'success') {
-		  const res = response.data;
-		  
-		  if (res.requests && res.requests.length > 0) {
+		  const res = response.data.history;
+		  console.log(res)
+		  if (res && res.length > 0) {
 			// 只统计 status 为 'pending' 的请求数量
-			this.requestnumber = res.requests.filter(request => request.status === 'pending').length;
+			this.requestnumber = res.filter(request => request.status === 'PENDING').length;
 		  } else {
 			this.requestnumber = 0; // 没有请求时设为0
 		  }

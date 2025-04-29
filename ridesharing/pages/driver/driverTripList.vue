@@ -45,7 +45,7 @@
 			}
 		},
 		onLoad() {
-			// this.getRequests();
+			 this.getRequests();
 		},
 		methods: {
 			async getRequests() {
@@ -54,33 +54,36 @@
 			  
 			  try {
 			    // 检查是否有用户ID
-			    if (!this.userID) {
-			      throw new Error('用户未登录');
-			    }
+				console.log(2);
+
+
+			    //if (!this.userID) {
+			    //  throw new Error('用户未登录');
+			    //}
 			    
 			    const response = await uni.request({
 			      //url: `http://localhost:8083/carsharing/get-driver-trip-list?userId=${this.userID}`,
-			      url: `http://localhost:8083/carsharing/get-driver-trip-list?userId=1`, // 直接拼接参数
+			      url: `http://localhost:8083/carsharing/get-driver-trip-list?userId=2`, // 直接拼接参数
 			      method: 'GET',
 			      header: {
 			        'Content-Type': 'application/json'
 			      }
 			    });
-			    
+			    console.log(response);
 			    // 处理响应数据
 			    if (response.data.status === 'success') {
-			      const res = response.data;
-			      
-			      if (res.requests && res.requests.length > 0) {
-			        this.tripListItems = res.requests.map(item => ({
-			          startAt: item.start_at || '未知时间',
-			          startLoc: item.start_loc || ['未知位置'],
-			          endLoc: item.end_loc || ['未知位置'],
+			      const res = response.data.history;
+			      console.log(res);
+			      if (res && res.length > 0) {
+			        this.tripListItems = res.map(item => ({
+			          startAt: item.startAt || '未知时间',
+			          startLoc: item.startLoc || ['未知位置'],
+			          endLoc: item.endLoc || ['未知位置'],
 			          status: item.status || '未知状态',
 					  phone:item.phone||'xxxx',
 					  price:item.price||0.00,
 			        }));
-			        this.requestnumber = res.requests.length;
+			        this.requestnumber = res.length;
 			      } else {
 			        this.tripListItems = [];
 			        this.requestnumber = 0;
