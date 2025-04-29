@@ -140,7 +140,7 @@ export default {
 
         if (response.data.history && response.data.history.length > 0) {
           this.tripListItems = response.data.history.map(item => ({
-            startAt: item.start_at ? new Date(item.start_at) : null,  // 提前转好
+            startAt: item.start_at || '未知时间',
             startLoc: item.start_loc || '未知',
             endLoc: item.end_loc || '未知',
             distance: item.distance,
