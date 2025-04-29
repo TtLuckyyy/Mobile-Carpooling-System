@@ -122,7 +122,7 @@ export default {
       });
     },
     searchRides() {
-      this.getRides();
+      //this.getRides();
     },
     goToInvitations() {
       uni.navigateTo({ url: '/pages/driver/invitations' });
@@ -133,21 +133,21 @@ export default {
     async getRides() {
       try {
         const response = await uni.request({
-          url: 'http://localhost:8083/get-all-invitations',
+          url: 'http://localhost:8083/carsharing/get-all-invitations',
           method: 'GET',
           header: { 'Content-Type': 'application/json' }
         });
 
-        if (response.data && response.data.length > 0) {
-          this.tripListItems = response.data.map(item => ({
-            startAt: item.start_at,
-            startLoc: item.start_loc,
-            endLoc: item.end_loc,
+        if (response.data.history && response.data.history.length > 0) {
+          this.tripListItems = response.data.history.map(item => ({
+            startAt: item.start_at ? new Date(item.start_at) : null,  // 提前转好
+            startLoc: item.start_loc || '未知',
+            endLoc: item.end_loc || '未知',
             distance: item.distance,
             price: item.price,
-            status: item.status,
-            exclusive: item.exclusive,
-            highway: item.highway
+            status: item.status || '',
+            exclusive: item.exclusive || false,
+            highway: item.highway || false
           }));
         } else {
           this.tripListItems = [];
