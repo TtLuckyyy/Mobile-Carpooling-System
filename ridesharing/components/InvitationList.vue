@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="block">
-      <view class="time-text">{{ formatDate(item.startAt) }}</view>
+      <view class="time-text">{{ formatDateTime(item.startAt) }}</view>
 
       <view class="location-row">
         <view class="location-section">
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import { formatDateTime } from '@/utils/functions/formatDateTime';
+
 export default {
   props: {
     item: {
@@ -51,14 +53,7 @@ export default {
     }
   },
   methods: {
-    formatDate(startAt) {
-      const date = new Date(startAt);
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      const hours = date.getHours().toString().padStart(2, '0');
-      const minutes = date.getMinutes().toString().padStart(2, '0');
-      return `${month}月${day}日 ${hours}:${minutes}`;
-    }
+    formatDateTime
   }
 }
 </script>
