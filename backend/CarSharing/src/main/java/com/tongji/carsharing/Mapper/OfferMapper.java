@@ -30,20 +30,20 @@ public interface OfferMapper {
     @Select("UPDATE carpool_offer SET status = #{status} WHERE id = #{Id}")
     void updateOfferStatus(@Param("Id") int Id, @Param("status") enums.PDStatus status);
 
-    // 获取用户最近行程
     @Select("""
-        SELECT 
-            f.start_at AS startAt,
-            f.start_loc AS startLoc,
-            f.end_loc AS endLoc,
-            o.status AS status,
-            u.phone AS phone,
-            o.price AS price
-        FROM carpool_order o
-        JOIN carpool_offer f ON o.request_id = f.id
-        JOIN users u ON o.driver_id = u.id
-        WHERE o.driver_id = #{userId}
-        ORDER BY f.start_at DESC
-    """)
+    SELECT 
+        f.start_at AS startAt,
+        f.start_loc AS startLoc,
+        f.end_loc AS endLoc,
+        o.status AS status,
+        u.phone AS phone,
+        o.price AS price
+    FROM carpool_offer f
+    JOIN carpool_order o ON f.id = o.offer_id
+    JOIN users u ON o.passenger_id = u.id
+    WHERE f.driver_id = #{userId}
+    ORDER BY f.start_at DESC
+""")
     List<Map<String, Object>> getDriverOfferList(@Param("userId") Integer userId);
+
 }

@@ -23,10 +23,9 @@ public class OfferController {
 
     // 获取车主最近的行程
     @GetMapping("/get-driver-trip-list")
-    public Map<String, Object> getDriverInviteTrips(@PathVariable Integer userId) {
+    public Map<String, Object> getDriverInviteTrips(@RequestParam Integer userId) {
         Map<String, Object> response = new HashMap<>();
         List<Map<String, Object>> history = offermapper.getDriverOfferList(userId);
-        Map<String, Object> res = new HashMap<>();
         if (history!= null) {
             response.put("status", "success");
             response.put("message", "获取用户最近行程成功！");

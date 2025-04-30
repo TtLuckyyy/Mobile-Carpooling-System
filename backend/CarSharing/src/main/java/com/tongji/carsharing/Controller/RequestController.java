@@ -86,19 +86,37 @@ public class RequestController {
         return response;
     }
 
-    //获取用户当前所有的拼车需求
+    //获取用户当前所有的拼车需求（简略的）
     @GetMapping("/get-requests")
     public Map<String, Object> getUserRequests(@RequestParam("userId") Integer userId) {
         Map<String, Object> response = new HashMap<>();
         List<Map<String, Object>> history = requestmapper.selectRequestsByUserId(userId);
+        System.out.println(history);
         if (!history.isEmpty()) {
             response.put("status","success");
-            response.put("message", "拼车需求查询成功!");
+            response.put("message", "当前用户拼车需求查询成功!");
             response.put("history", history);
         }
         else{
             response.put("status","error");
-            response.put("message","拼车需求查询失败！");
+            response.put("message","当前用户拼车需求查询失败！");
+        }
+        return response;
+    }
+
+    // 获取所有的用户需求
+    @GetMapping("/get-all-invitations")
+    public Map<String, Object> getAllRequests() {
+        Map<String, Object> response = new HashMap<>();
+        List<Map<String, Object>> history = requestmapper.selectAllRequests();
+        if (!history.isEmpty()) {
+            response.put("status","success");
+            response.put("message", "所有拼车需求查询成功!");
+            response.put("history", history);
+        }
+        else{
+            response.put("status","error");
+            response.put("message","所有拼车需求查询失败！");
         }
         return response;
     }
