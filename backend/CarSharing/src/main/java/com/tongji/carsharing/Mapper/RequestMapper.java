@@ -38,13 +38,30 @@ public interface RequestMapper
     // 根据用户ID查询所有拼车需求
     @Select("""
         SELECT 
-            start_at, 
-            start_loc, 
-            end_loc, 
+            start_at As startAt, 
+            start_loc AS startLoc, 
+            end_loc AS endLoc, 
             status
         FROM carpool_request
-        WHERE user_id = #{userId}
+        WHERE passenger_id = #{userId}
         ORDER BY start_at DESC
     """)
     List<Map<String, Object>> selectRequestsByUserId(@Param("userId") Integer userId);
+
+    // 查询所有拼车需求记录（不筛选 userId）
+    @Select("""
+    SELECT
+        start_at As startAt,
+        start_loc AS startLoc,
+        end_loc AS endLoc,
+        distance AS distance,
+        status AS status,
+        price AS price,
+        highway AS highway,
+        exclusive AS exclusive
+    FROM carpool_request
+    ORDER BY start_at DESC
+""")
+    List<Map<String, Object>> selectAllRequests();
+
 }

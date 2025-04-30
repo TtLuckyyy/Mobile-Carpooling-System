@@ -107,21 +107,65 @@ public class UserController {
 
     // 获取个人信息
     @GetMapping("/my")
-    public Map<String, Object> getUserInfo(@RequestBody Integer userId) {
+    public Map<String, Object> getUserInfo(@RequestParam Integer userId) {
         Map<String, Object> response = new HashMap<>();
         Map<String, Object> userInfo = usermapper.getUserBasicInfo(userId);
         if (userInfo!= null ) {
             response.put("status", "success");
-            response.put("message", "密码修改成功！");
+            response.put("message", "信息获取成功！");
             response.put("userInfo", userInfo);
         } else {
             response.put("status", "error");
-            response.put("message", "密码修改失败！");
+            response.put("message", "信息获取失败！");
         }
 
         return response;
     }
 
-    // 修改用户信息
+    // 显示用户详细信息
+    @GetMapping("/get-user-info")
+    public Map<String, Object> getUserDetailedInfo(@RequestParam Integer userId) {
+        Map<String, Object> response = new HashMap<>();
 
+        User user = usermapper.selectDetailInfoById(userId);  // 查询用户信息
+        if (user != null) {
+            response.put("username", user.getUsername());
+            response.put("email", user.getEmail());
+            response.put("avatar", user.getAvatar());
+            response.put("homeAddress", user.getHomeAddress());
+            response.put("companyAddress", user.getCompanyAddress());
+
+            response.put("status", "success");
+            response.put("message", "获取用户信息成功！");
+        } else {
+            response.put("status", "error");
+            response.put("message", "未找到用户信息");
+        }
+
+        return response;
+    }
+
+    @PostMapping("/update-user-info")
+    public Map<String, Object> updateUserInfo(@RequestBody Map<String, Object> requestData) {
+        Map<String, Object> response = new HashMap<>();
+
+        // 从 map 中取出字段
+        Integer userId = (Integer) requestData.get("userId");
+        String username = (String) requestData.get("username");
+        String email = (String) requestData.get("email");
+        String avatar = (String) requestData.get("avatar");
+        String homeAddress = (String) requestData.get("homeAddress");
+        String companyAddress = (String) requestData.get("companyAddress");
+
+        int success = usermapper.updateUserInfo(userId, username, email, avatar, homeAddress, companyAddress);
+
+        if (success==1) {
+            response.put("status", "success");
+            response.put("message", "更新用户信息成功！");
+        } else {
+            response.put("status", "fail");
+            response.put("message", "更新用户信息失败！");
+        }
+        return response;
+    }
 }
