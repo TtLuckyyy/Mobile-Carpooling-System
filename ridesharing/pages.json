@@ -40,6 +40,12 @@
 	      }
 	},
 	{
+	      "path": "pages/driver/search-result",
+	      "style": {
+	        "navigationBarTitleText": "搜索结果"
+	      }
+	},
+	{
 		"path" : "pages/index/index",
 		"style" : 
 		{

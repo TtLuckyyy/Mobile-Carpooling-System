@@ -11,11 +11,11 @@
         <view class="search-form">
           <view class="input-group">
             <view class="dot green"></view>
-            <input type="text" v-model="startLocation" placeholder="您的出发地" class="form-input" />
+            <input type="text" v-model="rideOrder.startLoc" placeholder="您的出发地" class="form-input" />
           </view>
           <view class="input-group">
             <view class="dot orange"></view>
-            <input type="text" v-model="endLocation" placeholder="您的目的地" class="form-input" />
+            <input type="text" v-model="rideOrder.endLoc" placeholder="您的目的地" class="form-input" />
           </view>
 
           <view class="location-tags">
@@ -75,6 +75,7 @@
 
 <script>
 import InvitationList from "@/components/InvitationList.vue";
+import { mapState, mapActions } from 'vuex';
 
 export default {
   components: { InvitationList },
@@ -82,17 +83,15 @@ export default {
     return {
       activeTab: '市内',
       activeRouteTab: '市内路线',
-      startLocation: '',
-      endLocation: '',
-      selectedTime: new Date(),
       locationTags: ['上海南站', '虹桥1', '虹桥2', '浦东3', '浦东4'],
       invitationCount: 3,
       tripListItems: [],
     }
   },
   computed: {
+	...mapState(['userID', 'rideRequest','rideOrder']),
     formattedTime() {
-      const now = this.selectedTime;
+      const now = this.rideOrder.startAt;
       const today = new Date();
       let prefix = '今天';
       if (now.getDate() !== today.getDate()) {
@@ -104,24 +103,76 @@ export default {
     }
   },
   methods: {
+	  ...mapActions([
+
+	  ]),
     selectLocation(tag) {
-      if (!this.startLocation) {
-        this.startLocation = tag;
-      } else if (!this.endLocation) {
-        this.endLocation = tag;
+      if (!this.rideOrder.startLoc) {
+        this.rideOrder.startLoc = tag;
+      } else if (!this.rideOrder.endLoc) {
+        this.rideOrder.endLoc = tag;
       } else {
-        this.startLocation = tag;
+        this.rideOrder.startLoc = tag;
       }
     },
     showTimePicker() {
       uni.showDatePicker({
-        date: this.selectedTime.toISOString(),
+        date: this.rideOrder.startAt.toISOString(),
         success: (res) => {
-          this.selectedTime = new Date(res.date);
+          this.rideOrder.startAt = new Date(res.date);
         }
       });
     },
+	
+	async publishInvitation(){
+		try {
+		  const requestData = {
+		    passengerId: this.userID,
+		    startLoc: this.rideOrder.startLoc,
+		    endLoc: this.rideOrder.endLoc,
+		    status: 'PENDING',
+		    startAt: this.rideOrder.startAt,
+		    seats: this.rideOrder.seats,
+		  };
+		
+		  const response = await uni.request({
+		    url: 'http://localhost:8083/carsharing/post-invitation',
+		    method: 'POST',
+		    data: requestData,
+		    header: {
+		      'Content-Type': 'application/json',
+		    },
+		  });
+		  console.log(requestData);
+		  if (response.data.status === 'success') {
+		    const responseData = response.data;
+		    if (responseData.orderID) {
+		      this.setRequestId(responseData.orderID);
+		      uni.showToast({
+		        title: '发布成功',
+		        icon: 'success',
+		      });
+		      this.goToSearchResult();
+		    } else {
+		      throw new Error('未收到 requestID');
+		    }
+		  } else {
+		    throw new Error('请求失败');
+		  }
+		} catch (error) {
+		  console.error('发布失败:', error);
+		  uni.showToast({
+		    title: '发布失败',
+		    icon: 'none',
+		  });
+		}
+	},
+	goToSearchResult() {
+		uni.navigateTo({ url: '/pages/driver/search-result' });
+	},
     searchRides() {
+		this.publishInvitation();
+		uni.navigateTo({ url: '/pages/driver/search-result' });
       //this.getRides();
     },
     goToInvitations() {

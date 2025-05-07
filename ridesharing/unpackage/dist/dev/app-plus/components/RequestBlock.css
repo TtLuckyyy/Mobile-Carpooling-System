@@ -569,15 +569,15 @@
 }
 
 /* 不同状态的具体样式 */
-.status-pending {
+.status-PENDING {
   background-color: var(--color-orange); /* 待接单 - 橙色 */
 }
-.status-matched {
+.status-MATCHED {
   background-color: var(--color-green); /* 进行中 - 绿色 */
 }
-.status-completed {
+.status-COMPLETED {
   background-color: var(--color-blue); /* 已完成 - 蓝色 */
 }
-.status-canceled {
+.status-CANCELED {
   background-color: var(--color-grey); /* 已取消 - 灰色 */
 }

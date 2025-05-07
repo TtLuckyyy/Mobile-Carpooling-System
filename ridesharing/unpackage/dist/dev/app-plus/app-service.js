@@ -368,7 +368,7 @@ if (uni.restoreGlobal) {
   function registerAction(store2, type, handler, local) {
     var entry = store2._actions[type] || (store2._actions[type] = []);
     entry.push(function wrappedActionHandler(payload) {
-      var res = handler.call(store2, {
+      var res2 = handler.call(store2, {
         dispatch: local.dispatch,
         commit: local.commit,
         getters: local.getters,
@@ -376,16 +376,16 @@ if (uni.restoreGlobal) {
         rootGetters: store2.getters,
         rootState: store2.state
       }, payload);
-      if (!isPromise(res)) {
-        res = Promise.resolve(res);
+      if (!isPromise(res2)) {
+        res2 = Promise.resolve(res2);
       }
       if (store2._devtoolHook) {
-        return res.catch(function(err) {
+        return res2.catch(function(err) {
           store2._devtoolHook.emit("vuex:error", err);
           throw err;
         });
       } else {
-        return res;
+        return res2;
       }
     });
   }
@@ -991,7 +991,7 @@ if (uni.restoreGlobal) {
       return handler(payload);
     })) : entry[0](payload);
     return new Promise(function(resolve, reject) {
-      result.then(function(res) {
+      result.then(function(res2) {
         try {
           this$1$1._actionSubscribers.filter(function(sub) {
             return sub.after;
@@ -1004,7 +1004,7 @@ if (uni.restoreGlobal) {
             console.error(e);
           }
         }
-        resolve(res);
+        resolve(res2);
       }, function(error) {
         try {
           this$1$1._actionSubscribers.filter(function(sub) {
@@ -1094,14 +1094,14 @@ if (uni.restoreGlobal) {
   };
   Object.defineProperties(Store.prototype, prototypeAccessors);
   var mapState = normalizeNamespace(function(namespace, states) {
-    var res = {};
+    var res2 = {};
     if (!isValidMap(states)) {
       console.error("[vuex] mapState: mapper parameter must be either an Array or an Object");
     }
     normalizeMap(states).forEach(function(ref) {
       var key = ref.key;
       var val = ref.val;
-      res[key] = function mappedState() {
+      res2[key] = function mappedState() {
         var state = this.$store.state;
         var getters = this.$store.getters;
         if (namespace) {
@@ -1114,19 +1114,19 @@ if (uni.restoreGlobal) {
         }
         return typeof val === "function" ? val.call(this, state, getters) : state[val];
       };
-      res[key].vuex = true;
+      res2[key].vuex = true;
     });
-    return res;
+    return res2;
   });
   var mapActions = normalizeNamespace(function(namespace, actions) {
-    var res = {};
+    var res2 = {};
     if (!isValidMap(actions)) {
       console.error("[vuex] mapActions: mapper parameter must be either an Array or an Object");
     }
     normalizeMap(actions).forEach(function(ref) {
       var key = ref.key;
       var val = ref.val;
-      res[key] = function mappedAction() {
+      res2[key] = function mappedAction() {
         var args = [], len = arguments.length;
         while (len--)
           args[len] = arguments[len];
@@ -1141,7 +1141,7 @@ if (uni.restoreGlobal) {
         return typeof val === "function" ? val.apply(this, [dispatch2].concat(args)) : dispatch2.apply(this.$store, [val].concat(args));
       };
     });
-    return res;
+    return res2;
   });
   function normalizeMap(map) {
     if (!isValidMap(map)) {
@@ -1181,7 +1181,7 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$o = {
+  const _sfc_main$u = {
     props: {
       type: {
         type: String,
@@ -1208,7 +1208,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$t(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "cover-view",
       {
@@ -1275,8 +1275,8 @@ if (uni.restoreGlobal) {
       /* CLASS */
     );
   }
-  const ComponentsShareOption = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/ShareOption.vue"]]);
-  const _sfc_main$n = {
+  const ComponentsShareOption = /* @__PURE__ */ _export_sfc(_sfc_main$u, [["render", _sfc_render$t], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/ShareOption.vue"]]);
+  const _sfc_main$t = {
     components: {
       ShareOption: ComponentsShareOption
     },
@@ -1292,41 +1292,43 @@ if (uni.restoreGlobal) {
         requestnumber: 0,
         ordersnumber: 0,
         currentOrders: [
-          {
-            id: 1,
-            distance: 10.5,
-            driverName: "张三",
-            driverRating: 4.8,
-            carModel: "特斯拉 Model",
-            carPlate: "京A12345",
-            startAt: "2025-04-21T10:00:00Z",
-            avatar: "@/static/1.png"
-          },
-          {
-            id: 2,
-            distance: 5.2,
-            driverName: "李四",
-            driverRating: 4.6,
-            carModel: "比亚迪汉",
-            carPlate: "京B67890",
-            startAt: "2025-04-21T11:30:00Z"
-          },
-          {
-            id: 3,
-            distance: 7.8,
-            driverName: "王五",
-            driverRating: 4.9,
-            carModel: "宝马 5 系",
-            carPlate: "京C56789",
-            startAt: "2025-04-21T12:45:00Z"
-          }
+          //     {
+          //       id: 1,
+          //       distance: 10.5,
+          //       driverName: "张三",
+          //       driverRating: 4.8,
+          //       carModel: "特斯拉 Model",
+          //       carPlate: "京A12345",
+          //       startAt: "2025-04-21T10:00:00Z",
+          // avatar:"@/static/1.png"
+          //     },
+          //     {
+          //       id: 2,
+          //       distance: 5.2,
+          //       driverName: "李四",
+          //       driverRating: 4.6,
+          //       carModel: "比亚迪汉",
+          //       carPlate: "京B67890",
+          //       startAt: "2025-04-21T11:30:00Z",
+          //     },
+          //     {
+          //       id: 3,
+          //       distance: 7.8,
+          //       driverName: "王五",
+          //       driverRating: 4.9,
+          //       carModel: "宝马 5 系",
+          //       carPlate: "京C56789",
+          //       startAt: "2025-04-21T12:45:00Z",
+          //     }
         ]
       };
     },
     computed: {
-      ...mapState(["userID", "rideRequest", "orderID"])
+      ...mapState(["userID", "rideRequest", "rideOrder"])
     },
     onLoad() {
+      this.getRequests();
+      this.getCurrentOrder();
     },
     methods: {
       ...mapActions([
@@ -1391,20 +1393,21 @@ if (uni.restoreGlobal) {
             passengerId: this.userID,
             startLoc: this.rideRequest.startLoc,
             endLoc: this.rideRequest.endLoc,
-            status: "pending",
+            status: "PENDING",
             startAt: this.rideRequest.startAt,
             exclusive: this.rideRequest.exclusive,
             highway: this.rideRequest.highway
           };
           const response = await uni.request({
-            url: "/post-request",
+            url: "http://localhost:8083/carsharing/post-request",
             method: "POST",
             data: requestData,
             header: {
               "Content-Type": "application/json"
             }
           });
-          if (response.statusCode === 200 || response.statusCode === 201) {
+          formatAppLog("log", "at pages/customer/customer.vue:232", requestData);
+          if (response.data.status === "success") {
             const responseData = response.data;
             if (responseData.requestID) {
               this.setRequestId(responseData.requestID);
@@ -1461,12 +1464,12 @@ if (uni.restoreGlobal) {
       showTimePicker() {
         uni.showActionSheet({
           itemList: ["15分钟后", "30分钟后", "1小时后", "自定义时间"],
-          success: (res) => {
-            if (res.tapIndex === 3) {
+          success: (res2) => {
+            if (res2.tapIndex === 3) {
               this.showDateTimeInput();
             } else {
               const times = [15, 30, 60];
-              this.selectTime(times[res.tapIndex]);
+              this.selectTime(times[res2.tapIndex]);
             }
           }
         });
@@ -1486,9 +1489,9 @@ if (uni.restoreGlobal) {
           // 自定义确认按钮文字
           confirmButtonColor: "#007AFF",
           // 自定义确认按钮颜色
-          success: (res) => {
-            if (res.confirm) {
-              this.validateAndSetDateTime(res.content);
+          success: (res2) => {
+            if (res2.confirm) {
+              this.validateAndSetDateTime(res2.content);
             }
           }
         });
@@ -1542,24 +1545,18 @@ if (uni.restoreGlobal) {
         this.isLoading = true;
         this.error = null;
         try {
-          if (!this.userID) {
-            throw new Error("用户未登录");
-          }
           const response = await uni.request({
-            url: "http://localhost:8083/carsharing/get-requests",
+            url: "http://localhost:8083/carsharing/get-requests?userId=1",
             method: "GET",
-            data: {
-              user_id: this.userID
-              // 传递当前用户ID
-            },
             header: {
               "Content-Type": "application/json"
             }
           });
           if (response.data.status === "success") {
-            const res = response.data;
-            if (res.requests && res.requests.length > 0) {
-              this.requestnumber = res.requests.filter((request) => request.status === "pending").length;
+            const res2 = response.data.history;
+            formatAppLog("log", "at pages/customer/customer.vue:399", res2);
+            if (res2 && res2.length > 0) {
+              this.requestnumber = res2.filter((request) => request.status === "PENDING").length;
             } else {
               this.requestnumber = 0;
             }
@@ -1567,7 +1564,7 @@ if (uni.restoreGlobal) {
             throw new Error(response.data.message || "获取请求列表失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/customer.vue:413", "获取请求列表失败:", error);
+          formatAppLog("error", "at pages/customer/customer.vue:410", "获取请求列表失败:", error);
           this.error = error.message || "获取请求列表失败";
           this.requestnumber = 0;
           uni.showToast({
@@ -1586,28 +1583,27 @@ if (uni.restoreGlobal) {
             throw new Error("用户未登录");
           }
           const response = await uni.request({
-            url: "http://localhost:8083/carsharing/current-order",
+            url: `http://localhost:8083/carsharing/current-order?userId=${this.userID}`,
             method: "GET",
-            data: {
-              user_id: this.userID
-            },
             header: {
               "Content-Type": "application/json"
             }
           });
           if (response.data.status === "success") {
-            const res = response.data;
+            const res2 = response.data;
             const now = /* @__PURE__ */ new Date();
-            if (res.orders && res.orders.length > 0) {
-              const pastOrders = res.orders.filter((order) => new Date(order.start_at) < now).sort((a, b) => new Date(b.start_at) - new Date(a.start_at));
+            formatAppLog("log", "at pages/customer/customer.vue:442", res2.orders);
+            if (res2.orders && res2.orders.length > 0) {
+              const pastOrders = res2.orders.filter((order) => new Date(order.startAt) < now).sort((a, b) => new Date(b.startAt) - new Date(a.startAt));
+              formatAppLog("log", "at pages/customer/customer.vue:448", pastOrders);
               this.currentOrders = pastOrders.length > 0 ? [{
                 id: pastOrders[0].id,
                 distance: pastOrders[0].distance,
-                driverName: pastOrders[0].real_name,
+                driverName: pastOrders[0].realName,
                 driverRating: pastOrders[0].rating,
-                carModel: pastOrders[0].verification_car_model || "未知车型",
-                carPlate: pastOrders[0].verification_car_plate || "未知车牌",
-                startAt: pastOrders[0].start_at || "未知时间",
+                carModel: pastOrders[0].verificationCarModel || "未知车型",
+                carPlate: pastOrders[0].verificationCarPlate || "未知车牌",
+                startAt: pastOrders[0].startAt || "未知时间",
                 avatar: pastOrders[0].avatar
               }] : [];
               this.ordersnumber = this.currentOrders.length;
@@ -1619,7 +1615,7 @@ if (uni.restoreGlobal) {
             throw new Error(response.data.message || "获取当前订单失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/customer.vue:478", "获取当前订单失败:", error);
+          formatAppLog("error", "at pages/customer/customer.vue:472", "获取当前订单失败:", error);
           this.error = error.message || "获取当前订单失败";
           this.ordersnumber = 0;
           this.currentOrders = [];
@@ -1633,8 +1629,10 @@ if (uni.restoreGlobal) {
       },
       ToOrderDetail() {
         if (this.currentOrders.length > 0) {
-          const orderId = this.currentOrders[0].id;
-          this.setOrderId(orderId);
+          const orderid = this.currentOrders[0].id;
+          formatAppLog("log", "at pages/customer/customer.vue:490", orderid);
+          this.setOrderId(orderid);
+          formatAppLog("log", "at pages/customer/customer.vue:493", this.rideOrder.orderID);
           uni.navigateTo({
             url: "./OrderDetail",
             // 替换为你的订单详情页面路径
@@ -1650,7 +1648,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$s(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_ShareOption = vue.resolveComponent("ShareOption");
     return vue.openBlock(), vue.createElementBlock(
       "view",
@@ -1910,25 +1908,32 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesCustomerCustomer = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/customer/customer.vue"]]);
-  const _imports_0$5 = "/static/icon_order.png";
+  const PagesCustomerCustomer = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$s], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/customer/customer.vue"]]);
+  const _imports_0$4 = "/static/icon_order.png";
   const _imports_1$1 = "/static/icon_safe.png";
   const _imports_2 = "/static/icon_cash.png";
-  const _sfc_main$m = {
+  const _sfc_main$s = {
     data() {
       return {
         statusBarHeight: uni.getSystemInfoSync().statusBarHeight
       };
     },
     methods: {
+      // 跳转到车主认证页面
       goToAuthPage() {
         uni.navigateTo({
           url: "/pages/driver/car-owner"
         });
+      },
+      // 跳转到车主搜索页面
+      goToDriverSearch() {
+        uni.navigateTo({
+          url: "/pages/driver/driver_search"
+        });
       }
     }
   };
-  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -1940,7 +1945,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("view", { class: "features" }, [
             vue.createElementVNode("view", { class: "feature-item" }, [
               vue.createElementVNode("image", {
-                src: _imports_0$5,
+                src: _imports_0$4,
                 class: "feature-icon"
               }),
               vue.createElementVNode("view", { class: "feature-text" }, [
@@ -1969,7 +1974,7 @@ if (uni.restoreGlobal) {
               ])
             ])
           ]),
-          vue.createCommentVNode(" 成为车主按钮 "),
+          vue.createCommentVNode(" 立即成为车主按钮 "),
           vue.createElementVNode("view", { class: "button-wrapper" }, [
             vue.createElementVNode("view", {
               class: "join-button",
@@ -1977,6 +1982,13 @@ if (uni.restoreGlobal) {
             }, [
               vue.createElementVNode("text", { class: "button-text" }, "立即成为车主")
             ])
+          ]),
+          vue.createCommentVNode(" 已经是车主文字 "),
+          vue.createElementVNode("view", { class: "link-wrapper" }, [
+            vue.createElementVNode("text", {
+              class: "link-text",
+              onClick: _cache[1] || (_cache[1] = (...args) => $options.goToDriverSearch && $options.goToDriverSearch(...args))
+            }, "已经是车主")
           ])
         ])
       ],
@@ -1984,811 +1996,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const PagesDriverDriver = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-da5dba0b"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/driver.vue"]]);
-  const _sfc_main$l = {
-    data() {
-      return {
-        selectedCity: "上海市",
-        // 固定为上海市
-        uploadItems: [
-          { label: "驾驶证", desc: "准驾车型：至少包含A1, A2, A3, B1, B2, C1, C2", certified: false },
-          { label: "行驶证", desc: "本人车辆或亲友车辆均可认证", certified: false },
-          { label: "车辆照片", desc: "使用真实照片，座位数7座及以下", certified: false }
-        ],
-        realNameCertified: false,
-        realName: "",
-        idNumber: "",
-        showAgreementDialog: false,
-        // 控制协议弹窗显示
-        showUploadDialog: false,
-        // 控制上传弹窗显示
-        currentUploadIndex: null,
-        // 当前上传的项的索引
-        uploadedImage: "",
-        // 存储上传的图片路径
-        agreeProtocol1: false,
-        // 第一个协议勾选状态
-        agreeProtocol2: false,
-        // 第二个协议勾选状态
-        isSubmitting: false
-        // 防止重复点击
-      };
-    },
-    computed: {
-      currentUploadItem() {
-        return this.currentUploadIndex !== null ? this.uploadItems[this.currentUploadIndex] : null;
-      },
-      idNumberDisplay() {
-        if (!this.idNumber)
-          return "";
-        return this.idNumber.slice(0, 1) + "*".repeat(this.idNumber.length - 2) + this.idNumber.slice(-1);
-      },
-      isAllCertified() {
-        return this.realNameCertified && this.uploadItems.every((item) => item.certified);
-      },
-      isAllAgreed() {
-        return this.agreeProtocol1 && this.agreeProtocol2;
-      }
-    },
-    methods: {
-      goBack() {
-        uni.navigateBack();
-      },
-      openAuthDialog() {
-        uni.showModal({
-          title: "实名认证 - 姓名",
-          content: "请输入您的姓名",
-          showCancel: true,
-          editable: true,
-          placeholderText: "请输入姓名",
-          success: (res) => {
-            if (res.confirm && res.content) {
-              this.realName = res.content.trim();
-              if (!this.realName) {
-                uni.showToast({
-                  title: "姓名不能为空",
-                  icon: "none"
-                });
-                return;
-              }
-              uni.showModal({
-                title: "实名认证 - 身份证号",
-                content: "请输入您的身份证号",
-                showCancel: true,
-                editable: true,
-                placeholderText: "请输入身份证号",
-                success: (res2) => {
-                  if (res2.confirm && res2.content) {
-                    this.idNumber = res2.content.trim();
-                    if (this.idNumber.length !== 18) {
-                      uni.showToast({
-                        title: "身份证号必须为18位",
-                        icon: "none"
-                      });
-                      return;
-                    }
-                    const idNumberRegex = /^[1-9]\d{16}(\d|X)$/i;
-                    if (!idNumberRegex.test(this.idNumber)) {
-                      uni.showToast({
-                        title: "身份证号格式不正确",
-                        icon: "none"
-                      });
-                      return;
-                    }
-                    if (this.realName && this.idNumber.length === 18) {
-                      this.realNameCertified = true;
-                    } else {
-                      uni.showToast({
-                        title: "请输入有效信息",
-                        icon: "none"
-                      });
-                    }
-                  }
-                }
-              });
-            } else if (res.confirm && !res.content) {
-              uni.showToast({
-                title: "姓名不能为空",
-                icon: "none"
-              });
-            }
-          }
-        });
-      },
-      showAgreement() {
-        this.showAgreementDialog = true;
-      },
-      hideAgreement() {
-        this.showAgreementDialog = false;
-      },
-      openUploadDialog(index) {
-        this.currentUploadIndex = index;
-        this.uploadedImage = "";
-        this.showUploadDialog = true;
-      },
-      closeUploadDialog() {
-        this.showUploadDialog = false;
-        this.currentUploadIndex = null;
-        this.uploadedImage = "";
-      },
-      chooseImage() {
-        uni.chooseImage({
-          count: 1,
-          sizeType: ["original", "compressed"],
-          sourceType: ["album", "camera"],
-          success: (res) => {
-            this.uploadedImage = res.tempFilePaths[0];
-          },
-          fail: (err) => {
-            uni.showToast({
-              title: "选择图片失败",
-              icon: "none"
-            });
-          }
-        });
-      },
-      confirmUpload() {
-        if (this.currentUploadIndex !== null) {
-          this.uploadItems[this.currentUploadIndex].certified = true;
-        }
-        this.closeUploadDialog();
-      },
-      handleProtocolChange(e) {
-        const values = e.detail.value;
-        this.agreeProtocol1 = values.includes("protocol1");
-        this.agreeProtocol2 = values.includes("protocol2");
-        formatAppLog("log", "at pages/driver/car-owner.vue:276", "agreeProtocol1:", this.agreeProtocol1, "agreeProtocol2:", this.agreeProtocol2);
-      },
-      submit() {
-        if (this.isSubmitting)
-          return;
-        this.isSubmitting = true;
-        formatAppLog("log", "at pages/driver/car-owner.vue:281", "isAllCertified:", this.isAllCertified);
-        formatAppLog("log", "at pages/driver/car-owner.vue:282", "isAllAgreed:", this.isAllAgreed);
-        if (!this.isAllCertified) {
-          uni.showToast({
-            title: "请完成所有认证和上传",
-            icon: "none"
-          });
-          this.isSubmitting = false;
-          return;
-        }
-        if (!this.isAllAgreed) {
-          uni.showToast({
-            title: "请同意所有协议",
-            icon: "none"
-          });
-          this.isSubmitting = false;
-          return;
-        }
-        uni.redirectTo({
-          url: "/pages/driver/driver_search",
-          // 修正路径
-          success: (res) => {
-            formatAppLog("log", "at pages/driver/car-owner.vue:303", "跳转成功:", res);
-          },
-          fail: (err) => {
-            formatAppLog("error", "at pages/driver/car-owner.vue:306", "跳转失败:", err);
-            uni.showToast({
-              title: "跳转失败，请检查路径",
-              icon: "none"
-            });
-            this.isSubmitting = false;
-          },
-          complete: () => {
-          }
-        });
-      }
-    }
-  };
-  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "auth-container" }, [
-      vue.createCommentVNode(" 顶部标题栏 + 返回按钮 "),
-      vue.createElementVNode("view", { class: "header" }, [
-        vue.createElementVNode("view", {
-          class: "back-icon",
-          onClick: _cache[0] || (_cache[0] = (...args) => $options.goBack && $options.goBack(...args))
-        }, "‹"),
-        vue.createElementVNode("text", { class: "title" }, "私家车拼车车主认证")
-      ]),
-      vue.createCommentVNode(" 城市显示（固定为上海市） "),
-      vue.createElementVNode("view", { class: "city-display" }, [
-        vue.createElementVNode("text", { class: "city-label" }, "接单城市"),
-        vue.createElementVNode("view", { class: "city-box" }, [
-          vue.createElementVNode(
-            "text",
-            { class: "city-name" },
-            vue.toDisplayString($data.selectedCity),
-            1
-            /* TEXT */
-          )
-        ])
-      ]),
-      vue.createCommentVNode(" 实名认证卡片 "),
-      vue.createElementVNode("view", { class: "auth-card" }, [
-        vue.createElementVNode("view", { class: "row" }, [
-          vue.createElementVNode("view", { class: "left" }, [
-            vue.createElementVNode("text", { class: "label" }, "实名认证"),
-            !$data.realNameCertified ? (vue.openBlock(), vue.createElementBlock("text", {
-              key: 0,
-              class: "desc",
-              onClick: _cache[1] || (_cache[1] = (...args) => $options.openAuthDialog && $options.openAuthDialog(...args))
-            }, "点击进行实名认证")) : (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
-              vue.createElementVNode(
-                "text",
-                { class: "desc" },
-                vue.toDisplayString($data.realName) + " " + vue.toDisplayString($options.idNumberDisplay),
-                1
-                /* TEXT */
-              ),
-              vue.createElementVNode("text", { class: "subdesc" }, "年龄要求：18–70周岁")
-            ]))
-          ]),
-          $data.realNameCertified ? (vue.openBlock(), vue.createElementBlock("text", {
-            key: 0,
-            class: "verified"
-          }, "✔ 已认证")) : vue.createCommentVNode("v-if", true)
-        ]),
-        vue.createCommentVNode(" 上传项 "),
-        (vue.openBlock(true), vue.createElementBlock(
-          vue.Fragment,
-          null,
-          vue.renderList($data.uploadItems, (item, index) => {
-            return vue.openBlock(), vue.createElementBlock("view", {
-              class: "row",
-              key: index
-            }, [
-              vue.createElementVNode("view", { class: "left" }, [
-                vue.createElementVNode(
-                  "text",
-                  { class: "label" },
-                  vue.toDisplayString(item.label),
-                  1
-                  /* TEXT */
-                ),
-                vue.createElementVNode(
-                  "text",
-                  { class: "desc" },
-                  vue.toDisplayString(item.desc),
-                  1
-                  /* TEXT */
-                )
-              ]),
-              item.certified ? (vue.openBlock(), vue.createElementBlock("text", {
-                key: 0,
-                class: "verified"
-              }, "✔ 已认证")) : (vue.openBlock(), vue.createElementBlock("view", {
-                key: 1,
-                class: "upload-btn",
-                onClick: ($event) => $options.openUploadDialog(index)
-              }, "去上传", 8, ["onClick"]))
-            ]);
-          }),
-          128
-          /* KEYED_FRAGMENT */
-        ))
-      ]),
-      vue.createCommentVNode(" 协议 "),
-      vue.createElementVNode("view", { class: "agreement" }, [
-        vue.createElementVNode(
-          "checkbox-group",
-          {
-            onChange: _cache[4] || (_cache[4] = (...args) => $options.handleProtocolChange && $options.handleProtocolChange(...args))
-          },
-          [
-            vue.createElementVNode("view", { class: "checkbox-line" }, [
-              vue.createElementVNode("checkbox", {
-                value: "protocol1",
-                checked: $data.agreeProtocol1
-              }, null, 8, ["checked"]),
-              vue.createTextVNode(" 请阅读并同意 "),
-              vue.createElementVNode("text", {
-                class: "link",
-                onClick: _cache[2] || (_cache[2] = (...args) => $options.showAgreement && $options.showAgreement(...args))
-              }, "《拼好车车主协议》"),
-              vue.createTextVNode("（必选） ")
-            ]),
-            vue.createElementVNode("view", { class: "checkbox-line" }, [
-              vue.createElementVNode("checkbox", {
-                value: "protocol2",
-                checked: $data.agreeProtocol2
-              }, null, 8, ["checked"]),
-              vue.createTextVNode(" 同意成为拼车车主并同意 "),
-              vue.createElementVNode("text", {
-                class: "link",
-                onClick: _cache[3] || (_cache[3] = (...args) => $options.showAgreement && $options.showAgreement(...args))
-              }, "《拼好车车主协议》")
-            ])
-          ],
-          32
-          /* NEED_HYDRATION */
-        )
-      ]),
-      vue.createCommentVNode(" 提交按钮 "),
-      vue.createElementVNode("view", { class: "submit-area" }, [
-        vue.createElementVNode("button", {
-          class: "submit-btn",
-          disabled: $data.isSubmitting,
-          onClick: _cache[5] || (_cache[5] = (...args) => $options.submit && $options.submit(...args))
-        }, "确认上传", 8, ["disabled"])
-      ]),
-      vue.createCommentVNode(" 协议弹窗 "),
-      $data.showAgreementDialog ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 0,
-        class: "agreement-mask"
-      }, [
-        vue.createElementVNode("view", { class: "agreement-box" }, [
-          vue.createElementVNode("view", { class: "agreement-title" }, "拼好车车主协议"),
-          vue.createElementVNode("scroll-view", {
-            class: "agreement-content",
-            "scroll-y": ""
-          }, [
-            vue.createElementVNode("view", { class: "content-text" }, [
-              vue.createElementVNode("view", { class: "section" }, [
-                vue.createElementVNode("text", { class: "section-title" }, "一、协议目的"),
-                vue.createElementVNode("text", { class: "section-text" }, " 本协议旨在规范拼好车平台车主的服务行为，保障车主和乘客的合法权益，促进平台的健康发展。 ")
-              ]),
-              vue.createElementVNode("view", { class: "section" }, [
-                vue.createElementVNode("text", { class: "section-title" }, "二、服务要求"),
-                vue.createElementVNode("text", { class: "section-text" }, " 1. 车主需年满18周岁且不超过70周岁，持有有效驾驶证，并确保车辆符合平台要求（7座及以下）。\\n 2. 车主需提供真实有效的身份信息，包括姓名、身份证号、驾驶证、行驶证等。\\n 3. 车主应遵守交通规则，确保行车安全，不得从事违法行为。 ")
-              ]),
-              vue.createElementVNode("view", { class: "section" }, [
-                vue.createElementVNode("text", { class: "section-title" }, "三、费用与结算"),
-                vue.createElementVNode("text", { class: "section-text" }, " 1. 车主通过平台接单后，费用由乘客支付，平台将按约定比例与车主结算。\\n 2. 车主需遵守平台的收费标准，不得私自向乘客收取额外费用。 ")
-              ]),
-              vue.createElementVNode("view", { class: "section" }, [
-                vue.createElementVNode("text", { class: "section-title" }, "四、责任与义务"),
-                vue.createElementVNode("text", { class: "section-text" }, " 1. 车主应对乘客的安全负责，确保服务过程中不发生安全事故。\\n 2. 如因车主原因导致服务纠纷，车主需承担相应责任，平台有权暂停或终止其服务资格。 ")
-              ]),
-              vue.createElementVNode("view", { class: "section" }, [
-                vue.createElementVNode("text", { class: "section-title" }, "五、其他条款"),
-                vue.createElementVNode("text", { class: "section-text" }, " 1. 本协议自车主同意之日起生效。\\n 2. 平台有权根据法律法规或运营需要调整协议内容，调整后将通过平台通知车主。 ")
-              ])
-            ])
-          ]),
-          vue.createElementVNode("view", { class: "agreement-btns" }, [
-            vue.createElementVNode("view", {
-              class: "close-btn",
-              onClick: _cache[6] || (_cache[6] = (...args) => $options.hideAgreement && $options.hideAgreement(...args))
-            }, "关闭")
-          ])
-        ])
-      ])) : vue.createCommentVNode("v-if", true),
-      vue.createCommentVNode(" 上传图片弹窗 "),
-      $data.showUploadDialog ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 1,
-        class: "upload-mask"
-      }, [
-        vue.createElementVNode("view", { class: "upload-box" }, [
-          vue.createElementVNode(
-            "view",
-            { class: "upload-title" },
-            "上传" + vue.toDisplayString($options.currentUploadItem ? $options.currentUploadItem.label : ""),
-            1
-            /* TEXT */
-          ),
-          vue.createElementVNode("view", { class: "upload-area" }, [
-            !$data.uploadedImage ? (vue.openBlock(), vue.createElementBlock("view", {
-              key: 0,
-              class: "upload-placeholder",
-              onClick: _cache[7] || (_cache[7] = (...args) => $options.chooseImage && $options.chooseImage(...args))
-            }, [
-              vue.createElementVNode("text", null, "点击上传图片")
-            ])) : (vue.openBlock(), vue.createElementBlock("image", {
-              key: 1,
-              src: $data.uploadedImage,
-              class: "uploaded-image",
-              mode: "aspectFit"
-            }, null, 8, ["src"]))
-          ]),
-          vue.createElementVNode("view", { class: "upload-btns" }, [
-            vue.createElementVNode("view", {
-              class: "cancel",
-              onClick: _cache[8] || (_cache[8] = (...args) => $options.closeUploadDialog && $options.closeUploadDialog(...args))
-            }, "取消"),
-            vue.createElementVNode("view", {
-              class: "confirm",
-              onClick: _cache[9] || (_cache[9] = (...args) => $options.confirmUpload && $options.confirmUpload(...args))
-            }, "确定")
-          ])
-        ])
-      ])) : vue.createCommentVNode("v-if", true)
-    ]);
-  }
-  const PagesDriverCarOwner = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-ba5a77be"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/car-owner.vue"]]);
-  const _sfc_main$k = {
-    data() {
-      return {
-        orders: [
-          {
-            date: "3月17日",
-            timeRange: "10:55-11:00",
-            distance: "9.2km",
-            start: "洋泾港",
-            end: "上海市交通大学...",
-            price: "45.8"
-          },
-          {
-            date: "3月17日",
-            timeRange: "10:55-11:00",
-            distance: "9.2km",
-            start: "洋泾港",
-            end: "上海市交通大学...",
-            price: "45.8"
-          },
-          {
-            date: "3月17日",
-            timeRange: "10:55-11:00",
-            distance: "9.2km",
-            start: "洋泾港",
-            end: "车程",
-            price: "45.8"
-          }
-        ]
-      };
-    }
-  };
-  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "search-container" }, [
-      vue.createCommentVNode(" 顶部筛选栏 "),
-      vue.createElementVNode("view", { class: "filter-bar" }, [
-        vue.createElementVNode("view", { class: "city-picker" }, [
-          vue.createElementVNode("text", { class: "city-label" }, "上海市"),
-          vue.createElementVNode("text", { class: "arrow" }, "▼")
-        ]),
-        vue.createElementVNode("view", { class: "date-picker" }, [
-          vue.createElementVNode("text", { class: "date-label" }, "今日16:50"),
-          vue.createElementVNode("text", { class: "arrow" }, "▼")
-        ]),
-        vue.createElementVNode("view", { class: "action-btn" }, "发布拼车需求")
-      ]),
-      vue.createCommentVNode(" 订单列表 "),
-      vue.createElementVNode("view", { class: "order-list" }, [
-        vue.createElementVNode("view", { class: "order-header" }, [
-          vue.createElementVNode("text", { class: "header-text" }, "市内接送"),
-          vue.createElementVNode("text", { class: "header-subtext" }, "城际路线")
-        ]),
-        (vue.openBlock(true), vue.createElementBlock(
-          vue.Fragment,
-          null,
-          vue.renderList($data.orders, (order, index) => {
-            return vue.openBlock(), vue.createElementBlock("view", {
-              class: "order-item",
-              key: index
-            }, [
-              vue.createElementVNode("view", { class: "order-time" }, [
-                vue.createElementVNode(
-                  "text",
-                  { class: "time-text" },
-                  vue.toDisplayString(order.date) + " " + vue.toDisplayString(order.timeRange),
-                  1
-                  /* TEXT */
-                )
-              ]),
-              vue.createElementVNode("view", { class: "order-details" }, [
-                vue.createElementVNode("view", { class: "distance" }, [
-                  vue.createElementVNode(
-                    "text",
-                    { class: "distance-text" },
-                    "约" + vue.toDisplayString(order.distance) + "km",
-                    1
-                    /* TEXT */
-                  ),
-                  vue.createElementVNode("text", { class: "distance-subtext" }, "预计准点")
-                ]),
-                vue.createElementVNode("view", { class: "route" }, [
-                  vue.createElementVNode("view", { class: "route-point" }, [
-                    vue.createElementVNode("view", { class: "dot green" }),
-                    vue.createElementVNode(
-                      "text",
-                      { class: "point-text" },
-                      vue.toDisplayString(order.start),
-                      1
-                      /* TEXT */
-                    )
-                  ]),
-                  vue.createElementVNode("view", { class: "route-point" }, [
-                    vue.createElementVNode("view", { class: "dot orange" }),
-                    vue.createElementVNode(
-                      "text",
-                      { class: "point-text" },
-                      vue.toDisplayString(order.end),
-                      1
-                      /* TEXT */
-                    )
-                  ])
-                ]),
-                vue.createElementVNode("view", { class: "price" }, [
-                  vue.createElementVNode(
-                    "text",
-                    { class: "price-text" },
-                    vue.toDisplayString(order.price) + "元",
-                    1
-                    /* TEXT */
-                  )
-                ])
-              ]),
-              vue.createElementVNode("view", { class: "order-actions" }, [
-                vue.createElementVNode("view", { class: "action-btn" }, "1人"),
-                vue.createElementVNode("view", { class: "action-btn" }, "拼单"),
-                vue.createElementVNode("view", { class: "action-btn" }, "已拍"),
-                vue.createElementVNode("view", { class: "action-btn primary" }, "接受拼单请求")
-              ])
-            ]);
-          }),
-          128
-          /* KEYED_FRAGMENT */
-        ))
-      ]),
-      vue.createCommentVNode(" 底部导航栏 "),
-      vue.createElementVNode("view", { class: "tab-bar" }, [
-        vue.createElementVNode("view", { class: "tab-item" }, [
-          vue.createElementVNode("text", { class: "tab-text" }, "车辆")
-        ]),
-        vue.createElementVNode("view", { class: "tab-item active" }, [
-          vue.createElementVNode("text", { class: "tab-text" }, "拼单")
-        ]),
-        vue.createElementVNode("view", { class: "tab-item" }, [
-          vue.createElementVNode("text", { class: "tab-text" }, "消息")
-        ])
-      ])
-    ]);
-  }
-  const PagesDriverDriverSearch = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-f1865e65"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/driver_search.vue"]]);
-  const _sfc_main$j = {
-    data() {
-      return {
-        statusBarHeight: uni.getSystemInfoSync().statusBarHeight
-      };
-    },
-    methods: {}
-  };
-  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock(
-      "view",
-      {
-        style: vue.normalizeStyle({ paddingTop: $data.statusBarHeight + "px" })
-      },
-      null,
-      4
-      /* STYLE */
-    );
-  }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/index/index.vue"]]);
-  const _imports_0$4 = "/static/tongji/school_badge.png";
-  const _sfc_main$i = {
-    data() {
-      return {
-        username: "未知用户",
-        total_mileage: 0,
-        statusBarHeight: uni.getSystemInfoSync().statusBarHeight,
-        menuItems: [
-          { icon: "🕒", text: "我的行程" },
-          { icon: "🎟️", text: "优惠券" },
-          { icon: "🔑", text: "登录" },
-          { icon: "📝", text: "修改个人信息" },
-          { icon: "🛡️", text: "账号与安全" },
-          { icon: "🎧", text: "联系客服" },
-          { icon: "⚙️", text: "设置" }
-        ]
-      };
-    },
-    computed: {
-      ...mapState(["userID"])
-    },
-    onLoad() {
-      this.fetchUserInfo();
-    },
-    methods: {
-      fetchUserInfo() {
-        uni.request({
-          url: `http://localhost:8083/carsharing/get-name-mile?userID=${this.userID}`,
-          // 替换成你的后端地址
-          method: "GET",
-          success: (res) => {
-            if (res.statusCode === 200 && res.data) {
-              this.username = res.data.username || "未命名用户";
-              this.total_mileage = res.data.total_mileage || 0;
-            } else {
-              uni.showToast({ title: "用户信息加载失败", icon: "none" });
-            }
-          },
-          fail: () => {
-            uni.showToast({ title: "网络错误", icon: "none" });
-          }
-        });
-      },
-      handleMenuClick(index) {
-        const pages = [
-          "/pages/my/trip",
-          "/pages/my/coupon",
-          "/pages/my/login/login",
-          "/pages/my/change/change",
-          "/pages/my/account",
-          "/pages/my/support",
-          "/pages/my/setting"
-        ];
-        uni.navigateTo({
-          url: pages[index]
-        });
-      }
-    }
-  };
-  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock(
-      "view",
-      {
-        class: "mine-page",
-        style: vue.normalizeStyle({ paddingTop: $data.statusBarHeight + "px" })
-      },
-      [
-        vue.createCommentVNode(" 用户信息栏 "),
-        vue.createElementVNode("view", { class: "profile" }, [
-          vue.createElementVNode("image", {
-            class: "avatar",
-            src: _imports_0$4,
-            mode: "aspectFill"
-          }),
-          vue.createElementVNode("view", { class: "info" }, [
-            vue.createElementVNode(
-              "text",
-              { class: "phone" },
-              vue.toDisplayString($data.username),
-              1
-              /* TEXT */
-            ),
-            vue.createElementVNode("text", { class: "mileage" }, [
-              vue.createTextVNode("里程值 "),
-              vue.createElementVNode(
-                "text",
-                { class: "green" },
-                vue.toDisplayString($data.total_mileage),
-                1
-                /* TEXT */
-              ),
-              vue.createTextVNode("/60")
-            ])
-          ])
-        ]),
-        vue.createCommentVNode(" 菜单项 "),
-        vue.createElementVNode("view", { class: "menu-list" }, [
-          (vue.openBlock(true), vue.createElementBlock(
-            vue.Fragment,
-            null,
-            vue.renderList($data.menuItems, (item, index) => {
-              return vue.openBlock(), vue.createElementBlock("view", {
-                class: "menu-item",
-                key: index,
-                onClick: ($event) => $options.handleMenuClick(index)
-              }, [
-                vue.createElementVNode("view", { class: "left" }, [
-                  vue.createElementVNode(
-                    "text",
-                    { class: "icon" },
-                    vue.toDisplayString(item.icon),
-                    1
-                    /* TEXT */
-                  ),
-                  vue.createElementVNode(
-                    "text",
-                    { class: "text" },
-                    vue.toDisplayString(item.text),
-                    1
-                    /* TEXT */
-                  )
-                ]),
-                vue.createElementVNode("text", { class: "arrow" }, "›")
-              ], 8, ["onClick"]);
-            }),
-            128
-            /* KEYED_FRAGMENT */
-          ))
-        ])
-      ],
-      4
-      /* STYLE */
-    );
-  }
-  const PagesMyMy = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-2f1ef635"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/my/my.vue"]]);
-  const _imports_0$3 = "/static/left-arrow.png";
-  const _sfc_main$h = {
-    name: "PageHeader",
-    // 给组件命名
-    props: {
-      backText: {
-        type: String,
-        default: "返回"
-        // 默认值
-      },
-      backUrl: {
-        type: String,
-        default: "/pages/customer/customer"
-        // 默认跳转到首页
-      }
-    },
-    data() {
-      return {};
-    },
-    methods: {
-      handleBack() {
-        uni.switchTab({
-          url: this.backUrl
-        });
-      }
-    }
-  };
-  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "all" }, [
-      vue.createElementVNode("view", { class: "head-content" }, [
-        vue.createElementVNode("view", null, [
-          vue.createElementVNode("view", { class: "back-btn" }, [
-            vue.createElementVNode("image", {
-              src: _imports_0$3,
-              class: "left-arrow",
-              onClick: _cache[0] || (_cache[0] = (...args) => $options.handleBack && $options.handleBack(...args))
-            }),
-            vue.createElementVNode(
-              "text",
-              { class: "back-text" },
-              vue.toDisplayString($props.backText),
-              1
-              /* TEXT */
-            )
-          ])
-        ])
-      ])
-    ]);
-  }
-  const ComponentsPageHeader = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/PageHeader.vue"]]);
-  const _sfc_main$g = {
-    name: "PageHeader_cover",
-    props: {
-      backText: {
-        type: String,
-        default: "返回"
-      },
-      backUrl: {
-        type: String,
-        default: "/pages/customer/customer"
-      }
-    },
-    data() {
-      return {};
-    },
-    methods: {
-      handleBack() {
-        uni.switchTab({
-          url: this.backUrl
-        });
-      }
-    }
-  };
-  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("cover-view", { class: "floating-buttons" }, [
-      vue.createElementVNode("cover-view", { class: "header" }, [
-        vue.createElementVNode("cover-view", {
-          class: "back-btn",
-          onClick: _cache[2] || (_cache[2] = (...args) => $options.handleBack && $options.handleBack(...args))
-        }, [
-          vue.createElementVNode("cover-image", {
-            src: _imports_0$3,
-            onClick: _cache[0] || (_cache[0] = (...args) => $options.handleBack && $options.handleBack(...args))
-          }),
-          vue.createElementVNode(
-            "cover-view",
-            {
-              class: "back-text",
-              onClick: _cache[1] || (_cache[1] = (...args) => $options.handleBack && $options.handleBack(...args))
-            },
-            vue.toDisplayString($props.backText),
-            1
-            /* TEXT */
-          )
-        ])
-      ])
-    ]);
-  }
-  const ComponentsPageHeaderCover = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/PageHeader_cover.vue"]]);
+  const PagesDriverDriver = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$r], ["__scopeId", "data-v-da5dba0b"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/driver.vue"]]);
   const fontData = [
     {
       "font_class": "arrow-down",
@@ -3439,7 +2647,7 @@ if (uni.restoreGlobal) {
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$f = {
+  const _sfc_main$r = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -3493,7 +2701,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "text",
       {
@@ -3508,8 +2716,1545 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-d31e1c47"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
-  const _sfc_main$e = {
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$q], ["__scopeId", "data-v-d31e1c47"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const _sfc_main$q = {
+    data() {
+      return {
+        username: "",
+        email: "",
+        avatar: "",
+        // 用于存储头像 URL
+        home_address: "",
+        company_address: "",
+        showError: false,
+        showUploadDialog: false,
+        // 控制上传图片弹窗
+        uploadedImage: ""
+        // 存储上传的图片路径
+      };
+    },
+    computed: {
+      ...mapState(["userID"])
+      // 假设 userID 是在 Vuex 里存的
+    },
+    onLoad() {
+      if (this.userID && this.userID !== "未登录用户") {
+        this.fetchUserInfo();
+      }
+    },
+    methods: {
+      // 返回上一页
+      goBack() {
+        uni.switchTab({ url: "/pages/my/my" });
+      },
+      // 获取用户信息，加载到表单
+      fetchUserInfo() {
+        uni.request({
+          url: `http://localhost:8083/carsharing/get-user-info?userID=${this.userID}`,
+          // 改成你的后端接口
+          method: "GET",
+          success: (res2) => {
+            if (res2.statusCode === 200 && res2.data && res2.data.data) {
+              const userInfo = res2.data.data;
+              this.username = userInfo.username || "";
+              this.email = userInfo.email || "";
+              this.avatar = userInfo.avatar || "";
+              this.home_address = userInfo.home_address || "";
+              this.company_address = userInfo.company_address || "";
+            } else {
+              uni.showToast({ title: "加载用户信息失败", icon: "none" });
+            }
+          },
+          fail: () => {
+            uni.showToast({ title: "网络错误，请重试", icon: "none" });
+          }
+        });
+      },
+      // 打开上传头像弹窗
+      openUploadDialog() {
+        this.showUploadDialog = true;
+      },
+      // 选择图片
+      chooseImage() {
+        uni.chooseImage({
+          count: 1,
+          sizeType: ["original", "compressed"],
+          sourceType: ["album", "camera"],
+          success: (res2) => {
+            this.uploadedImage = res2.tempFilePaths[0];
+          },
+          fail: (err) => {
+            uni.showToast({ title: "选择图片失败", icon: "none" });
+          }
+        });
+      },
+      // 关闭上传弹窗
+      closeUploadDialog() {
+        this.showUploadDialog = false;
+        this.uploadedImage = "";
+      },
+      // 确认上传图片
+      confirmUpload() {
+        this.avatar = this.uploadedImage;
+        this.showUploadDialog = false;
+      },
+      // 提交表单
+      submitForm() {
+        if (!this.username || !this.email) {
+          this.showError = true;
+          uni.vibrateShort();
+          return;
+        }
+        uni.request({
+          url: `http://localhost:8083/carsharing/update-user-info`,
+          // 改成你的后端接口
+          method: "POST",
+          data: {
+            userID: this.userID,
+            // 带上 userID
+            username: this.username,
+            email: this.email,
+            avatar: this.avatar,
+            home_address: this.home_address,
+            company_address: this.company_address
+          },
+          success: (res2) => {
+            if (res2.statusCode === 200 && res2.data.success) {
+              uni.showToast({ title: "更新成功", icon: "success" });
+            } else {
+              uni.showToast({ title: "更新失败", icon: "none" });
+            }
+          },
+          fail: () => {
+            uni.showToast({ title: "网络错误，请重试", icon: "none" });
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+    return vue.openBlock(), vue.createElementBlock(
+      vue.Fragment,
+      null,
+      [
+        vue.createElementVNode("view", { class: "container" }, [
+          vue.createCommentVNode(" 🔙 返回按钮 "),
+          vue.createElementVNode("view", {
+            class: "back-button",
+            onClick: _cache[0] || (_cache[0] = (...args) => $options.goBack && $options.goBack(...args))
+          }, [
+            vue.createVNode(_component_uni_icons, {
+              type: "back",
+              size: "24",
+              color: "#333"
+            }),
+            vue.createElementVNode("text", { class: "back-text" }, "返回")
+          ]),
+          vue.createCommentVNode(" 标题和装饰线 "),
+          vue.createElementVNode("view", { class: "header" }, [
+            vue.createElementVNode("text", { class: "title" }, "用户信息登记"),
+            vue.createElementVNode("view", { class: "title-line" })
+          ]),
+          vue.createCommentVNode(" 表单项 "),
+          vue.createElementVNode("view", { class: "form-card" }, [
+            vue.createCommentVNode(" 用户名 "),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("view", { class: "item-header" }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "person",
+                  size: "18",
+                  color: "#666",
+                  class: "icon"
+                }),
+                vue.createElementVNode("text", { class: "label" }, [
+                  vue.createTextVNode("用户名"),
+                  vue.createElementVNode("text", { class: "required" }, "*")
+                ])
+              ]),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.username = $event),
+                  class: vue.normalizeClass(["input", { error: $data.showError && !$data.username }]),
+                  placeholder: "请输入用户名",
+                  "placeholder-class": "placeholder"
+                },
+                null,
+                2
+                /* CLASS */
+              ), [
+                [vue.vModelText, $data.username]
+              ]),
+              $data.showError && !$data.username ? (vue.openBlock(), vue.createElementBlock("text", {
+                key: 0,
+                class: "error-msg"
+              }, "用户名不能为空")) : vue.createCommentVNode("v-if", true)
+            ]),
+            vue.createCommentVNode(" 邮箱 "),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("view", { class: "item-header" }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "email",
+                  size: "18",
+                  color: "#666",
+                  class: "icon"
+                }),
+                vue.createElementVNode("text", { class: "label" }, "邮箱")
+              ]),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.email = $event),
+                  class: "input",
+                  placeholder: "请输入邮箱",
+                  "placeholder-class": "placeholder"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.email]
+              ])
+            ]),
+            vue.createCommentVNode(" 用户头像 "),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("view", { class: "item-header" }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "image",
+                  size: "18",
+                  color: "#666",
+                  class: "icon"
+                }),
+                vue.createElementVNode("text", { class: "label" }, "用户头像")
+              ]),
+              vue.createElementVNode("view", { class: "avatar-upload" }, [
+                $data.avatar ? (vue.openBlock(), vue.createElementBlock("view", {
+                  key: 0,
+                  class: "avatar-preview"
+                }, [
+                  vue.createElementVNode("image", {
+                    src: $data.avatar,
+                    class: "avatar-image",
+                    mode: "aspectFit"
+                  }, null, 8, ["src"])
+                ])) : vue.createCommentVNode("v-if", true),
+                vue.createElementVNode("button", {
+                  class: "upload-btn",
+                  onClick: _cache[3] || (_cache[3] = (...args) => $options.openUploadDialog && $options.openUploadDialog(...args))
+                }, "上传头像")
+              ])
+            ]),
+            vue.createCommentVNode(" 常用居住地址 "),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("view", { class: "item-header" }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "location",
+                  size: "18",
+                  color: "#666",
+                  class: "icon"
+                }),
+                vue.createElementVNode("text", { class: "label" }, "常用居住地址")
+              ]),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.home_address = $event),
+                  class: "input",
+                  placeholder: "请输入常用居住地址",
+                  "placeholder-class": "placeholder"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.home_address]
+              ])
+            ]),
+            vue.createCommentVNode(" 常用公司地址 "),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("view", { class: "item-header" }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "location",
+                  size: "18",
+                  color: "#666",
+                  class: "icon"
+                }),
+                vue.createElementVNode("text", { class: "label" }, "常用公司地址")
+              ]),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.company_address = $event),
+                  class: "input",
+                  placeholder: "请输入常用公司地址",
+                  "placeholder-class": "placeholder"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.company_address]
+              ])
+            ]),
+            vue.createCommentVNode(" 提交按钮 "),
+            vue.createElementVNode("button", {
+              onClick: _cache[6] || (_cache[6] = (...args) => $options.submitForm && $options.submitForm(...args)),
+              class: "submit-button",
+              "hover-class": "submit-button-hover"
+            }, " 立即提交 ")
+          ])
+        ]),
+        vue.createCommentVNode(" 上传图片弹窗 "),
+        $data.showUploadDialog ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "upload-mask"
+        }, [
+          vue.createElementVNode("view", { class: "upload-box" }, [
+            vue.createElementVNode("view", { class: "upload-title" }, "上传头像"),
+            vue.createElementVNode("view", { class: "upload-area" }, [
+              !$data.uploadedImage ? (vue.openBlock(), vue.createElementBlock("view", {
+                key: 0,
+                class: "upload-placeholder",
+                onClick: _cache[7] || (_cache[7] = (...args) => $options.chooseImage && $options.chooseImage(...args))
+              }, [
+                vue.createElementVNode("text", null, "点击上传图片")
+              ])) : (vue.openBlock(), vue.createElementBlock("image", {
+                key: 1,
+                src: $data.uploadedImage,
+                class: "uploaded-image",
+                mode: "aspectFit"
+              }, null, 8, ["src"]))
+            ]),
+            vue.createElementVNode("view", { class: "upload-btns" }, [
+              vue.createElementVNode("view", {
+                class: "cancel",
+                onClick: _cache[8] || (_cache[8] = (...args) => $options.closeUploadDialog && $options.closeUploadDialog(...args))
+              }, "取消"),
+              vue.createElementVNode("view", {
+                class: "confirm",
+                onClick: _cache[9] || (_cache[9] = (...args) => $options.confirmUpload && $options.confirmUpload(...args))
+              }, "确定")
+            ])
+          ])
+        ])) : vue.createCommentVNode("v-if", true)
+      ],
+      64
+      /* STABLE_FRAGMENT */
+    );
+  }
+  const PagesMyChangeChange = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/my/change/change.vue"]]);
+  const _sfc_main$p = {
+    data() {
+      return {
+        selectedCity: "上海市",
+        // 固定为上海市
+        uploadItems: [
+          { label: "驾驶证", desc: "准驾车型：至少包含A1, A2, A3, B1, B2, C1, C2", certified: false },
+          { label: "行驶证", desc: "本人车辆或亲友车辆均可认证", certified: false },
+          { label: "车辆照片", desc: "使用真实照片，座位数7座及以下", certified: false }
+        ],
+        realNameCertified: false,
+        realName: "",
+        idNumber: "",
+        showAgreementDialog: false,
+        // 控制协议弹窗显示
+        showUploadDialog: false,
+        // 控制上传弹窗显示
+        currentUploadIndex: null,
+        // 当前上传的项的索引
+        uploadedImage: "",
+        // 存储上传的图片路径
+        agreeProtocol1: false,
+        // 第一个协议勾选状态
+        agreeProtocol2: false,
+        // 第二个协议勾选状态
+        isSubmitting: false
+        // 防止重复点击
+      };
+    },
+    computed: {
+      currentUploadItem() {
+        return this.currentUploadIndex !== null ? this.uploadItems[this.currentUploadIndex] : null;
+      },
+      idNumberDisplay() {
+        if (!this.idNumber)
+          return "";
+        return this.idNumber.slice(0, 1) + "*".repeat(this.idNumber.length - 2) + this.idNumber.slice(-1);
+      },
+      isAllCertified() {
+        return this.realNameCertified && this.uploadItems.every((item) => item.certified);
+      },
+      isAllAgreed() {
+        return this.agreeProtocol1 && this.agreeProtocol2;
+      }
+    },
+    methods: {
+      goBack() {
+        uni.navigateBack();
+      },
+      openAuthDialog() {
+        uni.showModal({
+          title: "实名认证 - 姓名",
+          content: "请输入您的姓名",
+          showCancel: true,
+          editable: true,
+          placeholderText: "请输入姓名",
+          success: (res2) => {
+            if (res2.confirm && res2.content) {
+              this.realName = res2.content.trim();
+              if (!this.realName) {
+                uni.showToast({
+                  title: "姓名不能为空",
+                  icon: "none"
+                });
+                return;
+              }
+              uni.showModal({
+                title: "实名认证 - 身份证号",
+                content: "请输入您的身份证号",
+                showCancel: true,
+                editable: true,
+                placeholderText: "请输入身份证号",
+                success: (res22) => {
+                  if (res22.confirm && res22.content) {
+                    this.idNumber = res22.content.trim();
+                    if (this.idNumber.length !== 18) {
+                      uni.showToast({
+                        title: "身份证号必须为18位",
+                        icon: "none"
+                      });
+                      return;
+                    }
+                    const idNumberRegex = /^[1-9]\d{16}(\d|X)$/i;
+                    if (!idNumberRegex.test(this.idNumber)) {
+                      uni.showToast({
+                        title: "身份证号格式不正确",
+                        icon: "none"
+                      });
+                      return;
+                    }
+                    if (this.realName && this.idNumber.length === 18) {
+                      this.realNameCertified = true;
+                    } else {
+                      uni.showToast({
+                        title: "请输入有效信息",
+                        icon: "none"
+                      });
+                    }
+                  }
+                }
+              });
+            } else if (res2.confirm && !res2.content) {
+              uni.showToast({
+                title: "姓名不能为空",
+                icon: "none"
+              });
+            }
+          }
+        });
+      },
+      showAgreement() {
+        this.showAgreementDialog = true;
+      },
+      hideAgreement() {
+        this.showAgreementDialog = false;
+      },
+      openUploadDialog(index) {
+        this.currentUploadIndex = index;
+        this.uploadedImage = "";
+        this.showUploadDialog = true;
+      },
+      closeUploadDialog() {
+        this.showUploadDialog = false;
+        this.currentUploadIndex = null;
+        this.uploadedImage = "";
+      },
+      chooseImage() {
+        uni.chooseImage({
+          count: 1,
+          sizeType: ["original", "compressed"],
+          sourceType: ["album", "camera"],
+          success: (res2) => {
+            this.uploadedImage = res2.tempFilePaths[0];
+          },
+          fail: (err) => {
+            uni.showToast({
+              title: "选择图片失败",
+              icon: "none"
+            });
+          }
+        });
+      },
+      confirmUpload() {
+        if (this.currentUploadIndex !== null) {
+          this.uploadItems[this.currentUploadIndex].certified = true;
+        }
+        this.closeUploadDialog();
+      },
+      handleProtocolChange(e) {
+        const values = e.detail.value;
+        this.agreeProtocol1 = values.includes("protocol1");
+        this.agreeProtocol2 = values.includes("protocol2");
+        formatAppLog("log", "at pages/driver/car-owner.vue:276", "agreeProtocol1:", this.agreeProtocol1, "agreeProtocol2:", this.agreeProtocol2);
+      },
+      submit() {
+        if (this.isSubmitting)
+          return;
+        this.isSubmitting = true;
+        if (!this.isAllCertified) {
+          uni.showToast({
+            title: "请完成所有认证和上传",
+            icon: "none"
+          });
+          this.isSubmitting = false;
+          return;
+        }
+        if (!this.isAllAgreed) {
+          uni.showToast({
+            title: "请同意所有协议",
+            icon: "none"
+          });
+          this.isSubmitting = false;
+          return;
+        }
+        uni.setStorageSync("isAuthenticated", true);
+        uni.navigateTo({
+          url: "/pages/driver/driver_search",
+          // 修正路径
+          success: (res2) => {
+            formatAppLog("log", "at pages/driver/car-owner.vue:307", "跳转成功:", res2);
+          },
+          fail: (err) => {
+            formatAppLog("error", "at pages/driver/car-owner.vue:310", "跳转失败:", err);
+            uni.showToast({
+              title: "跳转失败，请检查路径",
+              icon: "none"
+            });
+            this.isSubmitting = false;
+          },
+          complete: () => {
+            this.isSubmitting = false;
+          }
+        });
+      }
+    },
+    // 页面加载时检查认证状态
+    onLoad() {
+      const isAuthenticated = uni.getStorageSync("isAuthenticated");
+      if (isAuthenticated) {
+        uni.switchTab({
+          url: "/pages/driver/driver_search"
+        });
+      }
+    }
+  };
+  function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "auth-container" }, [
+      vue.createCommentVNode(" 顶部标题栏 + 返回按钮 "),
+      vue.createElementVNode("view", { class: "header" }, [
+        vue.createElementVNode("view", {
+          class: "back-icon",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.goBack && $options.goBack(...args))
+        }, "‹"),
+        vue.createElementVNode("text", { class: "title" }, "私家车拼车车主认证")
+      ]),
+      vue.createCommentVNode(" 城市显示（固定为上海市） "),
+      vue.createElementVNode("view", { class: "city-display" }, [
+        vue.createElementVNode("text", { class: "city-label" }, "接单城市"),
+        vue.createElementVNode("view", { class: "city-box" }, [
+          vue.createElementVNode(
+            "text",
+            { class: "city-name" },
+            vue.toDisplayString($data.selectedCity),
+            1
+            /* TEXT */
+          )
+        ])
+      ]),
+      vue.createCommentVNode(" 实名认证卡片 "),
+      vue.createElementVNode("view", { class: "auth-card" }, [
+        vue.createElementVNode("view", { class: "row" }, [
+          vue.createElementVNode("view", { class: "left" }, [
+            vue.createElementVNode("text", { class: "label" }, "实名认证"),
+            !$data.realNameCertified ? (vue.openBlock(), vue.createElementBlock("text", {
+              key: 0,
+              class: "desc",
+              onClick: _cache[1] || (_cache[1] = (...args) => $options.openAuthDialog && $options.openAuthDialog(...args))
+            }, "点击进行实名认证")) : (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, [
+              vue.createElementVNode(
+                "text",
+                { class: "desc" },
+                vue.toDisplayString($data.realName) + " " + vue.toDisplayString($options.idNumberDisplay),
+                1
+                /* TEXT */
+              ),
+              vue.createElementVNode("text", { class: "subdesc" }, "年龄要求：18–70周岁")
+            ]))
+          ]),
+          $data.realNameCertified ? (vue.openBlock(), vue.createElementBlock("text", {
+            key: 0,
+            class: "verified"
+          }, "✔ 已认证")) : vue.createCommentVNode("v-if", true)
+        ]),
+        vue.createCommentVNode(" 上传项 "),
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($data.uploadItems, (item, index) => {
+            return vue.openBlock(), vue.createElementBlock("view", {
+              class: "row",
+              key: index
+            }, [
+              vue.createElementVNode("view", { class: "left" }, [
+                vue.createElementVNode(
+                  "text",
+                  { class: "label" },
+                  vue.toDisplayString(item.label),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "text",
+                  { class: "desc" },
+                  vue.toDisplayString(item.desc),
+                  1
+                  /* TEXT */
+                )
+              ]),
+              item.certified ? (vue.openBlock(), vue.createElementBlock("text", {
+                key: 0,
+                class: "verified"
+              }, "✔ 已认证")) : (vue.openBlock(), vue.createElementBlock("view", {
+                key: 1,
+                class: "upload-btn",
+                onClick: ($event) => $options.openUploadDialog(index)
+              }, "去上传", 8, ["onClick"]))
+            ]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ]),
+      vue.createCommentVNode(" 协议 "),
+      vue.createElementVNode("view", { class: "agreement" }, [
+        vue.createElementVNode(
+          "checkbox-group",
+          {
+            onChange: _cache[4] || (_cache[4] = (...args) => $options.handleProtocolChange && $options.handleProtocolChange(...args))
+          },
+          [
+            vue.createElementVNode("view", { class: "checkbox-line" }, [
+              vue.createElementVNode("checkbox", {
+                value: "protocol1",
+                checked: $data.agreeProtocol1
+              }, null, 8, ["checked"]),
+              vue.createTextVNode(" 请阅读并同意 "),
+              vue.createElementVNode("text", {
+                class: "link",
+                onClick: _cache[2] || (_cache[2] = (...args) => $options.showAgreement && $options.showAgreement(...args))
+              }, "《拼好车车主协议》"),
+              vue.createTextVNode("（必选） ")
+            ]),
+            vue.createElementVNode("view", { class: "checkbox-line" }, [
+              vue.createElementVNode("checkbox", {
+                value: "protocol2",
+                checked: $data.agreeProtocol2
+              }, null, 8, ["checked"]),
+              vue.createTextVNode(" 同意成为拼车车主并同意 "),
+              vue.createElementVNode("text", {
+                class: "link",
+                onClick: _cache[3] || (_cache[3] = (...args) => $options.showAgreement && $options.showAgreement(...args))
+              }, "《拼好车车主协议》")
+            ])
+          ],
+          32
+          /* NEED_HYDRATION */
+        )
+      ]),
+      vue.createCommentVNode(" 提交按钮 "),
+      vue.createElementVNode("view", { class: "submit-area" }, [
+        vue.createElementVNode("button", {
+          class: "submit-btn",
+          disabled: $data.isSubmitting,
+          onClick: _cache[5] || (_cache[5] = (...args) => $options.submit && $options.submit(...args))
+        }, "确认上传", 8, ["disabled"])
+      ]),
+      vue.createCommentVNode(" 协议弹窗 "),
+      $data.showAgreementDialog ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "agreement-mask"
+      }, [
+        vue.createElementVNode("view", { class: "agreement-box" }, [
+          vue.createElementVNode("view", { class: "agreement-title" }, "拼好车车主协议"),
+          vue.createElementVNode("scroll-view", {
+            class: "agreement-content",
+            "scroll-y": ""
+          }, [
+            vue.createElementVNode("view", { class: "content-text" }, [
+              vue.createElementVNode("view", { class: "section" }, [
+                vue.createElementVNode("text", { class: "section-title" }, "一、协议目的"),
+                vue.createElementVNode("text", { class: "section-text" }, " 本协议旨在规范拼好车平台车主的服务行为，保障车主和乘客的合法权益，促进平台的健康发展。 ")
+              ]),
+              vue.createElementVNode("view", { class: "section" }, [
+                vue.createElementVNode("text", { class: "section-title" }, "二、服务要求"),
+                vue.createElementVNode("text", { class: "section-text" }, " 1. 车主需年满18周岁且不超过70周岁，持有有效驾驶证，并确保车辆符合平台要求（7座及以下）。\\n 2. 车主需提供真实有效的身份信息，包括姓名、身份证号、驾驶证、行驶证等。\\n 3. 车主应遵守交通规则，确保行车安全，不得从事违法行为。 ")
+              ]),
+              vue.createElementVNode("view", { class: "section" }, [
+                vue.createElementVNode("text", { class: "section-title" }, "三、费用与结算"),
+                vue.createElementVNode("text", { class: "section-text" }, " 1. 车主通过平台接单后，费用由乘客支付，平台将按约定比例与车主结算。\\n 2. 车主需遵守平台的收费标准，不得私自向乘客收取额外费用。 ")
+              ]),
+              vue.createElementVNode("view", { class: "section" }, [
+                vue.createElementVNode("text", { class: "section-title" }, "四、责任与义务"),
+                vue.createElementVNode("text", { class: "section-text" }, " 1. 车主应对乘客的安全负责，确保服务过程中不发生安全事故。\\n 2. 如因车主原因导致服务纠纷，车主需承担相应责任，平台有权暂停或终止其服务资格。 ")
+              ]),
+              vue.createElementVNode("view", { class: "section" }, [
+                vue.createElementVNode("text", { class: "section-title" }, "五、其他条款"),
+                vue.createElementVNode("text", { class: "section-text" }, " 1. 本协议自车主同意之日起生效。\\n 2. 平台有权根据法律法规或运营需要调整协议内容，调整后将通过平台通知车主。 ")
+              ])
+            ])
+          ]),
+          vue.createElementVNode("view", { class: "agreement-btns" }, [
+            vue.createElementVNode("view", {
+              class: "close-btn",
+              onClick: _cache[6] || (_cache[6] = (...args) => $options.hideAgreement && $options.hideAgreement(...args))
+            }, "关闭")
+          ])
+        ])
+      ])) : vue.createCommentVNode("v-if", true),
+      vue.createCommentVNode(" 上传图片弹窗 "),
+      $data.showUploadDialog ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: "upload-mask"
+      }, [
+        vue.createElementVNode("view", { class: "upload-box" }, [
+          vue.createElementVNode(
+            "view",
+            { class: "upload-title" },
+            "上传" + vue.toDisplayString($options.currentUploadItem ? $options.currentUploadItem.label : ""),
+            1
+            /* TEXT */
+          ),
+          vue.createElementVNode("view", { class: "upload-area" }, [
+            !$data.uploadedImage ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 0,
+              class: "upload-placeholder",
+              onClick: _cache[7] || (_cache[7] = (...args) => $options.chooseImage && $options.chooseImage(...args))
+            }, [
+              vue.createElementVNode("text", null, "点击上传图片")
+            ])) : (vue.openBlock(), vue.createElementBlock("image", {
+              key: 1,
+              src: $data.uploadedImage,
+              class: "uploaded-image",
+              mode: "aspectFit"
+            }, null, 8, ["src"]))
+          ]),
+          vue.createElementVNode("view", { class: "upload-btns" }, [
+            vue.createElementVNode("view", {
+              class: "cancel",
+              onClick: _cache[8] || (_cache[8] = (...args) => $options.closeUploadDialog && $options.closeUploadDialog(...args))
+            }, "取消"),
+            vue.createElementVNode("view", {
+              class: "confirm",
+              onClick: _cache[9] || (_cache[9] = (...args) => $options.confirmUpload && $options.confirmUpload(...args))
+            }, "确定")
+          ])
+        ])
+      ])) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  const PagesDriverCarOwner = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["__scopeId", "data-v-ba5a77be"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/car-owner.vue"]]);
+  function formatDateTime(dateStr) {
+    if (!dateStr)
+      return "";
+    try {
+      const normalizedDateStr = dateStr.replace(/[年月日]/g, "-").replace(/[时分秒]/g, ":");
+      const date = new Date(normalizedDateStr);
+      if (isNaN(date.getTime())) {
+        const [datePart, timePart] = dateStr.split(" ");
+        const [year, month2, day2] = datePart.split("-");
+        return `${parseInt(month2)}月${parseInt(day2)}日 ${timePart}`;
+      }
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      return `${month}月${day}日 ${hours}:${minutes}`;
+    } catch (e) {
+      formatAppLog("error", "at utils/functions/formatDateTime.js:25", "日期格式错误:", dateStr, e);
+      return dateStr;
+    }
+  }
+  const _sfc_main$o = {
+    props: {
+      item: {
+        type: Object,
+        required: true
+      }
+    },
+    computed: {
+      paymentStatus() {
+        if (this.item.status === "PENDING" || this.item.status === "ONGOING")
+          return "未支付";
+        if (this.item.status === "COMPLETED")
+          return "已支付";
+        if (this.item.status === "CANCELLED")
+          return "已取消";
+        return "";
+      }
+    },
+    methods: {
+      formatDateTime
+    }
+  };
+  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+    return vue.openBlock(), vue.createElementBlock("view", null, [
+      vue.createElementVNode("view", { class: "block" }, [
+        vue.createElementVNode(
+          "view",
+          { class: "time-text" },
+          vue.toDisplayString($options.formatDateTime($props.item.startAt)),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode("view", { class: "location-row" }, [
+          vue.createElementVNode("view", { class: "location-section" }, [
+            vue.createElementVNode("view", { class: "location-item" }, [
+              vue.createVNode(_component_uni_icons, {
+                type: "circle-filled",
+                size: "14",
+                color: "var(--color-green)"
+              }),
+              vue.createElementVNode(
+                "text",
+                { class: "location-text" },
+                vue.toDisplayString($props.item.startLoc),
+                1
+                /* TEXT */
+              )
+            ]),
+            vue.createElementVNode("view", { class: "dashed-line" }),
+            vue.createElementVNode("view", { class: "location-item" }, [
+              vue.createVNode(_component_uni_icons, {
+                type: "circle-filled",
+                size: "14",
+                color: "var(--color-orange)"
+              }),
+              vue.createElementVNode(
+                "text",
+                { class: "location-text" },
+                vue.toDisplayString($props.item.endLoc),
+                1
+                /* TEXT */
+              )
+            ])
+          ]),
+          vue.createElementVNode("text", { class: "amount-on-right" }, [
+            vue.createElementVNode(
+              "text",
+              { class: "price-number" },
+              vue.toDisplayString($props.item.price.toFixed(2)),
+              1
+              /* TEXT */
+            ),
+            vue.createElementVNode("text", { class: "price-unit" }, "元")
+          ])
+        ]),
+        vue.createElementVNode("view", { class: "tags-row" }, [
+          vue.createElementVNode("view", { class: "tag" }, "1人"),
+          vue.createElementVNode(
+            "view",
+            { class: "tag" },
+            vue.toDisplayString($props.item.exclusive ? "独享" : "拼座"),
+            1
+            /* TEXT */
+          ),
+          vue.createElementVNode(
+            "view",
+            { class: "tag" },
+            vue.toDisplayString($options.paymentStatus),
+            1
+            /* TEXT */
+          ),
+          $props.item.highway ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "tag tag-blue"
+          }, "愿意协商高速费")) : vue.createCommentVNode("v-if", true)
+        ])
+      ])
+    ]);
+  }
+  const ComponentsInvitationList = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__scopeId", "data-v-4846c26a"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/InvitationList.vue"]]);
+  const _sfc_main$n = {
+    components: { InvitationList: ComponentsInvitationList },
+    data() {
+      return {
+        activeTab: "市内",
+        activeRouteTab: "市内路线",
+        locationTags: ["上海南站", "虹桥1", "虹桥2", "浦东3", "浦东4"],
+        invitationCount: 3,
+        tripListItems: []
+      };
+    },
+    computed: {
+      ...mapState(["userID", "rideRequest", "rideOrder"]),
+      formattedTime() {
+        const now = this.rideOrder.startAt;
+        const today = /* @__PURE__ */ new Date();
+        let prefix = "今天";
+        if (now.getDate() !== today.getDate()) {
+          prefix = `${now.getMonth() + 1}月${now.getDate()}日`;
+        }
+        const hours = now.getHours().toString().padStart(2, "0");
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        return `${prefix}${hours}:${minutes}`;
+      }
+    },
+    methods: {
+      ...mapActions([]),
+      selectLocation(tag) {
+        if (!this.rideOrder.startLoc) {
+          this.rideOrder.startLoc = tag;
+        } else if (!this.rideOrder.endLoc) {
+          this.rideOrder.endLoc = tag;
+        } else {
+          this.rideOrder.startLoc = tag;
+        }
+      },
+      showTimePicker() {
+        uni.showDatePicker({
+          date: this.rideOrder.startAt.toISOString(),
+          success: (res2) => {
+            this.rideOrder.startAt = new Date(res2.date);
+          }
+        });
+      },
+      async publishInvitation() {
+        try {
+          const requestData = {
+            passengerId: this.userID,
+            startLoc: this.rideOrder.startLoc,
+            endLoc: this.rideOrder.endLoc,
+            status: "PENDING",
+            startAt: this.rideOrder.startAt,
+            seats: this.rideOrder.seats
+          };
+          const response = await uni.request({
+            url: "http://localhost:8083/carsharing/post-invitation",
+            method: "POST",
+            data: requestData,
+            header: {
+              "Content-Type": "application/json"
+            }
+          });
+          formatAppLog("log", "at pages/driver/driver_search.vue:146", requestData);
+          if (response.data.status === "success") {
+            const responseData = response.data;
+            if (responseData.orderID) {
+              this.setRequestId(responseData.orderID);
+              uni.showToast({
+                title: "发布成功",
+                icon: "success"
+              });
+              this.goToSearchResult();
+            } else {
+              throw new Error("未收到 requestID");
+            }
+          } else {
+            throw new Error("请求失败");
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/driver/driver_search.vue:163", "发布失败:", error);
+          uni.showToast({
+            title: "发布失败",
+            icon: "none"
+          });
+        }
+      },
+      goToSearchResult() {
+        uni.navigateTo({ url: "/pages/driver/search-result" });
+      },
+      searchRides() {
+        this.publishInvitation();
+        uni.navigateTo({ url: "/pages/driver/search-result" });
+      },
+      goToInvitations() {
+        uni.navigateTo({ url: "/pages/driver/invitations" });
+      },
+      goToMyTrips() {
+        uni.navigateTo({ url: "/pages/driver/driverTripList" });
+      },
+      async getRides() {
+        try {
+          const response = await uni.request({
+            url: "http://localhost:8083/carsharing/get-all-invitations",
+            method: "GET",
+            header: { "Content-Type": "application/json" }
+          });
+          formatAppLog("log", "at pages/driver/driver_search.vue:191", response);
+          if (response.data.history && response.data.history.length > 0) {
+            this.tripListItems = response.data.history.map((item) => ({
+              startAt: item.startAt || "未知时间",
+              startLoc: item.startLoc || "未知",
+              endLoc: item.endLoc || "未知",
+              distance: item.distance,
+              price: item.price,
+              status: item.status || "",
+              exclusive: item.exclusive || false,
+              highway: item.highway || false
+            }));
+          } else {
+            this.tripListItems = [];
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/driver/driver_search.vue:207", "拉取失败:", error);
+          uni.showToast({
+            title: "拉取失败",
+            icon: "none"
+          });
+        }
+      }
+    },
+    onLoad() {
+      this.getRides();
+    }
+  };
+  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_InvitationList = vue.resolveComponent("InvitationList");
+    return vue.openBlock(), vue.createElementBlock("view", { class: "app-container" }, [
+      vue.createElementVNode("view", { class: "main-content" }, [
+        vue.createCommentVNode(" 搜索表单 "),
+        vue.createElementVNode("view", { class: "search-form-container" }, [
+          vue.createElementVNode("view", { class: "location-tabs" }, [
+            vue.createElementVNode(
+              "view",
+              {
+                class: vue.normalizeClass(["tab", { active: $data.activeTab === "市内" }]),
+                onClick: _cache[0] || (_cache[0] = ($event) => $data.activeTab = "市内")
+              },
+              "市内",
+              2
+              /* CLASS */
+            ),
+            vue.createElementVNode(
+              "view",
+              {
+                class: vue.normalizeClass(["tab", { active: $data.activeTab === "城际" }]),
+                onClick: _cache[1] || (_cache[1] = ($event) => $data.activeTab = "城际")
+              },
+              "城际",
+              2
+              /* CLASS */
+            )
+          ]),
+          vue.createElementVNode("view", { class: "search-form" }, [
+            vue.createElementVNode("view", { class: "input-group" }, [
+              vue.createElementVNode("view", { class: "dot green" }),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  type: "text",
+                  "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => _ctx.rideOrder.startLoc = $event),
+                  placeholder: "您的出发地",
+                  class: "form-input"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, _ctx.rideOrder.startLoc]
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "input-group" }, [
+              vue.createElementVNode("view", { class: "dot orange" }),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  type: "text",
+                  "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => _ctx.rideOrder.endLoc = $event),
+                  placeholder: "您的目的地",
+                  class: "form-input"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, _ctx.rideOrder.endLoc]
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "location-tags" }, [
+              (vue.openBlock(true), vue.createElementBlock(
+                vue.Fragment,
+                null,
+                vue.renderList($data.locationTags, (tag, index) => {
+                  return vue.openBlock(), vue.createElementBlock("view", {
+                    class: "tag",
+                    key: index,
+                    onClick: ($event) => $options.selectLocation(tag)
+                  }, vue.toDisplayString(tag), 9, ["onClick"]);
+                }),
+                128
+                /* KEYED_FRAGMENT */
+              ))
+            ]),
+            vue.createElementVNode("view", {
+              class: "time-picker",
+              onClick: _cache[4] || (_cache[4] = (...args) => $options.showTimePicker && $options.showTimePicker(...args))
+            }, [
+              vue.createElementVNode("text", { class: "clock-icon" }, "🕘"),
+              vue.createElementVNode(
+                "text",
+                null,
+                vue.toDisplayString($options.formattedTime),
+                1
+                /* TEXT */
+              )
+            ]),
+            vue.createElementVNode("button", {
+              class: "search-button",
+              onClick: _cache[5] || (_cache[5] = (...args) => $options.searchRides && $options.searchRides(...args))
+            }, "发布并搜索")
+          ])
+        ]),
+        vue.createCommentVNode(" 导航卡片 "),
+        vue.createElementVNode("view", { class: "navigation-cards" }, [
+          vue.createElementVNode("view", {
+            class: "nav-card invitation-card",
+            onClick: _cache[6] || (_cache[6] = (...args) => $options.goToInvitations && $options.goToInvitations(...args))
+          }, [
+            vue.createElementVNode("view", { class: "nav-card-content" }, [
+              vue.createElementVNode("view", { class: "nav-card-title" }, "拼车邀请"),
+              vue.createElementVNode("view", { class: "nav-card-subtitle" }, "正在寻找乘客")
+            ]),
+            vue.createElementVNode("view", { class: "nav-card-count" }, [
+              vue.createElementVNode(
+                "text",
+                { class: "count-number" },
+                vue.toDisplayString($data.invitationCount),
+                1
+                /* TEXT */
+              ),
+              vue.createElementVNode("text", { class: "count-unit" }, "条")
+            ]),
+            vue.createElementVNode("view", { class: "nav-card-detail" }, "详情 >")
+          ]),
+          vue.createElementVNode("view", {
+            class: "nav-card trip-card",
+            onClick: _cache[7] || (_cache[7] = (...args) => $options.goToMyTrips && $options.goToMyTrips(...args))
+          }, [
+            vue.createElementVNode("view", { class: "nav-card-content" }, [
+              vue.createElementVNode("view", { class: "nav-card-title" }, "我的行程"),
+              vue.createElementVNode("view", { class: "nav-card-subtitle" }, "历史拼车订单")
+            ]),
+            vue.createElementVNode("view", { class: "nav-card-detail" }, "详情 >")
+          ])
+        ]),
+        vue.createCommentVNode(" 路线标签 "),
+        vue.createElementVNode("view", { class: "route-tabs" }, [
+          vue.createElementVNode(
+            "view",
+            {
+              class: vue.normalizeClass(["route-tab", { active: $data.activeRouteTab === "市内路线" }]),
+              onClick: _cache[8] || (_cache[8] = ($event) => $data.activeRouteTab = "市内路线")
+            },
+            "市内路线",
+            2
+            /* CLASS */
+          ),
+          vue.createElementVNode(
+            "view",
+            {
+              class: vue.normalizeClass(["route-tab", { active: $data.activeRouteTab === "城际路线" }]),
+              onClick: _cache[9] || (_cache[9] = ($event) => $data.activeRouteTab = "城际路线")
+            },
+            "城际路线",
+            2
+            /* CLASS */
+          )
+        ]),
+        vue.createCommentVNode(" 行程列表 "),
+        $data.tripListItems.length > 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList($data.tripListItems, (item, index) => {
+              return vue.openBlock(), vue.createBlock(_component_InvitationList, {
+                key: index,
+                item
+              }, null, 8, ["item"]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ])) : (vue.openBlock(), vue.createElementBlock("view", {
+          key: 1,
+          class: "empty-tips"
+        }, [
+          vue.createElementVNode("text", null, "暂无拼车邀请")
+        ]))
+      ])
+    ]);
+  }
+  const PagesDriverDriverSearch = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/driver_search.vue"]]);
+  const _imports_0$3 = "/static/left-arrow.png";
+  const _sfc_main$m = {
+    name: "PageHeader",
+    // 给组件命名
+    props: {
+      backText: {
+        type: String,
+        default: "返回"
+        // 默认值
+      },
+      backUrl: {
+        type: String,
+        default: "/pages/customer/customer"
+        // 默认跳转到首页
+      }
+    },
+    data() {
+      return {};
+    },
+    methods: {
+      handleBack() {
+        uni.switchTab({
+          url: this.backUrl
+        });
+      }
+    }
+  };
+  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "all" }, [
+      vue.createElementVNode("view", { class: "head-content" }, [
+        vue.createElementVNode("view", null, [
+          vue.createElementVNode("view", { class: "back-btn" }, [
+            vue.createElementVNode("image", {
+              src: _imports_0$3,
+              class: "left-arrow",
+              onClick: _cache[0] || (_cache[0] = (...args) => $options.handleBack && $options.handleBack(...args))
+            }),
+            vue.createElementVNode(
+              "text",
+              { class: "back-text" },
+              vue.toDisplayString($props.backText),
+              1
+              /* TEXT */
+            )
+          ])
+        ])
+      ])
+    ]);
+  }
+  const ComponentsPageHeader = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/PageHeader.vue"]]);
+  const _sfc_main$l = {
+    components: {
+      PageHeader: ComponentsPageHeader
+    },
+    data() {
+      return {
+        orders: [
+          {},
+          {},
+          {}
+          // Three identical orders as shown in the prototype
+        ]
+      };
+    }
+  };
+  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_PageHeader = vue.resolveComponent("PageHeader");
+    return vue.openBlock(), vue.createElementBlock(
+      vue.Fragment,
+      null,
+      [
+        vue.createVNode(_component_PageHeader, {
+          backText: "顺路订单",
+          backUrl: "/pages/driver/driver_search"
+        }),
+        vue.createElementVNode("view", { class: "page-container" }, [
+          vue.createElementVNode("view", { class: "trip-info" }, [
+            vue.createElementVNode("view", { class: "route" }, [
+              vue.createElementVNode("text", null, "同济大学嘉定校区图书馆 → 静安嘉里中心")
+            ]),
+            vue.createElementVNode("view", { class: "trip-details" }, [
+              vue.createElementVNode("text", null, "今天17:10 | 可载3人")
+            ])
+          ]),
+          vue.createElementVNode("view", { class: "action-buttons" }, [
+            vue.createElementVNode("button", { class: "btn primary" }, "自动抢单"),
+            vue.createElementVNode("button", { class: "btn" }, "修改行程"),
+            vue.createElementVNode("button", { class: "btn" }, "取消行程")
+          ]),
+          vue.createElementVNode("view", { class: "filter-options" }, [
+            vue.createElementVNode("view", { class: "filter-row" }, [
+              vue.createElementVNode("text", null, "智能排序"),
+              vue.createElementVNode("text", { class: "active" }, "时间")
+            ]),
+            vue.createElementVNode("view", { class: "filter-row" }, [
+              vue.createElementVNode("text", null, "愿摊高速费"),
+              vue.createElementVNode("text", null, "独享"),
+              vue.createElementVNode("text", null, "前后一小时内"),
+              vue.createElementVNode("text", null, "起点5公里内")
+            ])
+          ]),
+          vue.createElementVNode("view", { class: "order-list" }, [
+            (vue.openBlock(true), vue.createElementBlock(
+              vue.Fragment,
+              null,
+              vue.renderList($data.orders, (order, index) => {
+                return vue.openBlock(), vue.createElementBlock("view", {
+                  class: "order-card",
+                  key: index
+                }, [
+                  vue.createElementVNode("view", { class: "order-header" }, [
+                    vue.createElementVNode("text", { class: "match-rate" }, "85%顺路"),
+                    vue.createElementVNode("text", { class: "time-range" }, "今天 10:55~11:00")
+                  ]),
+                  vue.createElementVNode("view", { class: "location-info" }, [
+                    vue.createElementVNode("text", null, "距你2.9km"),
+                    vue.createElementVNode("text", null, "汽车港"),
+                    vue.createElementVNode("text", null, "黄浦区 上海市交通大学...")
+                  ]),
+                  vue.createElementVNode("view", { class: "passenger-info" }, [
+                    vue.createElementVNode("text", null, "1人"),
+                    vue.createElementVNode("text", null, "拼座"),
+                    vue.createElementVNode("text", null, "已预付"),
+                    vue.createElementVNode("text", null, "愿意协商高速费")
+                  ]),
+                  vue.createElementVNode("view", { class: "price" }, "45.8元")
+                ]);
+              }),
+              128
+              /* KEYED_FRAGMENT */
+            ))
+          ]),
+          vue.createElementVNode("view", { class: "tab-bar" }, [
+            vue.createElementVNode("text", null, "车主"),
+            vue.createElementVNode("text", { class: "active" }, "拼车广场"),
+            vue.createElementVNode("text", null, "我的")
+          ])
+        ])
+      ],
+      64
+      /* STABLE_FRAGMENT */
+    );
+  }
+  const PagesDriverSearchResult = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/search-result.vue"]]);
+  const _sfc_main$k = {
+    data() {
+      return {
+        statusBarHeight: uni.getSystemInfoSync().statusBarHeight
+      };
+    },
+    methods: {}
+  };
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        style: vue.normalizeStyle({ paddingTop: $data.statusBarHeight + "px" })
+      },
+      null,
+      4
+      /* STYLE */
+    );
+  }
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/index/index.vue"]]);
+  const _sfc_main$j = {
+    data() {
+      return {
+        phone: "未知用户",
+        total_mileage: 0,
+        avatar: "/static/default_avatar.png",
+        // 默认头像
+        statusBarHeight: uni.getSystemInfoSync().statusBarHeight || 0,
+        menuItems: [
+          { icon: "🕒", text: "我的行程" },
+          { icon: "🎟️", text: "优惠券" },
+          { icon: "📝", text: "修改个人信息" },
+          { icon: "🛡️", text: "账号与安全" },
+          { icon: "🎧", text: "联系客服" },
+          { icon: "⚙️", text: "设置" }
+        ]
+      };
+    },
+    computed: {
+      ...mapState(["userID"])
+    },
+    watch: {
+      userID(newVal) {
+        if (newVal && newVal !== "未登录用户") {
+          this.fetchUserInfo();
+        }
+      }
+    },
+    onLoad() {
+      if (this.userID && this.userID !== "未登录用户") {
+        this.fetchUserInfo();
+      }
+    },
+    methods: {
+      fetchUserInfo() {
+        uni.request({
+          url: `http://localhost:8083/carsharing/my?userID=${this.userID}`,
+          // 修改为你的接口
+          method: "GET",
+          success: (res2) => {
+            if (res2.data.statue === "success" && res2.data) {
+              this.phone = res2.data.phone || "未命名用户";
+              this.total_mileage = res2.data.total_mileage || 0;
+              this.avatar = res2.data.avatar || "/static/default_avatar.png";
+            } else {
+              uni.showToast({ title: "用户信息加载失败", icon: "none" });
+            }
+          },
+          fail: () => {
+            uni.showToast({ title: "网络错误", icon: "none" });
+          }
+        });
+      },
+      handleMenuClick(index) {
+        const pages = [
+          "/pages/my/trip",
+          "/pages/my/coupon",
+          "/pages/my/change/change",
+          "/pages/my/account",
+          "/pages/my/support",
+          "/pages/my/setting"
+        ];
+        uni.navigateTo({
+          url: pages[index]
+        });
+      }
+    }
+  };
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: "mine-page",
+        style: vue.normalizeStyle({ paddingTop: $data.statusBarHeight + "px" })
+      },
+      [
+        vue.createCommentVNode(" 用户信息栏 "),
+        vue.createElementVNode("view", { class: "profile" }, [
+          vue.createElementVNode("image", {
+            class: "avatar",
+            src: $data.avatar,
+            mode: "aspectFill"
+          }, null, 8, ["src"]),
+          vue.createElementVNode("view", { class: "info" }, [
+            vue.createElementVNode(
+              "text",
+              { class: "phone" },
+              vue.toDisplayString($data.phone),
+              1
+              /* TEXT */
+            ),
+            vue.createElementVNode("text", { class: "mileage" }, [
+              vue.createTextVNode("里程值 "),
+              vue.createElementVNode(
+                "text",
+                { class: "green" },
+                vue.toDisplayString($data.total_mileage),
+                1
+                /* TEXT */
+              ),
+              vue.createTextVNode("/60")
+            ])
+          ])
+        ]),
+        vue.createCommentVNode(" 菜单项 "),
+        vue.createElementVNode("view", { class: "menu-list" }, [
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList($data.menuItems, (item, index) => {
+              return vue.openBlock(), vue.createElementBlock("view", {
+                class: "menu-item",
+                key: index,
+                onClick: ($event) => $options.handleMenuClick(index)
+              }, [
+                vue.createElementVNode("view", { class: "left" }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "icon" },
+                    vue.toDisplayString(item.icon),
+                    1
+                    /* TEXT */
+                  ),
+                  vue.createElementVNode(
+                    "text",
+                    { class: "text" },
+                    vue.toDisplayString(item.text),
+                    1
+                    /* TEXT */
+                  )
+                ]),
+                vue.createElementVNode("text", { class: "arrow" }, "›")
+              ], 8, ["onClick"]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ])
+      ],
+      4
+      /* STYLE */
+    );
+  }
+  const PagesMyMy = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-2f1ef635"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/my/my.vue"]]);
+  const _sfc_main$i = {
+    name: "PageHeader_cover",
+    props: {
+      backText: {
+        type: String,
+        default: "返回"
+      },
+      backUrl: {
+        type: String,
+        default: "/pages/customer/customer"
+      }
+    },
+    data() {
+      return {};
+    },
+    methods: {
+      handleBack() {
+        uni.switchTab({
+          url: this.backUrl
+        });
+      }
+    }
+  };
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("cover-view", { class: "floating-buttons" }, [
+      vue.createElementVNode("cover-view", { class: "header" }, [
+        vue.createElementVNode("cover-view", {
+          class: "back-btn",
+          onClick: _cache[2] || (_cache[2] = (...args) => $options.handleBack && $options.handleBack(...args))
+        }, [
+          vue.createElementVNode("cover-image", {
+            src: _imports_0$3,
+            onClick: _cache[0] || (_cache[0] = (...args) => $options.handleBack && $options.handleBack(...args))
+          }),
+          vue.createElementVNode(
+            "cover-view",
+            {
+              class: "back-text",
+              onClick: _cache[1] || (_cache[1] = (...args) => $options.handleBack && $options.handleBack(...args))
+            },
+            vue.toDisplayString($props.backText),
+            1
+            /* TEXT */
+          )
+        ])
+      ])
+    ]);
+  }
+  const ComponentsPageHeaderCover = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/PageHeader_cover.vue"]]);
+  const _sfc_main$h = {
     name: "UniRate",
     props: {
       isFill: {
@@ -3712,7 +4457,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     return vue.openBlock(), vue.createElementBlock("view", null, [
       vue.createElementVNode(
@@ -3774,29 +4519,8 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-5c8fbdf3"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/uni_modules/uni-rate/components/uni-rate/uni-rate.vue"]]);
-  function formatDateTime(dateStr) {
-    if (!dateStr)
-      return "";
-    try {
-      const normalizedDateStr = dateStr.replace(/[年月日]/g, "-").replace(/[时分秒]/g, ":");
-      const date = new Date(normalizedDateStr);
-      if (isNaN(date.getTime())) {
-        const [datePart, timePart] = dateStr.split(" ");
-        const [year, month2, day2] = datePart.split("-");
-        return `${parseInt(month2)}月${parseInt(day2)}日 ${timePart}`;
-      }
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      const hours = date.getHours().toString().padStart(2, "0");
-      const minutes = date.getMinutes().toString().padStart(2, "0");
-      return `${month}月${day}日 ${hours}:${minutes}`;
-    } catch (e) {
-      formatAppLog("error", "at utils/functions/formatDateTime.js:25", "日期格式错误:", dateStr, e);
-      return dateStr;
-    }
-  }
-  const _sfc_main$d = {
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-5c8fbdf3"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/uni_modules/uni-rate/components/uni-rate/uni-rate.vue"]]);
+  const _sfc_main$g = {
     props: {
       item: {
         type: Object,
@@ -3811,7 +4535,7 @@ if (uni.restoreGlobal) {
       };
     },
     computed: {
-      ...mapState(["rideRequest"])
+      ...mapState(["rideRequest", "userID"])
       // 获取Vuex中的rideRequest
     },
     methods: {
@@ -3833,8 +4557,9 @@ if (uni.restoreGlobal) {
             // 拼车邀请的id
             requestId: this.$store.state.rideRequest.requestID,
             // 拼车需求的id
-            price: this.item.price
+            price: this.item.price,
             // 订单费用
+            passengerId: this.userID
           };
           const response = await uni.request({
             url: `http://localhost:8083/carsharing/create-order`,
@@ -3852,7 +4577,7 @@ if (uni.restoreGlobal) {
               icon: "success"
             });
             uni.navigateTo({
-              url: "../pages/customer/OrderDetail",
+              url: "/pages/customer/OrderDetail",
               animationType: "slide-in-right",
               animationDuration: 300
             });
@@ -3860,7 +4585,7 @@ if (uni.restoreGlobal) {
             throw new Error(response.data.message || "订单创建失败");
           }
         } catch (error) {
-          formatAppLog("error", "at components/ListBlock.vue:153", "创建订单失败:", error);
+          formatAppLog("error", "at components/ListBlock.vue:154", "创建订单失败:", error);
           uni.showToast({
             title: error.message || "创建订单失败",
             icon: "none"
@@ -3871,7 +4596,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     const _component_uni_rate = resolveEasycom(vue.resolveDynamicComponent("uni-rate"), __easycom_1);
     return vue.openBlock(), vue.createElementBlock("view", { class: "block" }, [
@@ -4018,8 +4743,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsListBlock = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/ListBlock.vue"]]);
-  const _sfc_main$c = {
+  const ComponentsListBlock = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/ListBlock.vue"]]);
+  const _sfc_main$f = {
     components: {
       PageHeader: ComponentsPageHeader,
       ListBlock: ComponentsListBlock
@@ -4027,34 +4752,34 @@ if (uni.restoreGlobal) {
     data() {
       return {
         listBlockItems: [
-          {
-            startAt: "2023-05-15 08:30",
-            startLoc: "北京市海淀区中关村",
-            endLoc: "北京市朝阳区国贸",
-            seats: 3,
-            realName: "张师傅",
-            verificationCarPlate: "京A12345",
-            price: 45,
-            offset: 1.2,
-            avatar: "/static/logo.png",
-            verificationColor: "黑色",
-            verificationCarModel: "奥迪A6",
-            rating: 4.3
-          },
-          {
-            startAt: "2023-05-15 09:15",
-            startLoc: "北京市海淀区五道口",
-            endLoc: "北京市西城区金融街",
-            seats: 2,
-            realName: "李师傅",
-            verificationCarPlate: "京B67890",
-            price: 35.5,
-            offset: 3.2,
-            avatar: "/static/logo.png",
-            verificationColor: "白色",
-            verificationCarModel: "本田雅阁",
-            rating: 5
-          }
+          // {
+          // 	startAt: '2023-05-15 08:30',
+          // 	startLoc: '北京市海淀区中关村',
+          // 	endLoc: '北京市朝阳区国贸',
+          // 	seats: 3,
+          // 	realName: '张师傅',
+          // 	verificationCarPlate: '京A12345',
+          // 	price: 45.00,
+          // 	offset:1.2,
+          // 	avatar: '/static/logo.png',
+          // 	verificationColor:'黑色',
+          // 	verificationCarModel:'奥迪A6',
+          // 	rating:4.3,
+          // },
+          // {
+          // 	startAt: '2023-05-15 09:15',
+          // 	startLoc: '北京市海淀区五道口',
+          // 	endLoc: '北京市西城区金融街',
+          // 	seats: 2,
+          // 	realName: '李师傅',
+          // 	verificationCarPlate: '京B67890',
+          // 	price: 35.50,
+          // 	offset:3.2,
+          // 	avatar: '/static/logo.png',
+          // 	verificationColor:'白色',
+          // 	verificationCarModel:'本田雅阁',
+          // 	rating:5.0,
+          // },
         ],
         isLoading: false,
         error: null
@@ -4064,6 +4789,7 @@ if (uni.restoreGlobal) {
       ...mapState(["rideRequest"])
     },
     mounted() {
+      this.getMatchedOrders();
     },
     methods: {
       // 获取匹配订单
@@ -4116,9 +4842,9 @@ if (uni.restoreGlobal) {
             }
           });
           if (response.data.status === "success") {
-            const res = response.data;
-            if (res.list_matched && res.list_matched.length > 0) {
-              this.listBlockItems = res.list_matched.map((item) => ({
+            const res2 = response.data;
+            if (res2.matched_orders && res2.matched_orders.length > 0) {
+              this.listBlockItems = res2.matched_orders.map((item) => ({
                 id: item.id,
                 // 拼车邀请的id
                 startAt: item.start_at,
@@ -4141,7 +4867,7 @@ if (uni.restoreGlobal) {
             throw new Error("请求失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/InvitationMatch.vue:147", "获取匹配订单失败:", error);
+          formatAppLog("error", "at pages/customer/InvitationMatch.vue:146", "获取匹配订单失败:", error);
           this.error = error.message || "获取匹配订单失败";
           uni.showToast({
             title: this.error,
@@ -4153,7 +4879,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_PageHeader = vue.resolveComponent("PageHeader");
     const _component_ListBlock = vue.resolveComponent("ListBlock");
     return vue.openBlock(), vue.createElementBlock("view", null, [
@@ -4184,9 +4910,9 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesCustomerInvitationMatch = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/customer/InvitationMatch.vue"]]);
+  const PagesCustomerInvitationMatch = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/customer/InvitationMatch.vue"]]);
   const _imports_0$2 = "/static/right-arrow-blue.png";
-  const _sfc_main$b = {
+  const _sfc_main$e = {
     props: {
       item: {
         type: Object,
@@ -4204,7 +4930,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
     return vue.openBlock(), vue.createElementBlock("view", null, [
       vue.createElementVNode("view", { class: "block" }, [
@@ -4251,7 +4977,7 @@ if (uni.restoreGlobal) {
           ])
         ]),
         vue.createElementVNode("view", { class: "right" }, [
-          $props.item.status === "pending" || $props.item.status === "matched" ? (vue.openBlock(), vue.createElementBlock("view", {
+          $props.item.status === "PENDING" || $props.item.status === "MATCHED" ? (vue.openBlock(), vue.createElementBlock("view", {
             key: 0,
             class: "edit-btn"
           }, [
@@ -4270,7 +4996,7 @@ if (uni.restoreGlobal) {
             {
               class: vue.normalizeClass(["status", "status-" + $props.item.status])
             },
-            vue.toDisplayString($props.item.status === "pending" ? "待接单" : $props.item.status === "matched" ? "进行中" : $props.item.status === "completed" ? "已完成" : $props.item.status === "canceled" ? "已取消" : ""),
+            vue.toDisplayString($props.item.status === "PENDING" ? "待接单" : $props.item.status === "MATCHED" ? "进行中" : $props.item.status === "COMPLETED" ? "已完成" : $props.item.status === "CANCELED" ? "已取消" : ""),
             3
             /* TEXT, CLASS */
           )
@@ -4278,8 +5004,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const ComponentsRequestBlock = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/RequestBlock.vue"]]);
-  const _sfc_main$a = {
+  const ComponentsRequestBlock = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/RequestBlock.vue"]]);
+  const _sfc_main$d = {
     components: {
       PageHeader: ComponentsPageHeader,
       RequestBlock: ComponentsRequestBlock
@@ -4288,52 +5014,46 @@ if (uni.restoreGlobal) {
       return {
         requestnumber: 0,
         RequestBlockItems: [
-          {
-            startAt: "2023-05-15 08:30",
-            startLoc: "北京市海淀区中关村",
-            endLoc: "北京市朝阳区国贸",
-            status: "pending"
-          },
-          {
-            startAt: "2023-05-15 09:15",
-            startLoc: "北京市海淀区五道口",
-            endLoc: "北京市西城区金融街",
-            status: "completed"
-          }
+          // {
+          // 	startAt: '2023-05-15 08:30',
+          // 	startLoc: '北京市海淀区中关村',
+          // 	endLoc: '北京市朝阳区国贸',
+          // 	status:'pending',
+          // },
+          // {
+          // 	startAt: '2023-05-15 09:15',
+          // 	startLoc: '北京市海淀区五道口',
+          // 	endLoc: '北京市西城区金融街',
+          // 	status:'completed',
+          // },
         ]
       };
     },
     onLoad() {
+      this.getRequests();
     },
     methods: {
       async getRequests() {
         this.isLoading = true;
         this.error = null;
         try {
-          if (!this.userID) {
-            throw new Error("用户未登录");
-          }
           const response = await uni.request({
-            url: "http://localhost:8083/carsharing/get-requests",
+            url: "http://localhost:8083/carsharing/get-requests?userId=1",
             method: "GET",
-            data: {
-              user_id: this.userID
-              // 传递当前用户ID
-            },
             header: {
               "Content-Type": "application/json"
             }
           });
           if (response.data.status === "success") {
-            const res = response.data;
-            if (res.requests && res.requests.length > 0) {
-              this.RequestBlockItems = res.requests.map((item) => ({
-                startAt: item.start_at || "未知时间",
-                startLoc: item.start_loc || ["未知位置"],
-                endLoc: item.end_loc || ["未知位置"],
+            const res2 = response.data.history;
+            if (res2 && res2.length > 0) {
+              this.RequestBlockItems = res2.map((item) => ({
+                startAt: item.startAt || "未知时间",
+                startLoc: item.startLoc || ["未知位置"],
+                endLoc: item.endLoc || ["未知位置"],
                 status: item.status || "未知状态"
               }));
-              this.requestnumber = res.requests.length;
+              this.requestnumber = res2.length;
             } else {
               this.RequestBlockItems = [];
               this.requestnumber = 0;
@@ -4342,7 +5062,7 @@ if (uni.restoreGlobal) {
             throw new Error(response.data.message || "获取请求列表失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/RequestList.vue:88", "获取请求列表失败:", error);
+          formatAppLog("error", "at pages/customer/RequestList.vue:85", "获取请求列表失败:", error);
           this.error = error.message || "获取请求列表失败";
           this.RequestBlockItems = [];
           this.requestnumber = 0;
@@ -4356,7 +5076,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_PageHeader = vue.resolveComponent("PageHeader");
     const _component_RequestBlock = vue.resolveComponent("RequestBlock");
     return vue.openBlock(), vue.createElementBlock("view", null, [
@@ -4385,7 +5105,300 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const PagesCustomerRequestList = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/customer/RequestList.vue"]]);
+  const PagesCustomerRequestList = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/customer/RequestList.vue"]]);
+  const _sfc_main$c = {
+    props: {
+      item: {
+        type: Object,
+        required: true
+      }
+    },
+    name: "TripList",
+    methods: {
+      formatDateTime
+    }
+  };
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+    return vue.openBlock(), vue.createElementBlock("view", null, [
+      vue.createElementVNode("view", { class: "block" }, [
+        vue.createElementVNode("view", { class: "left" }, [
+          vue.createCommentVNode(" 出发时间 "),
+          vue.createElementVNode("text", { style: { "font-size": "16px", "font-weight": "bold" } }, [
+            vue.createElementVNode("text", null, "出发时间"),
+            vue.createElementVNode(
+              "text",
+              { style: { "margin-left": "10px" } },
+              vue.toDisplayString($options.formatDateTime($props.item.startAt)),
+              1
+              /* TEXT */
+            )
+          ]),
+          vue.createElementVNode("view", { class: "location-row" }, [
+            vue.createCommentVNode(" 起止地点和虚线 "),
+            vue.createElementVNode("view", { class: "location-section" }, [
+              vue.createElementVNode("view", { class: "location-item" }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "circle-filled",
+                  size: "16",
+                  color: "var(--color-green)"
+                }),
+                vue.createElementVNode(
+                  "text",
+                  { class: "location-text" },
+                  vue.toDisplayString($props.item.startLoc),
+                  1
+                  /* TEXT */
+                )
+              ]),
+              vue.createElementVNode("view", { class: "dashed-line" }),
+              vue.createElementVNode("view", { class: "location-item" }, [
+                vue.createVNode(_component_uni_icons, {
+                  type: "circle-filled",
+                  size: "16",
+                  color: "var(--color-orange)"
+                }),
+                vue.createElementVNode(
+                  "text",
+                  { class: "location-text" },
+                  vue.toDisplayString($props.item.endLoc),
+                  1
+                  /* TEXT */
+                )
+              ])
+            ])
+          ])
+        ]),
+        vue.createCommentVNode(" 状态标签 "),
+        vue.createElementVNode("view", { class: "right" }, [
+          vue.createElementVNode(
+            "text",
+            {
+              class: vue.normalizeClass(["status-text", "status-" + $props.item.status])
+            },
+            vue.toDisplayString($props.item.status === "ONGOING" ? "进行中" : $props.item.status === "COMPLETED" ? "已完成" : $props.item.status === "CANCELLED" ? "已取消" : ""),
+            3
+            /* TEXT, CLASS */
+          )
+        ]),
+        vue.createCommentVNode(" 金额显示在右边且垂直居中 "),
+        vue.createElementVNode("text", { class: "amount-on-right" }, [
+          vue.createElementVNode(
+            "text",
+            { class: "price-number" },
+            vue.toDisplayString($props.item.price.toFixed(2)),
+            1
+            /* TEXT */
+          ),
+          vue.createElementVNode("text", { class: "price-unit" }, "元")
+        ]),
+        vue.createCommentVNode(" 手机尾号独立一行，放置在block底部 "),
+        vue.createElementVNode("view", { class: "phone-section" }, [
+          vue.createElementVNode(
+            "text",
+            { class: "phone-text" },
+            "尾号 " + vue.toDisplayString($props.item.phone.slice(-4)),
+            1
+            /* TEXT */
+          ),
+          vue.createVNode(_component_uni_icons, {
+            type: "phone",
+            size: "18",
+            color: "var(--color-blue)",
+            class: "phone-icon"
+          })
+        ])
+      ])
+    ]);
+  }
+  const ComponentsTripList = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/components/TripList.vue"]]);
+  const _sfc_main$b = {
+    components: {
+      PageHeader: ComponentsPageHeader,
+      TripList: ComponentsTripList
+    },
+    data() {
+      return {
+        requestnumber: 0,
+        tripListItems: [
+          {
+            startAt: "2024-04-22 14:30",
+            startLoc: "北京市海淀区",
+            endLoc: "北京市朝阳区",
+            status: "ONGOING",
+            phone: "13812345678",
+            price: 20
+          },
+          {
+            startAt: "2024-04-22 14:30",
+            startLoc: "北京市海淀区",
+            endLoc: "北京市朝阳区",
+            status: "CANCELLED",
+            phone: "13812345678",
+            price: 20.79
+          }
+        ]
+      };
+    },
+    onLoad() {
+      this.getRequests();
+    },
+    methods: {
+      async getRequests() {
+        this.isLoading = true;
+        this.error = null;
+        try {
+          formatAppLog("log", "at pages/driver/driverTripList.vue:57", 2);
+          const response = await uni.request({
+            //url: `http://localhost:8083/carsharing/get-driver-trip-list?userId=${this.userID}`,
+            url: `http://localhost:8083/carsharing/get-driver-trip-list?userId=2`,
+            // 直接拼接参数
+            method: "GET",
+            header: {
+              "Content-Type": "application/json"
+            }
+          });
+          formatAppLog("log", "at pages/driver/driverTripList.vue:72", response);
+          if (response.data.status === "success") {
+            const res2 = response.data.history;
+            formatAppLog("log", "at pages/driver/driverTripList.vue:76", res2);
+            if (res2 && res2.length > 0) {
+              this.tripListItems = res2.map((item) => ({
+                startAt: item.startAt || "未知时间",
+                startLoc: item.startLoc || ["未知位置"],
+                endLoc: item.endLoc || ["未知位置"],
+                status: item.status || "未知状态",
+                phone: item.phone || "xxxx",
+                price: item.price || 0
+              }));
+              this.requestnumber = res2.length;
+            } else {
+              this.tripListItems = [];
+              this.requestnumber = 0;
+            }
+          } else {
+            throw new Error(response.data.message || "获取请求列表失败");
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/driver/driverTripList.vue:95", "获取请求列表失败:", error);
+          this.error = error.message || "获取请求列表失败";
+          this.tripListItems = [];
+          this.requestnumber = 0;
+          uni.showToast({
+            title: this.error,
+            icon: "none"
+          });
+        } finally {
+          this.isLoading = false;
+        }
+      }
+    }
+  };
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_PageHeader = vue.resolveComponent("PageHeader");
+    const _component_TripList = vue.resolveComponent("TripList");
+    return vue.openBlock(), vue.createElementBlock("view", null, [
+      vue.createVNode(_component_PageHeader, {
+        backText: "我的行程",
+        backUrl: "/pages/customer/customer"
+      }),
+      $data.tripListItems.length > 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($data.tripListItems, (item, index) => {
+            return vue.openBlock(), vue.createBlock(_component_TripList, {
+              key: index,
+              item
+            }, null, 8, ["item"]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ])) : (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: "empty-tips"
+      }, [
+        vue.createElementVNode("text", null, "您暂时还没有过行程哦")
+      ]))
+    ]);
+  }
+  const PagesDriverDriverTripList = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/driverTripList.vue"]]);
+  const _sfc_main$a = {
+    components: {
+      PageHeader: ComponentsPageHeader,
+      TripList: ComponentsTripList
+    },
+    data() {
+      return {
+        tripListItems: [
+          {
+            startAt: this.todayAt("10:00"),
+            startLoc: "同济大学（嘉定校区）",
+            endLoc: "静安嘉里中心",
+            status: "ONGOING",
+            phone: "13900000001",
+            price: 0
+          },
+          {
+            startAt: "2024-06-24 10:00",
+            startLoc: "同济大学（嘉定校区）",
+            endLoc: "静安嘉里中心",
+            status: "ONGOING",
+            phone: "13900000002",
+            price: 0
+          },
+          {
+            startAt: "2024-06-24 10:00",
+            startLoc: "同济大学（嘉定校区）",
+            endLoc: "静安嘉里中心",
+            status: "ONGOING",
+            phone: "13900000003",
+            price: 0
+          }
+        ]
+      };
+    },
+    methods: {
+      todayAt(timeStr) {
+        const today = /* @__PURE__ */ new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, "0");
+        const dd = String(today.getDate()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd} ${timeStr}`;
+      }
+    }
+  };
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_PageHeader = vue.resolveComponent("PageHeader");
+    const _component_TripList = vue.resolveComponent("TripList");
+    return vue.openBlock(), vue.createElementBlock("view", null, [
+      vue.createVNode(_component_PageHeader, {
+        backText: "我的拼车邀请",
+        backUrl: "/pages/customer/customer"
+      }),
+      $data.tripListItems.length > 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, [
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($data.tripListItems, (item, index) => {
+            return vue.openBlock(), vue.createBlock(_component_TripList, {
+              key: index,
+              item
+            }, null, 8, ["item"]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ])) : (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: "empty-tips"
+      }, [
+        vue.createElementVNode("text", null, "您暂时还没有拼车邀请哦")
+      ]))
+    ]);
+  }
+  const PagesDriverInvitations = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-d5f23abd"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/invitations.vue"]]);
   const _imports_0$1 = "/static/launch/welcome0.png";
   const _imports_1 = "/static/launch/welcome1.png";
   const _sfc_main$9 = {
@@ -4485,7 +5498,7 @@ if (uni.restoreGlobal) {
           this.countdown--;
         }, 1e3);
         try {
-          const res = await uni.request({
+          const res2 = await uni.request({
             url: "/api/sendCode",
             method: "POST",
             data: { phone: this.phone }
@@ -4605,6 +5618,104 @@ if (uni.restoreGlobal) {
     );
   }
   const PagesMyLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-dd394eb5"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/my/login/login.vue"]]);
+  const store = createStore({
+    state() {
+      return {
+        userID: "1",
+        rideRequest: {
+          // 拼车需求数据
+          startLoc: "华东理工大学",
+          endLoc: "上海财经大学",
+          startAt: /* @__PURE__ */ new Date("2025-04-14 00:00:00"),
+          exclusive: false,
+          highway: false,
+          requestID: null
+        },
+        rideOrder: {
+          startLoc: "",
+          endLoc: "",
+          startAt: /* @__PURE__ */ new Date(),
+          seats: null,
+          orderID: null
+        }
+      };
+    },
+    mutations: {
+      MLOGIN(state, userID) {
+        state.userID = userID;
+      },
+      MLOGOUT(state) {
+        state.userID = "未登录用户";
+      },
+      // RideRequest mutations
+      SET_START_LOC(state, location) {
+        state.rideRequest.startLoc = location;
+      },
+      SET_END_LOC(state, location) {
+        state.rideRequest.endLoc = location;
+      },
+      SET_START_AT(state, datetime) {
+        state.rideRequest.startAt = datetime;
+      },
+      TOGGLE_EXCLUSIVE(state) {
+        state.rideRequest.exclusive = !state.rideRequest.exclusive;
+      },
+      TOGGLE_HIGHWAY(state) {
+        state.rideRequest.highway = !state.rideRequest.highway;
+      },
+      SET_REQUEST_ID(state, id) {
+        state.rideRequest.requestID = id;
+      },
+      // Optional: reset all rideRequest fields
+      RESET_RIDE_REQUEST(state) {
+        state.rideRequest = {
+          startLoc: "",
+          endLoc: "",
+          startAt: "",
+          exclusive: false,
+          highway: false,
+          requestID: null
+        };
+      },
+      SET_ORDER_ID(state, id) {
+        state.rideOrder.orderID = id;
+        formatAppLog("log", "at store/index.js:63", "111", state.rideOrder.orderID);
+      }
+    },
+    actions: {
+      login({ commit }, userID) {
+        commit("MLOGIN", userID);
+      },
+      logout({ commit }) {
+        commit("MLOGOUT");
+      },
+      // RideRequest actions
+      setStartLoc({ commit }, location) {
+        commit("SET_START_LOC", location);
+      },
+      setEndLoc({ commit }, location) {
+        commit("SET_END_LOC", location);
+      },
+      setStartAt({ commit }, datetime) {
+        commit("SET_START_AT", datetime);
+      },
+      toggleExclusive({ commit }) {
+        commit("TOGGLE_EXCLUSIVE");
+      },
+      toggleHighway({ commit }) {
+        commit("TOGGLE_HIGHWAY");
+      },
+      setRequestId({ commit }, id) {
+        commit("SET_REQUEST_ID", id);
+      },
+      resetRideRequest({ commit }) {
+        commit("RESET_RIDE_REQUEST");
+      },
+      setOrderId({ commit }, id) {
+        commit("SET_ORDER_ID", id);
+      }
+    }
+  });
   const _sfc_main$7 = {
     data() {
       return {
@@ -4634,7 +5745,7 @@ if (uni.restoreGlobal) {
           return;
         uni.showLoading({ title: "登录中...", mask: true });
         try {
-          const res = await uni.request({
+          const res2 = await uni.request({
             url: "http://localhost:8083/carsharing/login",
             method: "POST",
             data: {
@@ -4643,10 +5754,12 @@ if (uni.restoreGlobal) {
             }
           });
           uni.hideLoading();
-          if (res.data.status === "success") {
+          if (res2.data.status === "success") {
+            const userID = res2.data.data.userID;
+            store.dispatch("login", userID);
             uni.switchTab({ url: "/pages/customer/customer" });
           } else {
-            uni.showToast({ title: res.data.msg || "登录失败", icon: "none" });
+            uni.showToast({ title: res2.data.msg || "登录失败", icon: "none" });
           }
         } catch (error) {
           uni.hideLoading();
@@ -4786,7 +5899,7 @@ if (uni.restoreGlobal) {
           this.countdown--;
         }, 1e3);
         try {
-          const res = await uni.request({
+          const res2 = await uni.request({
             url: "/api/sendCode",
             method: "POST",
             data: { phone: this.phone }
@@ -4833,7 +5946,7 @@ if (uni.restoreGlobal) {
           return;
         uni.showLoading({ title: "修改中..." });
         try {
-          const res = await uni.request({
+          const res2 = await uni.request({
             url: "http://localhost:8083/carsharing/forget",
             method: "POST",
             data: {
@@ -4843,7 +5956,7 @@ if (uni.restoreGlobal) {
               // 用户密码
             }
           });
-          if (res.data.status === "success") {
+          if (res2.data.status === "success") {
             uni.showToast({ title: "修改成功", icon: "success" });
             setTimeout(() => {
               uni.navigateTo({
@@ -5031,7 +6144,7 @@ if (uni.restoreGlobal) {
           this.countdown--;
         }, 1e3);
         try {
-          const res = await uni.request({
+          const res2 = await uni.request({
             url: "/api/sendCode",
             method: "POST",
             data: { phone: this.phone }
@@ -5078,7 +6191,7 @@ if (uni.restoreGlobal) {
           return;
         uni.showLoading({ title: "注册中..." });
         try {
-          const res = await uni.request({
+          const res2 = await uni.request({
             url: "http://localhost:8083/carsharing/register",
             method: "POST",
             data: {
@@ -5088,7 +6201,7 @@ if (uni.restoreGlobal) {
               // 用户密码
             }
           });
-          if (res.data.status === "success") {
+          if (res2.data.status === "success") {
             uni.showToast({ title: "注册成功", icon: "success" });
             setTimeout(() => {
               uni.navigateTo({
@@ -5346,7 +6459,7 @@ if (uni.restoreGlobal) {
           return;
         }
         try {
-          const res = await uni.request({
+          const res2 = await uni.request({
             url: `https://api.map.baidu.com/place/v2/suggestion`,
             method: "GET",
             data: {
@@ -5357,8 +6470,8 @@ if (uni.restoreGlobal) {
               ak: this.ak
             }
           });
-          if (res.data.status === 0) {
-            this.suggestions = await Promise.all(res.data.result.map(async (item) => {
+          if (res2.data.status === 0) {
+            this.suggestions = await Promise.all(res2.data.result.map(async (item) => {
               let { address, lat, lng } = await this.getAddressAndCoordinatesByName(item.name);
               let currentLocation = await this.getCurrentLocation();
               let distance = await this.calculateDistance(currentLocation.lat, currentLocation.lng, lat, lng);
@@ -5372,7 +6485,7 @@ if (uni.restoreGlobal) {
             }));
             this.showSuggestions = true;
           } else {
-            formatAppLog("warn", "at pages/customer/StartLoc.vue:142", "百度 Suggestion 接口失败:", res.data.message);
+            formatAppLog("warn", "at pages/customer/StartLoc.vue:142", "百度 Suggestion 接口失败:", res2.data.message);
             this.suggestions = [];
             this.showSuggestions = false;
           }
@@ -5743,7 +6856,7 @@ if (uni.restoreGlobal) {
           return;
         }
         try {
-          const res = await uni.request({
+          const res2 = await uni.request({
             url: `https://api.map.baidu.com/place/v2/suggestion`,
             method: "GET",
             data: {
@@ -5754,8 +6867,8 @@ if (uni.restoreGlobal) {
               ak: this.ak
             }
           });
-          if (res.data.status === 0) {
-            this.suggestions = await Promise.all(res.data.result.map(async (item) => {
+          if (res2.data.status === 0) {
+            this.suggestions = await Promise.all(res2.data.result.map(async (item) => {
               let { address, lat, lng } = await this.getAddressAndCoordinatesByName(item.name);
               let currentLocation = await this.getCurrentLocation();
               let distance = await this.calculateDistance(currentLocation.lat, currentLocation.lng, lat, lng);
@@ -5769,7 +6882,7 @@ if (uni.restoreGlobal) {
             }));
             this.showSuggestions = true;
           } else {
-            formatAppLog("warn", "at pages/customer/EndLoc.vue:142", "百度 Suggestion 接口失败:", res.data.message);
+            formatAppLog("warn", "at pages/customer/EndLoc.vue:142", "百度 Suggestion 接口失败:", res2.data.message);
             this.suggestions = [];
             this.showSuggestions = false;
           }
@@ -6140,9 +7253,10 @@ if (uni.restoreGlobal) {
       };
     },
     computed: {
-      ...mapState(["userID", "rideRequest", "orderID"])
+      ...mapState(["userID", "rideRequest", "rideOrder"])
     },
     created() {
+      this.fetchOrderInfo();
       this.startCountdown();
     },
     beforeDestroy() {
@@ -6155,30 +7269,25 @@ if (uni.restoreGlobal) {
         this.isLoading = true;
         this.error = null;
         try {
-          if (!this.orderId) {
+          formatAppLog("log", "at pages/customer/OrderDetail.vue:116", this.rideOrder.orderID);
+          if (!this.rideOrder.orderID) {
             throw new Error("未获取到订单ID");
           }
           const response = await uni.request({
-            url: "http://localhost:8083/carsharing/get-certain-order",
+            url: `http://localhost:8083/carsharing/get-certain-order?orderId=${this.rideOrder.orderID}`,
             method: "GET",
-            data: {
-              order_id: this.orderId
-            },
             header: {
               "Content-Type": "application/json"
             }
           });
-          const [error, res] = response;
-          if (error) {
-            throw error;
-          }
-          if (res.data.status === "success") {
-            this.orderInfo = res.data.data;
+          formatAppLog("log", "at pages/customer/OrderDetail.vue:129", response);
+          if (response.data.status === "success") {
+            this.orderInfo = response.data.history;
           } else {
             throw new Error(res.data.message || "获取订单信息失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/OrderDetail.vue:146", "获取订单信息失败:", error);
+          formatAppLog("error", "at pages/customer/OrderDetail.vue:139", "获取订单信息失败:", error);
           this.error = error.message || "获取订单信息失败";
           uni.showToast({
             title: this.error,
@@ -6205,21 +7314,21 @@ if (uni.restoreGlobal) {
               "Content-Type": "application/json"
             }
           });
-          const [error, res] = response;
+          const [error, res2] = response;
           if (error) {
             throw error;
           }
-          if (res.data.status === "success") {
+          if (res2.data.status === "success") {
             uni.showToast({
               title: "订单已取消",
               icon: "success"
             });
             uni.navigateBack();
           } else {
-            throw new Error(res.data.message || "取消订单失败");
+            throw new Error(res2.data.message || "取消订单失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/OrderDetail.vue:196", "取消订单出错:", error);
+          formatAppLog("error", "at pages/customer/OrderDetail.vue:189", "取消订单出错:", error);
           this.error = error.message || "取消订单失败";
           uni.showToast({
             title: this.error,
@@ -6250,8 +7359,8 @@ if (uni.restoreGlobal) {
         uni.showModal({
           title: "确认取消订单",
           content: "您确定要取消当前订单吗？",
-          success: (res) => {
-            if (res.confirm) {
+          success: (res2) => {
+            if (res2.confirm) {
               this.cancelOrder();
             }
           }
@@ -6312,14 +7421,14 @@ if (uni.restoreGlobal) {
                       vue.createElementVNode(
                         "cover-view",
                         { class: "car-plate" },
-                        vue.toDisplayString($data.orderInfo.verification_car_plate),
+                        vue.toDisplayString($data.orderInfo.verificationCarPlate),
                         1
                         /* TEXT */
                       ),
                       vue.createElementVNode(
                         "cover-view",
                         { class: "car-detail" },
-                        vue.toDisplayString($data.carColor) + " | " + vue.toDisplayString($data.orderInfo.verification_car_model),
+                        vue.toDisplayString($data.carColor) + " | " + vue.toDisplayString($data.orderInfo.verificationCarModel),
                         1
                         /* TEXT */
                       )
@@ -6328,7 +7437,7 @@ if (uni.restoreGlobal) {
                       vue.createElementVNode(
                         "cover-view",
                         { class: "driver-name" },
-                        vue.toDisplayString($data.orderInfo.real_name),
+                        vue.toDisplayString($data.orderInfo.realName),
                         1
                         /* TEXT */
                       ),
@@ -6353,7 +7462,7 @@ if (uni.restoreGlobal) {
                       vue.createElementVNode(
                         "cover-view",
                         { style: { "font-size": "30px", "color": "var(--color-red)" } },
-                        vue.toDisplayString($data.orderInfo.distance),
+                        vue.toDisplayString($data.orderInfo.distance) + "km",
                         1
                         /* TEXT */
                       )
@@ -6367,7 +7476,7 @@ if (uni.restoreGlobal) {
                     vue.createElementVNode(
                       "cover-view",
                       { class: "route-from" },
-                      vue.toDisplayString($data.orderInfo.start_loc),
+                      vue.toDisplayString($data.orderInfo.startLoc),
                       1
                       /* TEXT */
                     )
@@ -6378,7 +7487,7 @@ if (uni.restoreGlobal) {
                     vue.createElementVNode(
                       "cover-view",
                       { class: "route-to" },
-                      vue.toDisplayString($data.orderInfo.end_loc),
+                      vue.toDisplayString($data.orderInfo.endLoc),
                       1
                       /* TEXT */
                     )
@@ -6418,8 +7527,10 @@ if (uni.restoreGlobal) {
   const PagesCustomerOrderDetail = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/customer/OrderDetail.vue"]]);
   __definePage("pages/customer/customer", PagesCustomerCustomer);
   __definePage("pages/driver/driver", PagesDriverDriver);
+  __definePage("pages/my/change/change", PagesMyChangeChange);
   __definePage("pages/driver/car-owner", PagesDriverCarOwner);
   __definePage("pages/driver/driver_search", PagesDriverDriverSearch);
+  __definePage("pages/driver/search-result", PagesDriverSearchResult);
   __definePage("pages/index/index", PagesIndexIndex);
   __definePage("pages/my/my", PagesMyMy);
   __definePage("components/PageHeader", ComponentsPageHeader);
@@ -6428,6 +7539,10 @@ if (uni.restoreGlobal) {
   __definePage("components/ListBlock", ComponentsListBlock);
   __definePage("pages/customer/RequestList", PagesCustomerRequestList);
   __definePage("components/RequestBlock", ComponentsRequestBlock);
+  __definePage("components/TripList", ComponentsTripList);
+  __definePage("components/InvitationList", ComponentsInvitationList);
+  __definePage("pages/driver/driverTripList", PagesDriverDriverTripList);
+  __definePage("pages/driver/invitations", PagesDriverInvitations);
   __definePage("pages/index/welcome", PagesIndexWelcome);
   __definePage("pages/my/login/login", PagesMyLoginLogin);
   __definePage("pages/my/login/passwordLogin", PagesMyLoginPasswordLogin);
@@ -6450,97 +7565,6 @@ if (uni.restoreGlobal) {
     }
   };
   const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/App.vue"]]);
-  const store = createStore({
-    state() {
-      return {
-        userID: "未登录用户",
-        rideRequest: {
-          // 拼车需求数据
-          startLoc: "",
-          endLoc: "",
-          startAt: "",
-          exclusive: false,
-          highway: false,
-          requestID: null
-        },
-        orderID: null
-      };
-    },
-    mutations: {
-      MLOGIN(state, userID) {
-        state.userID = userID;
-      },
-      MLOGOUT(state) {
-        state.userID = "未登录用户";
-      },
-      // RideRequest mutations
-      SET_START_LOC(state, location) {
-        state.rideRequest.startLoc = location;
-      },
-      SET_END_LOC(state, location) {
-        state.rideRequest.endLoc = location;
-      },
-      SET_START_AT(state, datetime) {
-        state.rideRequest.startAt = datetime;
-      },
-      TOGGLE_EXCLUSIVE(state) {
-        state.rideRequest.exclusive = !state.rideRequest.exclusive;
-      },
-      TOGGLE_HIGHWAY(state) {
-        state.rideRequest.highway = !state.rideRequest.highway;
-      },
-      SET_REQUEST_ID(state, id) {
-        state.rideRequest.requestID = id;
-      },
-      // Optional: reset all rideRequest fields
-      RESET_RIDE_REQUEST(state) {
-        state.rideRequest = {
-          startLoc: "",
-          endLoc: "",
-          startAt: "",
-          exclusive: false,
-          highway: false,
-          requestID: null
-        };
-      },
-      SET_ORDER_ID(state, orderID) {
-        state.orderID = orderID;
-      }
-    },
-    actions: {
-      login({ commit }, userID) {
-        commit("MLOGIN", userID);
-      },
-      logout({ commit }) {
-        commit("MLOGOUT");
-      },
-      // RideRequest actions
-      setStartLoc({ commit }, location) {
-        commit("SET_START_LOC", location);
-      },
-      setEndLoc({ commit }, location) {
-        commit("SET_END_LOC", location);
-      },
-      setStartAt({ commit }, datetime) {
-        commit("SET_START_AT", datetime);
-      },
-      toggleExclusive({ commit }) {
-        commit("TOGGLE_EXCLUSIVE");
-      },
-      toggleHighway({ commit }) {
-        commit("TOGGLE_HIGHWAY");
-      },
-      setRequestId({ commit }, id) {
-        commit("SET_REQUEST_ID", id);
-      },
-      resetRideRequest({ commit }) {
-        commit("RESET_RIDE_REQUEST");
-      },
-      setOrderId({ commit }, orderID) {
-        commit("SET_ORDER_ID", orderID);
-      }
-    }
-  });
   function createApp() {
     const app = vue.createVueApp(App);
     app.use(store);

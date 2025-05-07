@@ -13,6 +13,10 @@ export default createStore({
 			requestID:null,
 		},
 		rideOrder: {  
+			startLoc: '',
+			endLoc: '',
+			startAt: new Date(),
+			seats:null,
 			orderID:null,
 		},
     }
