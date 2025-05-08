@@ -88,9 +88,7 @@ public class RequestService {
 
 
                 // 调整后的价格，简单示例：价格随着偏差距离减少
-                BigDecimal adjustedPrice = request.getPrice()
-                        .subtract(BigDecimal.valueOf(offsetDistance * 0.1))
-                        .max(BigDecimal.ZERO);
+                BigDecimal adjustedPrice = request.getPrice();
 
                 // 组装匹配信息
                 Map<String, Object> match = new HashMap<>();

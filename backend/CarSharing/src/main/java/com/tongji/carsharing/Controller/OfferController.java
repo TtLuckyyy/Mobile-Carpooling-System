@@ -54,7 +54,7 @@ public class OfferController {
         if (offerId > 0) {
             response.put("status", "success");
             response.put("message", "拼车邀请发布成功！");
-            response.put("offerId", offerId);
+            response.put("invitationID", offer.getId());
         } else {
             response.put("status", "error");
             response.put("message", "拼车邀请发布失败！");

@@ -48,20 +48,20 @@ public interface OfferMapper {
     // 插入拼车邀请
     @Insert("""
         INSERT INTO carpool_offer (
-            driver_id, 
-            start_loc, 
-            end_loc, 
-            status, 
-            start_at, 
-            seats, 
+            driver_id,
+            start_loc,
+            end_loc,
+            status,
+            start_at,
+            seats,
             created_at
         ) VALUES (
-            #{driverId}, 
-            #{startLoc}, 
-            #{endLoc}, 
-            #{status}, 
-            #{startAt}, 
-            #{seats}, 
+            #{driverId},
+            #{startLoc},
+            #{endLoc},
+            #{status},
+            #{startAt},
+            #{seats},
             #{createdAt}
         )
     """)
