@@ -33,7 +33,7 @@ public class OrderService {
 
 
         // 3. 定义最大偏差范围（单位：公里）
-        double MAX_OFFSET = 10.0;
+        double MAX_OFFSET = 20.0;
 
         // 4. 结果列表
         List<Map<String, Object>> matchedOffers = new ArrayList<>();
@@ -45,7 +45,7 @@ public class OrderService {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(offsetDistance);
+            System.out.println("偏差距离为："+offsetDistance);
             if (offsetDistance <= MAX_OFFSET && offerdto.getStatus() == request.getStatus()) {
                 Verification verification = verimapper.getVerificationByUserId(offerdto.getDriverId());
                 if (verification == null) continue;

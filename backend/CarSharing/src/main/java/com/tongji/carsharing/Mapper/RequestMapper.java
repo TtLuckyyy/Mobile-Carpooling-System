@@ -5,6 +5,7 @@ import com.tongji.carsharing.enums.enums;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.session.RowBounds;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -64,4 +65,14 @@ public interface RequestMapper
 """)
     List<Map<String, Object>> selectAllRequests();
 
+    // 获取所有的需求记录
+    @Select("SELECT * FROM carpool_request")
+    List<Request> getallRequests();
+
+    // 根据需求表ID修改用户需求表记录
+    @Update("UPDATE carpool_request SET start_loc = #{startLoc}, end_loc = #{endLoc}, start_at = #{startAt} WHERE id = #{orderId}")
+    int updateRequest(@Param("orderId") Integer orderId,
+                      @Param("startLoc") String startLoc,
+                      @Param("endLoc") String endLoc,
+                      @Param("startAt") Timestamp startAt);
 }
