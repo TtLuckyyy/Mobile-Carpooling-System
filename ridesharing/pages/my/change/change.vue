@@ -148,16 +148,17 @@ export default {
     // 获取用户信息，加载到表单
     fetchUserInfo() {
       uni.request({
-        url: `http://localhost:8083/carsharing/get-user-info?userID=${this.userID}`, // 改成你的后端接口
+        url: `http://localhost:8083/carsharing/get-user-info?userId=${this.userID}`, // 改成你的后端接口
         method: 'GET',
         success: (res) => {
-          if (res.statusCode === 200 && res.data && res.data.data) {
-            const userInfo = res.data.data
+          if (res.data.status === "success" && res.data) {
+			console.log(res);
+            const userInfo = res.data
             this.username = userInfo.username || ''
             this.email = userInfo.email || ''
             this.avatar = userInfo.avatar || ''
-            this.home_address = userInfo.home_address || ''
-            this.company_address = userInfo.company_address || ''
+            this.home_address = userInfo.homeAddress || ''
+            this.company_address = userInfo.companyAddress || ''
           } else {
             uni.showToast({ title: '加载用户信息失败', icon: 'none' })
           }
@@ -213,16 +214,17 @@ export default {
         url: `http://localhost:8083/carsharing/update-user-info`, // 改成你的后端接口
         method: 'POST',
         data: {
-          userID: this.userID,          // 带上 userID
+          userId: this.userID,          // 带上 userID
           username: this.username,
           email: this.email,
           avatar: this.avatar,
-          home_address: this.home_address,
-          company_address: this.company_address
+          homeAddress: this.home_address,
+          companyAddress: this.company_address
         },
         success: (res) => {
-          if (res.statusCode === 200 && res.data.success) {
+          if (res.data.status === "success" && res.data) {
             uni.showToast({ title: '更新成功', icon: 'success' })
+			uni.switchTab({ url: '/pages/my/my' })
           } else {
             uni.showToast({ title: '更新失败', icon: 'none' })
           }

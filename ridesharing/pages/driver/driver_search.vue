@@ -104,7 +104,7 @@ export default {
   },
   methods: {
 	  ...mapActions([
-
+		'setInvitationId'
 	  ]),
     selectLocation(tag) {
       if (!this.rideInvitation.startLoc) {
@@ -127,7 +127,7 @@ export default {
 	async publishInvitation(){
 		try {
 		  const requestData = {
-		    passengerId: this.userID,
+		    driverId: this.userID,
 		    startLoc: this.rideInvitation.startLoc,
 		    endLoc: this.rideInvitation.endLoc,
 		    status: 'PENDING',
@@ -143,11 +143,13 @@ export default {
 		      'Content-Type': 'application/json',
 		    },
 		  });
-		  console.log(requestData);
+
 		  if (response.data.status === 'success') {
 		    const responseData = response.data;
-		    if (responseData.orderID) {
-		      this.setRequestId(responseData.orderID);
+
+		    if (responseData.invitationID) {
+
+		      this.setInvitationId(responseData.invitationID);
 		      uni.showToast({
 		        title: '发布成功',
 		        icon: 'success',
@@ -172,7 +174,7 @@ export default {
 	},
     searchRides() {
 		this.publishInvitation();
-		uni.navigateTo({ url: '/pages/driver/search-result' });
+		// uni.navigateTo({ url: '/pages/driver/search-result' });
       //this.getRides();
     },
     goToInvitations() {

@@ -4,7 +4,7 @@
     <view class="profile">
       <image class="avatar" :src="avatar" mode="aspectFill" />
       <view class="info">
-        <text class="phone">{{ phone }}</text>
+        <text class="username">{{ username }}</text>
         <text class="mileage">里程值 <text class="green">{{ total_mileage }}</text>/60</text>
       </view>
     </view>
@@ -27,7 +27,7 @@ import { mapState } from 'vuex'
 export default {
   data() {
     return {
-      phone: '未知用户',
+      username: '未知用户',
       total_mileage: 0,
       avatar: '/static/default_avatar.png',  // 默认头像
 	  statusBarHeight: uni.getSystemInfoSync().statusBarHeight || 0,
@@ -59,13 +59,14 @@ export default {
   methods: {
     fetchUserInfo() {
       uni.request({
-        url: `http://localhost:8083/carsharing/my?userID=${this.userID}`, // 修改为你的接口
+        url: `http://localhost:8083/carsharing/my?userId=${this.userID}`, // 修改为你的接口
         method: 'GET',
         success: (res) => {
-          if (res.data.statue === "success" && res.data) {
-            this.phone = res.data.phone || '未命名用户'
-            this.total_mileage = res.data.total_mileage || 0
-            this.avatar = res.data.avatar || '/static/default_avatar.png'
+          if (res.data.status === "success" && res.data) {
+			console.log(res);
+            this.total_mileage = res.data.userInfo.total_mileage || 0
+            this.avatar = res.data.userInfo.avatar || '/static/c1.pn11g'
+			this.username =res.data.userInfo.username
           } else {
             uni.showToast({ title: '用户信息加载失败', icon: 'none' })
           }
@@ -120,7 +121,7 @@ export default {
   justify-content: center;
 }
 
-.phone {
+.username {
   font-size: 36rpx;
   font-weight: bold;
 }

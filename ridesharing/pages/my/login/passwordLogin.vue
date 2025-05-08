@@ -92,6 +92,7 @@ export default {
       uni.showLoading({ title: '登录中...', mask: true })
 
       try {
+		console.log("11111111");
         const res = await uni.request({
           url: 'http://localhost:8083/carsharing/login',
           method: 'POST',
@@ -100,10 +101,11 @@ export default {
             password: this.password
           }
         })
-
+		console.log(res);
         uni.hideLoading()
         if (res.data.status === "success") {
-          const userID = res.data.data.userID  // 取出 userID
+          const userID = res.data.userId  // 取出 userID
+		  console.log(userID);
           store.dispatch('login', userID)      // 调用 Vuex 保存 userID
           uni.switchTab({ url: '/pages/customer/customer' })
         } else {

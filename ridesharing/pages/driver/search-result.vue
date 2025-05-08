@@ -89,66 +89,66 @@ export default {
       sortIndex: 0,
       sortOptions: ['按时间排序', '按顺路度由高到低排序', '按价格由低到高排序', '按价格由高到低排序'],
       listBlockItems: [
-        {
-          id: '1',
-          startAt: '2023-06-15T08:30:00',
-          startLoc: '北京市海淀区中关村大街5号',
-          endLoc: '北京市朝阳区国贸大厦',
-          person: '张先生',
-          price: 45,
-          offset: 6.6,
-          exclusive: false,
-          highway: true,
-          convenientRate: 0.65,
-        },
-        {
-          id: '2',
-          startAt: '2023-06-15T09:15:00',
-          startLoc: '北京市海淀区清华大学东门',
-          endLoc: '北京市朝阳区CBD万达广场',
-          person: '李女士',
-          price: 35,
-          offset: 3.4,
-          exclusive: true,
-          highway: false,
-          convenientRate: 0.75,
-        },
-        {
-          id: '3',
-          startAt: '2023-06-15T10:00:00',
-          startLoc: '北京市海淀区北京大学西门',
-          endLoc: '北京市朝阳区三里屯',
-          person: '王同学',
-          price: 30,
-          offset: 4,
-          exclusive: false,
-          highway: true,
-          convenientRate: 0.85,
-        },
-        {
-          id: '4',
-          startAt: '2023-06-15T18:45:00',
-          startLoc: '北京市海淀区人民大学',
-          endLoc: '北京市朝阳区朝阳公园',
-          person: '赵先生',
-          price: 40,
-          offset: 5,
-          exclusive: true,
-          highway: true,
-          convenientRate: 0.235,
-        },
-        {
-          id: '5',
-          startAt: '2023-06-15T09:30:00',
-          startLoc: '北京市海淀区五道口',
-          endLoc: '北京市朝阳区大望路',
-          person: '刘女士',
-          price: 25,
-          offset: 70,
-          exclusive: false,
-          highway: false,
-          convenientRate: 0.455,
-        }
+        // {
+        //   id: '1',
+        //   startAt: '2023-06-15T08:30:00',
+        //   startLoc: '北京市海淀区中关村大街5号',
+        //   endLoc: '北京市朝阳区国贸大厦',
+        //   person: '张先生',
+        //   price: 45,
+        //   offset: 6.6,
+        //   exclusive: false,
+        //   highway: true,
+        //   convenientRate: 0.65,
+        // },
+        // {
+        //   id: '2',
+        //   startAt: '2023-06-15T09:15:00',
+        //   startLoc: '北京市海淀区清华大学东门',
+        //   endLoc: '北京市朝阳区CBD万达广场',
+        //   person: '李女士',
+        //   price: 35,
+        //   offset: 3.4,
+        //   exclusive: true,
+        //   highway: false,
+        //   convenientRate: 0.75,
+        // },
+        // {
+        //   id: '3',
+        //   startAt: '2023-06-15T10:00:00',
+        //   startLoc: '北京市海淀区北京大学西门',
+        //   endLoc: '北京市朝阳区三里屯',
+        //   person: '王同学',
+        //   price: 30,
+        //   offset: 4,
+        //   exclusive: false,
+        //   highway: true,
+        //   convenientRate: 0.85,
+        // },
+        // {
+        //   id: '4',
+        //   startAt: '2023-06-15T18:45:00',
+        //   startLoc: '北京市海淀区人民大学',
+        //   endLoc: '北京市朝阳区朝阳公园',
+        //   person: '赵先生',
+        //   price: 40,
+        //   offset: 5,
+        //   exclusive: true,
+        //   highway: true,
+        //   convenientRate: 0.235,
+        // },
+        // {
+        //   id: '5',
+        //   startAt: '2023-06-15T09:30:00',
+        //   startLoc: '北京市海淀区五道口',
+        //   endLoc: '北京市朝阳区大望路',
+        //   person: '刘女士',
+        //   price: 25,
+        //   offset: 70,
+        //   exclusive: false,
+        //   highway: false,
+        //   convenientRate: 0.455,
+        // }
       ],
       isLoading: false,
       error: null,
@@ -217,14 +217,16 @@ export default {
           throw new Error('未获取到订单ID');
         }
         const response = await uni.request({
-          url: `http://localhost:8083/carsharing/get-certain-invitation?orderId=${this.rideOrder.orderID}`,
+          url: `http://localhost:8083/carsharing/get-certain-invitation?offerId=${this.rideInvitation.invitationID}`,
           method: 'GET',
           header: {
             'Content-Type': 'application/json'
           }
         });
+		console.log(response.data);
         if (response.data.status === 'success') {
-          this.invitationInfo = response.data.history;
+          this.invitationInfo = response.data.data;
+		  console.log(this.invitationInfo);
         } else {
           throw new Error(response.data.message || '获取邀请信息失败');
         }
@@ -247,16 +249,17 @@ export default {
           throw new Error('缺少拼车邀请ID');
         }
         const response = await uni.request({
-          url: `http://localhost:8083/carsharing/matched-requests?invitationID=${this.rideInvitation.invitationID}`,
+          url: `http://localhost:8083/carsharing/matched-requests?offerId=${this.rideInvitation.invitationID}`,
           method: 'GET',
           header: {
             'Content-Type': 'application/json'
           }
         });
+		console.log(response.data);
         if (response.data.status === 'success') {
           const res = response.data;
-          if (res.matched_requests && res.matched_requests.length > 0) {
-            this.listBlockItems = res.matched_requests.map(item => ({
+          if (res.list_matched && res.list_matched.length > 0) {
+            this.listBlockItems = res.list_matched.map(item => ({
               id: item.id,
               startAt: item.start_at,
               startLoc: item.start_loc,

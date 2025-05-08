@@ -16,10 +16,10 @@ export default createStore({
 			orderID:null,
 		},
 		rideInvitation:{
-			startLoc: '',
-			endLoc: '',
-			startAt: new Date(),
-			seats:null,
+			startLoc: '华东理工大学',
+			endLoc: '上海财经大学',
+			startAt: new Date('2025-04-14 00:00:00'),
+			seats:3,
 			invitationID:null,
 		}
     }
@@ -49,6 +49,9 @@ export default createStore({
 	},
 	SET_REQUEST_ID(state, id) {
 	  state.rideRequest.requestID = id
+	},
+	SET_INVITATION_ID(state, id) {
+	  state.rideInvitation.invitationID = id
 	},
 	// Optional: reset all rideRequest fields
 	RESET_RIDE_REQUEST(state) {
@@ -97,6 +100,9 @@ export default createStore({
 	},
 	setOrderId({ commit }, id) {
 	  commit('SET_ORDER_ID', id);
-	}
+	},
+	setInvitationId({ commit }, id) {
+	  commit('SET_INVITATION_ID', id)
+	},
   }
 })
