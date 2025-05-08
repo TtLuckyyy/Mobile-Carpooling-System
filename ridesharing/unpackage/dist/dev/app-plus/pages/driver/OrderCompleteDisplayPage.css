@@ -1,0 +1,232 @@
+/* 水平间距 */
+/* 水平间距 */
+.order-complete-card-cover[data-v-5f958676] {
+  width: 100%;
+  box-sizing: border-box;
+}
+.order-complete-card[data-v-5f958676] {
+  width: 100%;
+  /* 确保占据父元素宽度 */
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin: 0;
+  /* 移除外边距，使其填充父元素 */
+  box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.05);
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Segoe UI, Arial, Roboto, "PingFang SC", "miui", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+}
+.header[data-v-5f958676] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.625rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 0.03125rem solid #eee;
+}
+.status[data-v-5f958676] {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #18bc37;
+  flex: 0 0 auto;
+}
+.income[data-v-5f958676] {
+  display: flex;
+  align-items: baseline;
+  font-size: 1rem;
+  color: #333;
+  flex: 0 0 auto;
+}
+.income .amount[data-v-5f958676] {
+  font-size: 1.375rem;
+  font-weight: bold;
+  color: #FF7F50;
+  /* 橙色 */
+  margin: 0 0.125rem;
+}
+.passenger-info[data-v-5f958676] {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.625rem;
+}
+.avatar[data-v-5f958676] {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  margin-right: 0.625rem;
+  background-color: #f0f0f0;
+  /* 占位背景色 */
+}
+.details[data-v-5f958676] {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.name-rating[data-v-5f958676] {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 0.25rem;
+}
+.name[data-v-5f958676] {
+  font-size: 0.9375rem;
+  font-weight: bold;
+  color: #333;
+  margin-right: 0.3125rem;
+}
+.rating[data-v-5f958676] {
+  font-size: 0.75rem;
+  color: #FFD700;
+  /* 金色 */
+  padding: 0.0625rem 0.25rem;
+  border-radius: 0.1875rem;
+}
+.time[data-v-5f958676] {
+  font-size: 0.8125rem;
+  color: #666;
+}
+.trip-details[data-v-5f958676] {
+  position: relative;
+  /* For line connector positioning */
+}
+.location-item[data-v-5f958676] {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding-left: 0.9375rem;
+  /* Space for dot and line */
+  position: relative;
+}
+.dot[data-v-5f958676] {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.green[data-v-5f958676] {
+  background-color: #00C853;
+  /* 鲜绿色 */
+}
+.red[data-v-5f958676] {
+  background-color: #FF5252;
+  /* 鲜红色 */
+}
+.location-text[data-v-5f958676] {
+  font-size: 0.875rem;
+  color: #333;
+  flex-grow: 1;
+}
+.distance[data-v-5f958676] {
+  font-size: 0.8125rem;
+  color: #888;
+  margin-left: 0.5rem;
+  flex-shrink: 0;
+}
+.line-connector[data-v-5f958676] {
+  position: absolute;
+  left: 0.21875rem;
+  /* (16rpx dot width / 2) - (2rpx line width / 2) approx */
+  top: 1rem;
+  /* Approx position between the dots */
+  bottom: 1rem;
+  /* Adjust based on actual spacing */
+  width: 0.0625rem;
+  background-color: #ccc;
+  border-left: 0.0625rem dashed #ccc;
+  /* The height will be dynamic based on content, but if items have fixed height: */
+  /* height: calc(100% - (16rpx + 8rpx + 8rpx) * 2); */
+  /* Approximate height */
+}
+
+/* Ensure the line connector is between the two dots */
+.trip-details .location-item[data-v-5f958676]:first-child {
+  margin-bottom: 0.75rem;
+  /* Increase space for the line */
+}
+.trip-details .location-item[data-v-5f958676]:last-child {
+  margin-bottom: 0;
+}
+
+/* Adjust line connector height more accurately if possible, or use JS if dynamic height is complex */
+/* This CSS attempts to place it. More precise line might need adjustments based on exact content heights */
+.trip-details .line-connector[data-v-5f958676] {
+  top: 1.09375rem;
+  /* Approximate start below the first dot's center */
+  height: calc(100% - 2.1875rem);
+  /* Approximate height between dots */
+}
+
+.floating-buttons {
+  position: fixed;
+  top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 9999;
+  pointer-events: auto;
+}
+.header {
+  width: 95%;
+  max-width: 400px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.back-btn {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+  padding: 15px 10px;
+}
+.back-btn uni-cover-image {
+  width: 18px;
+  height: 18px;
+}
+.back-text {
+  font-family: "Microsoft YaHei";
+  font-weight: bold;
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+
+/* 从 OrderDetail.vue 复制的样式，用于布局地图和悬浮卡片 */
+.map-container {
+  width: 100%;
+  /* 假设 PageHeader_cover 高度为 60px */
+  height: calc(100vh - 60px); 
+  margin-top: 60px; 
+  position: relative;
+}
+.floating-details {
+  position: fixed;
+  bottom: 20px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 9999;
+}
+uni-web-view {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 如果需要页面占满 */
+/*
+page, cover-view {
+  height: 100%;
+  overflow: hidden; 
+}
+*/

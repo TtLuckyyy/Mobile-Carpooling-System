@@ -1,0 +1,70 @@
+
+.title-section[data-v-99c7da38] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.625rem;
+}
+.title[data-v-99c7da38] {
+  font-weight: bold;
+  font-size: 1.6875rem;
+}
+.fee-note[data-v-99c7da38] {
+  font-size: 0.75rem;
+  color: #ccc;
+}
+.subtitle[data-v-99c7da38] {
+  color: #666;
+  font-size: 0.75rem;
+  margin-bottom: 0.625rem;
+}
+.time-section[data-v-99c7da38] {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.625rem;
+}
+.icon[data-v-99c7da38] {
+  font-size: 0.875rem;
+  margin-right: 0.3125rem;
+}
+.time[data-v-99c7da38] {
+	font-weight: bold;
+  font-size: 0.875rem;
+}
+.location-section[data-v-99c7da38] {
+  margin-bottom: 0.9375rem;
+}
+.location-item[data-v-99c7da38] {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.3125rem;
+}
+.dot[data-v-99c7da38] {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  margin-right: 0.3125rem;
+}
+.green[data-v-99c7da38] {
+  background-color: #00aa00;
+}
+.red[data-v-99c7da38] {
+  background-color: #cc0000;
+}
+.location-text[data-v-99c7da38] {
+	font-weight: bold;
+  font-size: 0.875rem;
+}
+.btn[data-v-99c7da38] {
+  background-color: #669966;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 0.375rem;
+  padding: 0.625rem;
+  text-align: center;
+  margin-top: 0.625rem;
+  display: flex;              /* 使用 flexbox */
+  align-items: center;        /* 垂直居中 */
+  justify-content: center;    /* 水平居中 */
+}
+

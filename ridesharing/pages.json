@@ -199,6 +199,41 @@
 		{
 			"navigationBarTitleText" : ""
 		}
+	},
+	{
+		"path" : "pages/customer/OrderCancel",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/customer/OrderModify",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "components/OrderCancelSuccess",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/driver/OrderCompleteDisplayPage",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/driver/RideInfoDisplayPage",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
 	}
 	],
 	"globalStyle": {

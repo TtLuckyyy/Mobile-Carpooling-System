@@ -1,6 +1,6 @@
 <template>
   <view>
-    <PageHeader backText="我的拼车邀请" backUrl="/pages/customer/customer" />
+    <PageHeader backText="我的拼车邀请" backUrl="/pages/driver/driver_search" />
 
     <view v-if="tripListItems.length > 0">
       <TripList

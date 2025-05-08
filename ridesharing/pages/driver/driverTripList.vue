@@ -1,11 +1,11 @@
 <template>
 	<view>
-		<PageHeader backText="我的行程" backUrl="/pages/customer/customer" />
+		<PageHeader backText="我的行程" backUrl="/pages/driver/driver_search" />
 		
 		<view v-if="tripListItems.length > 0">
 			<TripList v-for="(item, index) in tripListItems" :key="index" :item="item" />
 		</view>
-		  
+
 		<view v-else class="empty-tips">
 			<text>您暂时还没有过行程哦</text>
 		</view>
