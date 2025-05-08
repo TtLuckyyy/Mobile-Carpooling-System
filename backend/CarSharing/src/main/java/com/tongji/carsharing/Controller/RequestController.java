@@ -1,10 +1,9 @@
 package com.tongji.carsharing.Controller;
 import com.tongji.carsharing.Entity.Request;
-import com.tongji.carsharing.Entity.User;
+import com.tongji.carsharing.Entity.Offer;
 import com.tongji.carsharing.Mapper.RequestMapper;
-import com.tongji.carsharing.Mapper.UserMapper;
+import com.tongji.carsharing.Mapper.OfferMapper;
 import com.tongji.carsharing.Service.RequestService;
-import com.tongji.carsharing.Service.UserService;
 import com.tongji.carsharing.Utility.CalculateTool;
 import com.tongji.carsharing.enums.enums;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +21,9 @@ import java.util.Map;
 public class RequestController {
     @Autowired
     private RequestMapper requestmapper;
+
+    @Autowired
+    private OfferMapper offermapper;
 
     @Autowired
     private CalculateTool calculateTool;
@@ -120,4 +122,59 @@ public class RequestController {
         }
         return response;
     }
+
+    // 获取匹配的用户需求表
+    @GetMapping("/matched-requests")
+    public Map<String, Object> matchedRequests(@RequestParam("offerId") Integer offerId) {
+        Map<String, Object> response = new HashMap<>();
+
+        // 获取当前拼车邀请信息
+        Offer offer = offermapper.getOfferById(offerId);
+
+        if (offer == null) {
+            response.put("status", "error");
+            response.put("message", "未找到对应的拼车邀请");
+            return response;
+        }
+
+        // 调用服务层的匹配逻辑
+        Map<String, Object> matchedRequests = requestservice.matchedRequests(offer,calculateTool);
+
+        if (matchedRequests.containsKey("list_matched")) {
+            response.put("status", "success");
+            response.put("message", "拼车请求匹配成功！");
+            response.put("list_matched", matchedRequests.get("list_matched"));
+        } else {
+            response.put("status", "error");
+            response.put("message", matchedRequests.getOrDefault("error", "未找到合适的拼车请求"));
+        }
+
+        return response;
+    }
+
+    // 修改用户需求表
+    @PostMapping("/modify-request")
+    public Map<String, Object> modifyRequest(@RequestBody Map<String, Object> params) {
+        Map<String, Object> response = new HashMap<>();
+
+        Integer orderId = (Integer) params.get("orderId");
+        String startLoc = (String) params.get("startLoc");
+        String endLoc = (String) params.get("endLoc");
+        String startAt = (String) params.get("startAt");
+
+        // 转换时间格式
+        Timestamp startAtTimestamp = Timestamp.valueOf(startAt);
+
+        // 更新拼车需求表
+        int success = requestmapper.updateRequest(orderId, startLoc, endLoc, startAtTimestamp);
+
+        if (success > 0) {
+            response.put("status", "success");
+            response.put("message", "拼车需求修改成功！");
+        } else {
+            response.put("status", "error");
+            response.put("message", "拼车需求修改失败！");
+        }
+        return response;
+        }
 }

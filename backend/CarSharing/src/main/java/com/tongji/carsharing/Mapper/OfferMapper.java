@@ -3,9 +3,7 @@ package com.tongji.carsharing.Mapper;
 
 import com.tongji.carsharing.Entity.Offer;
 import com.tongji.carsharing.enums.enums;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
@@ -30,6 +28,7 @@ public interface OfferMapper {
     @Select("UPDATE carpool_offer SET status = #{status} WHERE id = #{Id}")
     void updateOfferStatus(@Param("Id") int Id, @Param("status") enums.PDStatus status);
 
+    // 根据用户ID获取该用户的拼车邀请列表
     @Select("""
     SELECT 
         f.start_at AS startAt,
@@ -46,4 +45,38 @@ public interface OfferMapper {
 """)
     List<Map<String, Object>> getDriverOfferList(@Param("userId") Integer userId);
 
+    // 插入拼车邀请
+    @Insert("""
+        INSERT INTO carpool_offer (
+            driver_id,
+            start_loc,
+            end_loc,
+            status,
+            start_at,
+            seats,
+            created_at
+        ) VALUES (
+            #{driverId},
+            #{startLoc},
+            #{endLoc},
+            #{status},
+            #{startAt},
+            #{seats},
+            #{createdAt}
+        )
+    """)
+    @Options(useGeneratedKeys = true, keyProperty = "id") // 自动获取插入后的主键 ID
+    Integer createUserRequest(Offer offer);
+
+    // 获取当前拼车邀请表
+    @Select("""
+        SELECT 
+            start_loc, 
+            end_loc, 
+            start_at, 
+            seats 
+        FROM carpool_offer
+        WHERE id = #{offerId}
+    """)
+    Map<String, Object> getOfferByIdSimple(@Param("offerId") Integer offerId);
 }

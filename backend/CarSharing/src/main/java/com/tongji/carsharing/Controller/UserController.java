@@ -69,7 +69,7 @@ public class UserController {
         String phone = data.get("phone");
         String password = data.get("password");
 
-
+        System.out.println("phone: " + phone);
         User user = usermapper.login(phone, password); // 未加密版本
         Integer userId = user.getId();
 
@@ -149,8 +149,11 @@ public class UserController {
     public Map<String, Object> updateUserInfo(@RequestBody Map<String, Object> requestData) {
         Map<String, Object> response = new HashMap<>();
 
+        System.out.println(requestData);
         // 从 map 中取出字段
-        Integer userId = (Integer) requestData.get("userId");
+        String userIdStr = (String) requestData.get("userId");
+        Integer userId = Integer.parseInt(userIdStr);
+
         String username = (String) requestData.get("username");
         String email = (String) requestData.get("email");
         String avatar = (String) requestData.get("avatar");
