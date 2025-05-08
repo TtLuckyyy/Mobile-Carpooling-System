@@ -31,6 +31,39 @@ if (uni.restoreGlobal) {
 }
 (function(vue) {
   "use strict";
+  const _imports_0$7 = "/static/launch/start.png";
+  const _export_sfc = (sfc, props) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props) {
+      target[key] = val;
+    }
+    return target;
+  };
+  const _sfc_main$D = {
+    onShow() {
+      setTimeout(() => {
+        uni.reLaunch({
+          url: "/pages/index/welcome"
+          // 你想跳转的主页面
+        });
+      }, 2e3);
+    }
+  };
+  function _sfc_render$C(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "splash-page" }, [
+      vue.createElementVNode("text", { class: "title" }, "拼 好 车"),
+      vue.createElementVNode("text", { class: "subtitle" }, "你的出行省钱指南"),
+      vue.createElementVNode("image", {
+        class: "logo",
+        src: _imports_0$7
+      }),
+      vue.createElementVNode("view", { class: "footer" }, [
+        vue.createElementVNode("text", { class: "footer-text" }, "一路同行，美好随行"),
+        vue.createElementVNode("text", { class: "version" }, "V1.0.0")
+      ])
+    ]);
+  }
+  const PagesIndexLaunch = /* @__PURE__ */ _export_sfc(_sfc_main$D, [["render", _sfc_render$C], ["__scopeId", "data-v-8d8376b8"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/index/launch.vue"]]);
   function formatAppLog(type, filename, ...args) {
     if (uni.__log__) {
       uni.__log__(type, filename, ...args);
@@ -1174,13 +1207,6 @@ if (uni.restoreGlobal) {
     }
     return module;
   }
-  const _export_sfc = (sfc, props) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props) {
-      target[key] = val;
-    }
-    return target;
-  };
   const _sfc_main$C = {
     props: {
       type: {
@@ -1406,7 +1432,7 @@ if (uni.restoreGlobal) {
               "Content-Type": "application/json"
             }
           });
-          formatAppLog("log", "at pages/customer/customer.vue:232", requestData);
+          formatAppLog("log", "at pages/customer/customer.vue:231", requestData);
           if (response.data.status === "success") {
             const responseData = response.data;
             if (responseData.requestID) {
@@ -1423,7 +1449,7 @@ if (uni.restoreGlobal) {
             throw new Error("请求失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/customer.vue:249", "发布失败:", error);
+          formatAppLog("error", "at pages/customer/customer.vue:248", "发布失败:", error);
           uni.showToast({
             title: "发布失败",
             icon: "none"
@@ -1554,7 +1580,7 @@ if (uni.restoreGlobal) {
           });
           if (response.data.status === "success") {
             const res2 = response.data.history;
-            formatAppLog("log", "at pages/customer/customer.vue:399", res2);
+            formatAppLog("log", "at pages/customer/customer.vue:398", res2);
             if (res2 && res2.length > 0) {
               this.requestnumber = res2.filter((request) => request.status === "PENDING").length;
             } else {
@@ -1564,7 +1590,7 @@ if (uni.restoreGlobal) {
             throw new Error(response.data.message || "获取请求列表失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/customer.vue:410", "获取请求列表失败:", error);
+          formatAppLog("error", "at pages/customer/customer.vue:409", "获取请求列表失败:", error);
           this.error = error.message || "获取请求列表失败";
           this.requestnumber = 0;
           uni.showToast({
@@ -1592,10 +1618,10 @@ if (uni.restoreGlobal) {
           if (response.data.status === "success") {
             const res2 = response.data;
             const now = /* @__PURE__ */ new Date();
-            formatAppLog("log", "at pages/customer/customer.vue:442", res2.orders);
+            formatAppLog("log", "at pages/customer/customer.vue:441", res2.orders);
             if (res2.orders && res2.orders.length > 0) {
               const pastOrders = res2.orders.filter((order) => new Date(order.startAt) < now).sort((a, b) => new Date(b.startAt) - new Date(a.startAt));
-              formatAppLog("log", "at pages/customer/customer.vue:448", pastOrders);
+              formatAppLog("log", "at pages/customer/customer.vue:447", pastOrders);
               this.currentOrders = pastOrders.length > 0 ? [{
                 id: pastOrders[0].id,
                 distance: pastOrders[0].distance,
@@ -1615,7 +1641,7 @@ if (uni.restoreGlobal) {
             throw new Error(response.data.message || "获取当前订单失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/customer.vue:472", "获取当前订单失败:", error);
+          formatAppLog("error", "at pages/customer/customer.vue:471", "获取当前订单失败:", error);
           this.error = error.message || "获取当前订单失败";
           this.ordersnumber = 0;
           this.currentOrders = [];
@@ -1630,9 +1656,9 @@ if (uni.restoreGlobal) {
       ToOrderDetail() {
         if (this.currentOrders.length > 0) {
           const orderid = this.currentOrders[0].id;
-          formatAppLog("log", "at pages/customer/customer.vue:490", orderid);
+          formatAppLog("log", "at pages/customer/customer.vue:489", orderid);
           this.setOrderId(orderid);
-          formatAppLog("log", "at pages/customer/customer.vue:493", this.rideOrder.orderID);
+          formatAppLog("log", "at pages/customer/customer.vue:492", this.rideOrder.orderID);
           uni.navigateTo({
             url: "./OrderDetail",
             // 替换为你的订单详情页面路径
@@ -5835,7 +5861,7 @@ if (uni.restoreGlobal) {
     methods: {
       goToExperience() {
         uni.reLaunch({
-          url: "/pages/customer/customer"
+          url: "/pages/my/login/passwordLogin"
           // 你想跳转的主页面
         });
       }
@@ -8969,6 +8995,7 @@ if (uni.restoreGlobal) {
     ]);
   }
   const PagesDriverRideInfoDisplayPage = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-7bce6222"], ["__file", "C:/Users/Lenovo/Desktop/Code/Mobile-Carpooling-System/Mobile-Carpooling-System/Mobile-Carpooling-System/ridesharing/pages/driver/RideInfoDisplayPage.vue"]]);
+  __definePage("pages/index/launch", PagesIndexLaunch);
   __definePage("pages/customer/customer", PagesCustomerCustomer);
   __definePage("pages/driver/driver", PagesDriverDriver);
   __definePage("pages/my/change/change", PagesMyChangeChange);

@@ -39,7 +39,7 @@ export default {
     goToExperience() {
       // 跳转到主页面或其他页面
       uni.reLaunch({
-        url: '/pages/customer/customer' // 你想跳转的主页面
+        url: '/pages/my/login/passwordLogin' // 你想跳转的主页面
       });
     }
   }

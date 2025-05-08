@@ -1,12 +1,12 @@
 {
 	"pages": [
-	// {
-	// 	"path" : "pages/index/launch",
-	// 	"style" : 
-	// 	{
-	// 		"navigationBarTitleText" : ""
-	// 	}
-	// },
+	{
+		"path" : "pages/index/launch",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
 	{
 		"path": "pages/customer/customer",
 		"style": {

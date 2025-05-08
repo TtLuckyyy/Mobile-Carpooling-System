@@ -31,7 +31,6 @@
           </cover-view>
         </cover-view>
 		
-		
 		<cover-view class="order-request" v-if="currentOrders.length > 0">
 			  <cover-view class="order-card"   @click="ToOrderDetail">
 			    <cover-view class="order-header"  @click="ToOrderDetail">
