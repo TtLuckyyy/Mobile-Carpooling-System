@@ -13,12 +13,15 @@ export default createStore({
 			requestID:null,
 		},
 		rideOrder: {  
+			orderID:null,
+		},
+		rideInvitation:{
 			startLoc: '',
 			endLoc: '',
 			startAt: new Date(),
 			seats:null,
-			orderID:null,
-		},
+			invitationID:null,
+		}
     }
   },
   mutations: {

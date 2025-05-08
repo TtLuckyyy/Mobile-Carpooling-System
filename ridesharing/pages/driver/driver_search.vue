@@ -11,11 +11,11 @@
         <view class="search-form">
           <view class="input-group">
             <view class="dot green"></view>
-            <input type="text" v-model="rideOrder.startLoc" placeholder="您的出发地" class="form-input" />
+            <input type="text" v-model="rideInvitation.startLoc" placeholder="您的出发地" class="form-input" />
           </view>
           <view class="input-group">
             <view class="dot orange"></view>
-            <input type="text" v-model="rideOrder.endLoc" placeholder="您的目的地" class="form-input" />
+            <input type="text" v-model="rideInvitation.endLoc" placeholder="您的目的地" class="form-input" />
           </view>
 
           <view class="location-tags">
@@ -89,9 +89,9 @@ export default {
     }
   },
   computed: {
-	...mapState(['userID', 'rideRequest','rideOrder']),
+	...mapState(['userID', 'rideRequest','rideOrder',"rideInvitation"]),
     formattedTime() {
-      const now = this.rideOrder.startAt;
+      const now = this.rideInvitation.startAt;
       const today = new Date();
       let prefix = '今天';
       if (now.getDate() !== today.getDate()) {
@@ -107,19 +107,19 @@ export default {
 
 	  ]),
     selectLocation(tag) {
-      if (!this.rideOrder.startLoc) {
-        this.rideOrder.startLoc = tag;
-      } else if (!this.rideOrder.endLoc) {
-        this.rideOrder.endLoc = tag;
+      if (!this.rideInvitation.startLoc) {
+        this.rideInvitation.startLoc = tag;
+      } else if (!this.rideInvitation.endLoc) {
+        this.rideInvitation.endLoc = tag;
       } else {
-        this.rideOrder.startLoc = tag;
+        this.rideInvitation.startLoc = tag;
       }
     },
     showTimePicker() {
       uni.showDatePicker({
-        date: this.rideOrder.startAt.toISOString(),
+        date: this.rideInvitation.startAt.toISOString(),
         success: (res) => {
-          this.rideOrder.startAt = new Date(res.date);
+          this.rideInvitation.startAt = new Date(res.date);
         }
       });
     },
@@ -128,11 +128,11 @@ export default {
 		try {
 		  const requestData = {
 		    passengerId: this.userID,
-		    startLoc: this.rideOrder.startLoc,
-		    endLoc: this.rideOrder.endLoc,
+		    startLoc: this.rideInvitation.startLoc,
+		    endLoc: this.rideInvitation.endLoc,
 		    status: 'PENDING',
-		    startAt: this.rideOrder.startAt,
-		    seats: this.rideOrder.seats,
+		    startAt: this.rideInvitation.startAt,
+		    seats: this.rideInvitation.seats,
 		  };
 		
 		  const response = await uni.request({
@@ -213,7 +213,7 @@ export default {
     }
   },
   onLoad() {
-    this.getRides();
+    // this.getRides();
   }
 }
 </script>
@@ -286,11 +286,11 @@ export default {
 }
 
 .dot.green {
-  background-color: #3ea87a;
+  background-color: var(--color-green);
 }
 
 .dot.orange {
-  background-color: #f17a3d;
+  background-color: var(--color-orange);
 }
 
 .form-input {

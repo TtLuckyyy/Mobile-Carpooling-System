@@ -31,8 +31,14 @@
 		methods: {
 			handleBack() {
 				// 使用父组件传递的 URL 进行跳转
-				uni.switchTab({
-					url: this.backUrl
+				// uni.switchTab({
+				// 	url: this.backUrl
+				// });
+				
+				uni.navigateTo({ 
+					url: this.backUrl,
+					animationType: 'slide-in-left',
+					animationDuration: 300,
 				});
 			}
 		}

@@ -192,6 +192,13 @@
 		{
 			"navigationBarTitleText" : ""
 		}
+	},
+	{
+		"path" : "components/MatchedRequestBlock",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
 	}
 	],
 	"globalStyle": {

@@ -27,7 +27,8 @@
 	  --color-red: #d44240;      // 主红色
 	  --color-yellow: #F9CE45;
 	  --color-grey:#d8d8d8;
-	  --color-darkgrey:#bbbbbb;
+	  --color-lightgrey:#f5f5f5;
+	  --color-darkgrey:#989898;
 	  --color-lightyellow: #f8f6e8;
 	  --color-lightgreen:#bacb5b;
 	}
