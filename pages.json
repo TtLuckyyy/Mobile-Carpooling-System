@@ -1,0 +1,242 @@
+{
+	"pages": [
+	// {
+	// 	"path" : "pages/index/launch",
+	// 	"style" : 
+	// 	{
+	// 		"navigationBarTitleText" : ""
+	// 	}
+	// },
+	{
+		"path": "pages/customer/customer",
+		"style": {
+			"navigationBarTitleText": ""
+		}
+	},
+	{
+		"path" : "pages/driver/driver",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/my/change/change",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path": "pages/driver/car-owner",
+		"style": {
+			"navigationBarTitleText": "车主认证"
+		}
+	},
+	{
+	      "path": "pages/driver/driver_search",
+	      "style": {
+	        "navigationBarTitleText": "拼单"
+	      }
+	},
+	{
+		"path" : "pages/index/index",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	
+	{
+		"path" : "pages/my/my",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "components/PageHeader",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "components/PageHeader_cover",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/customer/InvitationMatch",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "components/ListBlock",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/customer/RequestList",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "components/RequestBlock",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+    {
+		"path" : "components/TripList",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "components/InvitationList",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/driver/driverTripList",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/driver/invitations",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/index/welcome",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+	  "path": "pages/my/login/login",
+	  "style": {
+		"navigationBarTitleText": "登录",
+		"navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/my/login/passwordLogin",
+	  "style": {
+		"navigationBarTitleText": "密码登录",
+		"navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/my/login/forget",
+	  "style": {
+		"navigationBarTitleText": "忘记密码",
+		"navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/my/login/register",
+	  "style": {
+		"navigationBarTitleText": "注册账户",
+		"navigationStyle": "custom"
+	  }
+	},
+	{
+		"path" : "pages/customer/StartLoc",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/customer/EndLoc",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "components/ShareOption",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/customer/OrderDetail",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/customer/OrderCancel",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	},
+	{
+		"path" : "pages/customer/OrderModify",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
+	}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "拼途",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationStyle": "custom",         // 隐藏所有页面的导航栏
+		"app-plus": {
+			"background": "#efeff4"
+		}
+	},
+	"tabBar": {
+		"color": "#bbbbbb",
+		"selectedColor": "#5c9267",
+		"borderStyle": "white",
+	 	"backgroundColor": "#ffffff",
+	    "height": "60px",       // 微调高度
+	    "iconWidth": "24px",    // 规范图标尺寸
+	    "spacing": "4px",       // 图文间距
+	    "fontSize": "12px",     // 文字大小
+		"fontWeight":"bold",
+		"list": [{
+			"pagePath": "pages/driver/driver",
+			"iconPath": "/static/tabbar/1.png",
+			"selectedIconPath": "/static/tabbar/2.png",
+			"text": "车主"
+		}, {
+			"pagePath": "pages/customer/customer",
+			"iconPath": "/static/tabbar/3.png",
+			"selectedIconPath": "/static/tabbar/4.png",
+			"text": "拼车广场"
+		},{
+			"pagePath": "pages/my/my",
+			"iconPath": "/static/tabbar/5.png",
+			"selectedIconPath": "/static/tabbar/6.png",
+			"text": "我的"
+		}
+		]
+	}
+}

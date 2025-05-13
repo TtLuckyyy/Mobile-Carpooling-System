@@ -1,0 +1,69 @@
+
+.mine-page[data-v-2f1ef635] {
+  background-color: #f0f0f0; /* 👈 更统一柔和的背景 */
+  padding-bottom: 3.125rem;
+  font-family: sans-serif;
+  min-height: 100vh; /* 防止内容太短不满屏 */
+}
+.profile[data-v-2f1ef635] {
+  display: flex;
+  background-color: #f0f0f0; /* 👈 背景统一 */
+  padding: 0.9375rem;
+  align-items: center;
+}
+.avatar[data-v-2f1ef635] {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+}
+.info[data-v-2f1ef635] {
+  margin-left: 0.9375rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.phone[data-v-2f1ef635] {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+.mileage[data-v-2f1ef635] {
+  font-size: 0.875rem;
+  color: #888888;
+  margin-top: 0.3125rem;
+}
+.green[data-v-2f1ef635] {
+  color: #5c9267;
+}
+.menu-list[data-v-2f1ef635] {
+  margin-top: 0.625rem;
+  background-color: #ffffff;
+  border-radius: 0.625rem;
+  overflow: hidden;
+  box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05);
+  margin: 10px;
+}
+.menu-item[data-v-2f1ef635] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9375rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+.menu-item[data-v-2f1ef635]:last-child {
+  border-bottom: none;
+}
+.left[data-v-2f1ef635] {
+  display: flex;
+  align-items: center;
+}
+.icon[data-v-2f1ef635] {
+  margin-right: 0.625rem;
+  font-size: 1rem;
+}
+.text[data-v-2f1ef635] {
+  font-size: 1rem;
+}
+.arrow[data-v-2f1ef635] {
+  font-size: 1.125rem;
+  color: #ccc;
+}
