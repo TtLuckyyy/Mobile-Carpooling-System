@@ -49,10 +49,16 @@ export default {
   components: {
 	  PageHeader_cover,
   },
-  mounted() {
+  async mounted() {
     const id = this.$route.query.id;
     console.log('接收到的id:', id);
-	this.fetchRideData();
+	if (mStartLoc === null && mEndLoc === null && mStartAt === null) {
+	    await this.fetchRideData();
+	  } else {
+	    const response = await this.fetchRideData();
+	      if (this.rideRequest.startLoc_changeobject == id) this.startLoc = this.rideRequest.startLoc;
+	      if (this.rideRequest.endLoc_changeobject == id) this.endLoc = this.rideRequest.endLoc;
+	  }
   },
   computed: {
       ...mapState(['rideRequest','rideOrder']),
@@ -159,6 +165,7 @@ export default {
 	
 	ToStartLoc() {
 		console.log("Start location clicked");
+		this.setStartLoc_changeobject(this.id);
 	  uni.navigateTo({
 	    url: '/pages/customer/StartLoc',
 	    animationType: 'slide-in-right',
@@ -167,6 +174,7 @@ export default {
 	},
 	
 	ToEndLoc() {
+		this.setEndLoc_changeobject(this.id);
 	  uni.navigateTo({
 	    url: '/pages/customer/EndLoc',
 	    animationType: 'slide-in-right',
@@ -284,7 +292,11 @@ export default {
 	          title: '发布成功',
 	          icon: 'success',
 	        });
-	        this.ToInvitationMatch();
+	        uni.navigateTo({
+	          url: '/pages/customer/RequestList',
+	          animationType: 'slide-in-right',
+	          animationDuration: 300,
+	        });
 	      } else {
 	        throw new Error('未收到 requestID');
 	      }
