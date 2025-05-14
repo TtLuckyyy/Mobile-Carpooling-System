@@ -57,7 +57,7 @@
 		methods: {
 			formatDateTime,
 			goToEdit(id) {
-			    this.$router.push({ name: 'editPage', query: { id } });
+			    this.$router.push({ path: '/pages/customer/OrderModify', query: { id } });
 			  },
 			editRequest() {
 			//     // 1. 构建安全数据对象

@@ -80,9 +80,10 @@ export default {
 	  selectedType: null,
 	  selectedTime: null,
 	  showTimePopup: false,
-	  startAt,
-	  startLoc,
-	  endLoc
+	  startAt: new Date('2025-04-14 00:00:00'),
+	  startLoc: '华东理工大学',
+	  endLoc: '上海财经大学',
+	  id:0
 	  }
 	},
   methods: {
@@ -102,16 +103,17 @@ export default {
 	        try {
 	          // 假设你的后端接口为 /api/ride?id=123
 			const response = await uni.request({
-			  url: `http://localhost:8083/carsharing/get-certain-request?id=${this.id}`,
+			  url: `http://localhost:8083/carsharing/get-certain-request?requestId=${this.id}`,
 			  method: 'GET',
 			  header: {
 				'Content-Type': 'application/json'
 			  }
 			});
-	          const data = response.data;
+			console.log(response)
+	          const data = response.data.history;
 	          this.startLoc = data.startLoc;
 	          this.endLoc = data.endLoc;
-	          this.startAt = data.startAt;
+	          this.startAt = new Date(data.startAt);
 	        } catch (error) {
 	          console.error('获取行程数据失败:', error);
 	        }
@@ -270,36 +272,25 @@ export default {
 	async publishDemand() {
 	  try {
 	    const requestData = {
-	      startLoc: this.rideRequest.startLoc,
-	      endLoc: this.rideRequest.endLoc,
-	      startAt: this.rideRequest.startAt,
+	      startLoc: this.startLoc,
+	      endLoc: this.endLoc,
+	      startAt: this.startAt.toISOString(),
+		  orderId: +this.id
 	    };
-	
 	    const response = await uni.request({
-	      url: `http://localhost:8083/carsharing/modify-request?orderId=${this.rideOrder.orderID}`,
+	      url: `http://localhost:8083/carsharing/modify-request`,
 	      method: 'POST',
 	      data: requestData,
 	      header: {
 	        'Content-Type': 'application/json',
 	      },
 	    });
-		console.log(requestData);
 	    if (response.data.status === 'success') {
-	      const responseData = response.data;
-	      if (responseData.requestID) {
-	        this.setRequestId(responseData.requestID);
 	        uni.showToast({
 	          title: '发布成功',
 	          icon: 'success',
 	        });
-	        uni.navigateTo({
-	          url: '/pages/customer/RequestList',
-	          animationType: 'slide-in-right',
-	          animationDuration: 300,
-	        });
-	      } else {
-	        throw new Error('未收到 requestID');
-	      }
+
 	    } else {
 	      throw new Error('请求失败');
 	    }
