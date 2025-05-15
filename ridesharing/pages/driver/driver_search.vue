@@ -24,11 +24,38 @@
             </view>
           </view>
 
-          <view class="time-picker" @click="showTimePicker">
+<!--          <view class="time-picker" @click="showTimePicker">
             <text class="clock-icon">🕘</text>
             <text>{{ formattedTime }}</text>
           </view>
+		  
 
+		  <view class="seats-selector" @click="cycleSeats">
+			<text>座位数：{{ seats }} 个</text>
+		  </view> -->
+		<!-- ✅ 时间 + 座位选择 同行 -->
+<!-- 		<view class="time-seat-row">
+		  <view class="time-picker" @click="showTimePicker">
+		    <text class="clock-icon">🕘</text>
+		    <text>{{ formattedTime }}</text>
+		  </view>
+		  <view class="seats-selector" @click="cycleSeats">
+		    <text>座位数：{{ seats }} 个</text>
+		  </view>
+		</view> -->
+		<!-- 时间 + 座位数 统一样式 -->
+		<view class="info-row">
+		  <view class="info-box" @click="showTimePicker">
+		    <text class="icon">🕘</text>
+		    <text class="text">{{ formattedTime }}</text>
+		  </view>
+		  <view class="info-box" @click="showSeatPicker">
+			<text class="icon">💺</text>
+		    <text class="text">座位数：{{ rideInvitation.seats  }} 个</text>
+		  </view>
+		</view>
+		
+	
           <button class="search-button" @click="searchRides">发布并搜索</button>
         </view>
       </view>
@@ -40,10 +67,10 @@
             <view class="nav-card-title">拼车邀请</view>
             <view class="nav-card-subtitle">正在寻找乘客</view>
           </view>
-          <view class="nav-card-count">
+<!--          <view class="nav-card-count">
             <text class="count-number">{{ invitationCount }}</text>
             <text class="count-unit">条</text>
-          </view>
+          </view> -->
           <view class="nav-card-detail">详情 ></view>
         </view>
 
@@ -88,6 +115,7 @@ export default {
       locationTags: ['上海南站', '虹桥1', '虹桥2', '浦东3', '浦东4'],
       invitationCount: 3,
       tripListItems: [],
+      seats: 1 // ✅ 默认座位数
     }
   },
   computed: {
@@ -113,6 +141,7 @@ export default {
         this.startLocation = tag;
       }
     },
+<<<<<<< Updated upstream
     showTimePicker() {
       uni.showDatePicker({
         date: this.selectedTime.toISOString(),
@@ -121,11 +150,178 @@ export default {
         }
       });
     },
+=======
+    // showTimePicker() {
+    //   uni.showDatePicker({
+    //     date: this.rideInvitation.startAt.toISOString(),
+    //     success: (res) => {
+    //       this.rideInvitation.startAt = new Date(res.date);
+    //     }
+    //   });
+    // },
+	
+	showSeatPicker() {
+	  uni.showActionSheet({
+	    itemList: ['1 个', '2 个', '3 个', '4 个'],
+	    success: (res) => {
+	      this.rideInvitation.seats = res.tapIndex + 1;
+	      uni.showToast({
+	        title: `已设置为 ${this.rideInvitation.seats} 个座位`,
+	        icon: 'success'
+	      });
+	    },
+	    fail: () => {
+	      uni.showToast({
+	        title: '未选择座位数',
+	        icon: 'none'
+	      });
+	    }
+	  });
+	},
+
+	showTimePicker() {
+	  uni.showActionSheet({
+	    itemList: ['15分钟后', '30分钟后', '1小时后', '自定义时间'],
+	    success: (res) => {
+	      if (res.tapIndex === 3) {
+	        this.showDateTimeInput();
+	      } else {
+	        const times = [15, 30, 60];
+	        this.selectTime(times[res.tapIndex]);
+	      }
+	    }
+	  });
+	},
+	
+	selectTime(minutesLater) {
+	  const now = new Date();
+	  const targetTime = new Date(now.getTime() + minutesLater * 60000);
+	  this.rideInvitation.startAt = targetTime;
+	
+	  uni.showToast({
+	    title: `已设置：${minutesLater}分钟后`,
+	    icon: 'success'
+	  });
+	},
+	
+	showDateTimeInput() {
+	  const now = new Date();
+	  const currentDateTime = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+	
+	  uni.showModal({
+	    title: '自定义出发时间',
+	    content: `当前时间: ${currentDateTime}\n请输入出发时间(YYYY-MM-DD HH:MM)`,
+	    editable: true,
+	    placeholderText: '例如: ' + this.getTomorrowDate(),
+	    showCancel: false,
+	    confirmButtonText: '确定',
+	    confirmButtonColor: '#007AFF',
+	    success: (res) => {
+	      if (res.confirm) {
+	        this.validateAndSetDateTime(res.content);
+	      }
+	    }
+	  });
+	},
+	
+	getTomorrowDate() {
+	  const tomorrow = new Date();
+	  tomorrow.setDate(tomorrow.getDate() + 1);
+	  return `${tomorrow.getFullYear()}-${(tomorrow.getMonth() + 1).toString().padStart(2, '0')}-${tomorrow.getDate().toString().padStart(2, '0')} 09:00`;
+	},
+	
+	validateAndSetDateTime(dateTimeStr) {
+	  const dateTimeRegex = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/;
+	  if (!dateTimeRegex.test(dateTimeStr)) {
+	    uni.showToast({
+	      title: '格式不正确，请使用YYYY-MM-DD HH:MM格式',
+	      icon: 'none'
+	    });
+	    return;
+	  }
+	
+	  const [_, year, month, day, hours, minutes] = dateTimeStr.match(dateTimeRegex);
+	  const targetTime = new Date(year, month - 1, day, hours, minutes);
+	  const now = new Date();
+	
+	  if (isNaN(targetTime.getTime())) {
+	    uni.showToast({
+	      title: '时间无效',
+	      icon: 'none'
+	    });
+	    return;
+	  }
+	
+	  if (targetTime < now) {
+	    uni.showToast({
+	      title: '不能选择过去的时间',
+	      icon: 'none'
+	    });
+	    return;
+	  }
+	
+	  this.rideInvitation.startAt = targetTime;
+	
+	  uni.showToast({
+	    title: '时间设置成功',
+	    icon: 'success'
+	  });
+	},
+	
+	async publishInvitation(){
+		try {
+		  const requestData = {
+		    driverId: this.userID,
+		    startLoc: this.rideInvitation.startLoc,
+		    endLoc: this.rideInvitation.endLoc,
+		    status: 'PENDING',
+		    startAt: this.rideInvitation.startAt,
+		    seats: this.rideInvitation.seats,
+		  };
+		
+		  const response = await uni.request({
+		    url: 'http://localhost:8083/carsharing/post-invitation',
+		    method: 'POST',
+		    data: requestData,
+		    header: {
+		      'Content-Type': 'application/json',
+		    },
+		  });
+
+		  if (response.data.status === 'success') {
+		    const responseData = response.data;
+
+		    if (responseData.invitationID) {
+
+		      this.setInvitationId(responseData.invitationID);
+		      uni.showToast({
+		        title: '发布成功',
+		        icon: 'success',
+		      });
+		      this.goToSearchResult();
+		    } else {
+		      throw new Error('未收到 requestID');
+		    }
+		  } else {
+		    throw new Error('请求失败');
+		  }
+		} catch (error) {
+		  console.error('发布失败:', error);
+		  uni.showToast({
+		    title: '发布失败',
+		    icon: 'none',
+		  });
+		}
+	},
+	goToSearchResult() {
+		uni.navigateTo({ url: '/pages/driver/search-result' });
+	},
+>>>>>>> Stashed changes
     searchRides() {
       //this.getRides();
     },
     goToInvitations() {
-      uni.navigateTo({ url: '/pages/driver/invitations' });
+      uni.navigateTo({ url: '/pages/driver/driverTripList' });
     },
     goToMyTrips() {
       uni.navigateTo({ url: '/pages/driver/driverTripList' });
@@ -162,7 +358,7 @@ export default {
     }
   },
   onLoad() {
-    this.getRides();
+    // this.getRides();
   }
 }
 </script>
@@ -388,4 +584,67 @@ export default {
   color: #999;
   font-size: 14px;
 }
+<<<<<<< Updated upstream
 </style>
+=======
+.seats-selector {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #3ea87a;
+  padding: 8px 12px;
+  background-color: #fff;
+  border: 1px solid #3ea87a;
+  border-radius: 10px;
+  display: inline-block;
+  width: fit-content;
+}
+.time-seat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+.time-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.seats-selector {
+  font-size: 14px;
+  color: #3ea87a;
+  padding: 6px 12px;
+  background-color: #fff;
+  border: 1px solid #3ea87a;
+  border-radius: 10px;
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+  gap: 15px;
+}
+
+.info-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #3ea87a;
+  border-radius: 12px;
+  background-color: #fff;
+  color: #3ea87a;
+  font-weight: bold;
+}
+
+.icon {
+  margin-right: 6px;
+}
+</style>
+>>>>>>> Stashed changes

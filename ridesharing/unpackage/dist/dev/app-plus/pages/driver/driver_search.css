@@ -786,3 +786,59 @@
   color: #999;
   font-size: 14px;
 }
+.seats-selector {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #3ea87a;
+  padding: 8px 12px;
+  background-color: #fff;
+  border: 1px solid #3ea87a;
+  border-radius: 10px;
+  display: inline-block;
+  width: -webkit-fit-content;
+  width: fit-content;
+}
+.time-seat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+.time-picker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #333;
+}
+.seats-selector {
+  font-size: 14px;
+  color: #3ea87a;
+  padding: 6px 12px;
+  background-color: #fff;
+  border: 1px solid #3ea87a;
+  border-radius: 10px;
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+  gap: 15px;
+}
+.info-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #3ea87a;
+  border-radius: 12px;
+  background-color: #fff;
+  color: #3ea87a;
+  font-weight: bold;
+}
+.icon {
+  margin-right: 6px;
+}
