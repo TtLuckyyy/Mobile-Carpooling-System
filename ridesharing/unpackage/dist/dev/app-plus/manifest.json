@@ -135,7 +135,7 @@
           "text": "车主"
         },
         {
-          "pagePath": "pages/customer/customer",
+          "pagePath": "pages/customer/customer_new",
           "iconPath": "/static/tabbar/3.png",
           "selectedIconPath": "/static/tabbar/4.png",
           "text": "拼车广场"
@@ -150,7 +150,11 @@
       "backgroundColor": "#ffffff",
       "fontWeight": "bold",
       "selectedIndex": 0,
-      "shown": true
+      "shown": true,
+      "child": [
+        "lauchwebview"
+      ],
+      "selected": 1
     }
   },
   "app-harmony": {

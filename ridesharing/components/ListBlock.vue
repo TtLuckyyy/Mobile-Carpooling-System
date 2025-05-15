@@ -121,7 +121,7 @@
 				
 				// 发送创建订单请求
 				const response = await uni.request({
-				  url: `http://localhost:8083/carsharing/create-order`, 
+				  url: `http://10.0.2.2:8083/carsharing/create-order`, 
 				  method: 'POST',
 				  data: orderData,
 				  header: {

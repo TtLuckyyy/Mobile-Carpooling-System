@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<PageHeader backText="行程匹配的私家车邀请" backUrl="/pages/customer/customer" />
+		<PageHeader backText="行程匹配的私家车邀请" backUrl="/pages/customer/customer_new" />
 		
 		<view v-if="listBlockItems.length > 0">
 			<ListBlock v-for="(item, index) in listBlockItems" :key="index" :item="item" />
@@ -107,7 +107,7 @@
 				}
 				
 				const response = await uni.request({
-				  url: `http://localhost:8083/carsharing/matched-orders`, // 替换为实际后端路径
+				  url: `http://10.0.2.2:8083/carsharing/matched-orders`, // 替换为实际后端路径
 				  method: 'GET',
 				  data: {
 					request_id: this.rideRequest.requestID // 传递当前拼车需求的ID

@@ -217,7 +217,7 @@ export default {
           throw new Error('未获取到订单ID');
         }
         const response = await uni.request({
-          url: `http://localhost:8083/carsharing/get-certain-invitation?offerId=${this.rideInvitation.invitationID}`,
+          url: `http://10.0.2.2:8083/carsharing/get-certain-invitation?offerId=${this.rideInvitation.invitationID}`,
           method: 'GET',
           header: {
             'Content-Type': 'application/json'
@@ -249,7 +249,7 @@ export default {
           throw new Error('缺少拼车邀请ID');
         }
         const response = await uni.request({
-          url: `http://localhost:8083/carsharing/matched-requests?offerId=${this.rideInvitation.invitationID}`,
+          url: `http://10.0.2.2:8083/carsharing/matched-requests?offerId=${this.rideInvitation.invitationID}`,
           method: 'GET',
           header: {
             'Content-Type': 'application/json'

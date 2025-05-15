@@ -94,7 +94,7 @@ export default {
       try {
 		console.log("11111111");
         const res = await uni.request({
-          url: 'http://localhost:8083/carsharing/login',
+          url: 'http://10.0.2.2:8083/carsharing/login',
           method: 'POST',
           data: {
             phone: this.phone,

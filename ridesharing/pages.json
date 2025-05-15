@@ -8,17 +8,24 @@
 	// 	}
 	// },
 	{
-	  "path": "pages/my/login/passwordLogin",
-	  "style": {
-		"navigationBarTitleText": "密码登录",
-		"navigationStyle": "custom"
-	  }
+		"path" : "pages/customer/customer_new",
+		"style" : 
+		{
+			"navigationBarTitleText" : ""
+		}
 	},
 	{
 		"path": "pages/customer/customer",
 		"style": {
 			"navigationBarTitleText": ""
 		}
+	},
+	{
+	  "path": "pages/my/login/passwordLogin",
+	  "style": {
+		"navigationBarTitleText": "密码登录",
+		"navigationStyle": "custom"
+	  }
 	},
 	{
 		"path" : "pages/driver/driver",
@@ -236,6 +243,13 @@
 			"navigationBarTitleText" : ""
 		}
 	}
+	// {
+	// 	"path" : "pages/customer/customer_new",
+	// 	"style" : 
+	// 	{
+	// 		"navigationBarTitleText" : ""
+	// 	}
+	// }
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -262,7 +276,7 @@
 			"selectedIconPath": "/static/tabbar/2.png",
 			"text": "车主"
 		}, {
-			"pagePath": "pages/customer/customer",
+			"pagePath": "pages/customer/customer_new",
 			"iconPath": "/static/tabbar/3.png",
 			"selectedIconPath": "/static/tabbar/4.png",
 			"text": "拼车广场"

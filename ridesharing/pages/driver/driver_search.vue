@@ -136,7 +136,7 @@ export default {
 		  };
 		
 		  const response = await uni.request({
-		    url: 'http://localhost:8083/carsharing/post-invitation',
+		    url: 'http://10.0.2.2:8083/carsharing/post-invitation',
 		    method: 'POST',
 		    data: requestData,
 		    header: {
@@ -186,7 +186,7 @@ export default {
     async getRides() {
       try {
         const response = await uni.request({
-          url: 'http://localhost:8083/carsharing/get-all-invitations',
+          url: 'http://10.0.2.2:8083/carsharing/get-all-invitations',
           method: 'GET',
           header: { 'Content-Type': 'application/json' }
         });
@@ -215,7 +215,7 @@ export default {
     }
   },
   onLoad() {
-    // this.getRides();
+    this.getRides();
   }
 }
 </script>

@@ -17,31 +17,32 @@
   <div id="container"></div>
   <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=17f597ad8d2ddf86ae2169eeb45570a8"></script>
   <script type="text/javascript">
-    var map = new AMap.Map('container', {
-      zoom: 16,
-      center: [108.921672, 34.250646]
-    });
+    // var map = new AMap.Map('container', {
+    //   zoom: 16,
+    //   center: [108.921672, 34.250646]
+    // });
 
     // 添加定位和路径规划插件
-    AMap.plugin(['AMap.Geolocation', 'AMap.Driving'], function() {
-      var geolocation = new AMap.Geolocation({
-        enableHighAccuracy: true,
-        timeout: 10000,
-        buttonPosition: 'RB',
-        buttonOffset: new AMap.Pixel(15, 285),
-        zoomToAccuracy: true
-      });
+  //   AMap.plugin(['AMap.Geolocation', 'AMap.Driving'], function() {
+  //     var geolocation = new AMap.Geolocation({
+  //       enableHighAccuracy: true,
+  //       timeout: 10000,
+  //       buttonPosition: 'RB',
+  //       buttonOffset: new AMap.Pixel(15, 285),
+  //       zoomToAccuracy: true,
+		
+  //     });
       
-      map.addControl(geolocation);
+  //     map.addControl(geolocation);
       
       // 路径规划实例
-      var driving = new AMap.Driving({
-        map: map,
-        policy: AMap.DrivingPolicy.LEAST_TIME
-      });
+    //   var driving = new AMap.Driving({
+    //     map: map,
+    //     policy: AMap.DrivingPolicy.LEAST_TIME
+    //   });
       
-      window.driving = driving; // 存储到全局以便调用
-    });
+    //   window.driving = driving; // 存储到全局以便调用
+    // });
   </script>
 </body>
 </html>

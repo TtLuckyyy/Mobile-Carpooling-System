@@ -221,7 +221,7 @@ export default {
         };
 
         const response = await uni.request({
-          url: 'http://localhost:8083/carsharing/post-request',
+          url: 'http://10.0.2.2:8083/carsharing/post-request',
           method: 'POST',
           data: requestData,
           header: {
@@ -385,7 +385,7 @@ export default {
 		// }
 		
 		const response = await uni.request({
-		  url: 'http://localhost:8083/carsharing/get-requests?userId=1',
+		  url: 'http://10.0.2.2:8083/carsharing/get-requests?userId=1',
 		  method: 'GET',
 		  header: {
 			'Content-Type': 'application/json'
@@ -428,7 +428,7 @@ export default {
 	    }
 	    
 	    const response = await uni.request({
-	      url: `http://localhost:8083/carsharing/current-order?userId=${this.userID}`,
+	      url: `http://10.0.2.2:8083/carsharing/current-order?userId=${this.userID}`,
 	      method: 'GET',
 	      header: {
 	        'Content-Type': 'application/json'

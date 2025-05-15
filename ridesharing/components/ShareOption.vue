@@ -1,22 +1,22 @@
 <template>
-  <cover-view 
+  <view 
     class="option-card" 
     :class="[type, {selected: isSelected}]" 
     @click="handleClick"
   >
-    <cover-view class="left" @click="handleClick">
+    <view class="left" @click="handleClick">
       <cover-image :src="type === 'shared' ? '/static/shareoption/shared.png' : '/static/shareoption/exclusive.png'"></cover-image>
-    </cover-view>
-    <cover-view class="right" @click="handleClick">
-      <cover-view class="firstrow" @click="handleClick">
-        <cover-view class="type-name" @click="handleClick">{{ typeName }}</cover-view>
-        <cover-view class="radio-button" :class="{selected: isSelected, [type]: true}" @click="handleClick">
-          <cover-view class="radio-inner" v-if="isSelected" @click="handleClick"></cover-view>
-        </cover-view>
-      </cover-view>
-      <cover-view class="type-desc"@click="handleClick">{{ typeDesc }}</cover-view>
-    </cover-view>
-  </cover-view>
+    </view>
+    <view class="right" @click="handleClick">
+      <view class="firstrow" @click="handleClick">
+        <view class="type-name" @click="handleClick">{{ typeName }}</view>
+        <view class="radio-button" :class="{selected: isSelected, [type]: true}" @click="handleClick">
+          <view class="radio-inner" v-if="isSelected" @click="handleClick"></view>
+        </view>
+      </view>
+      <view class="type-desc"@click="handleClick">{{ typeDesc }}</view>
+    </view>
+  </view>
 </template>
 
 <script>
@@ -60,6 +60,7 @@ export default {
   border-radius: 8px;
   display: flex;
   flex-direction: row;
+  padding: 5px 5px 10px 5px;
 }
 
 .left {
@@ -68,6 +69,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 4px;
 }
 
 .left cover-image {
@@ -89,7 +91,7 @@ export default {
 .type-name {
   font-size: 14px;
   font-family: "Microsoft YaHei";
-  font-weight: 900;
+  font-weight: bold;
 }
 
 .shared .type-name {
@@ -103,6 +105,7 @@ export default {
 .type-desc {
   font-size: 10px;
   color: var(--color-darkgrey);
+  font-weight: bold;
   text-align: left;
 }
 
@@ -140,14 +143,6 @@ export default {
 }
 
 /* 未选中状态 */
-.option-card.shared {
-  border: 1px solid #E0E0E0;
-}
-
-.option-card.exclusive {
-  border: 1px solid #E0E0E0;
-}
-
 /* 选中状态 */
 .option-card.selected {
   transform: translateY(-2px);
@@ -158,7 +153,6 @@ export default {
 }
 
 .option-card.exclusive.selected {
-  border: 1px solid var(--color-orange);
   background-color: #FFF5E6;
 }
 </style>

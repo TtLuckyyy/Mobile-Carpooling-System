@@ -21,7 +21,8 @@ export default createStore({
 			startAt: new Date('2025-04-14 00:00:00'),
 			seats:3,
 			invitationID:null,
-		}
+		},
+		current_change_request_id:null,
     }
   },
   mutations: {
@@ -41,8 +42,8 @@ export default createStore({
 	SET_START_AT(state, datetime) {
 	  state.rideRequest.startAt = datetime
 	},
-	TOGGLE_EXCLUSIVE(state) {
-	  state.rideRequest.exclusive = !state.rideRequest.exclusive
+	SET_EXCLUSIVE(state,exclusive) {
+	  state.rideRequest.exclusive = exclusive
 	},
 	TOGGLE_HIGHWAY(state) {
 	  state.rideRequest.highway = !state.rideRequest.highway
@@ -53,6 +54,26 @@ export default createStore({
 	SET_INVITATION_ID(state, id) {
 	  state.rideInvitation.invitationID = id
 	},
+	SET_CURRENT_CHANGE_REQUEST_ID(state, id) {
+	  state.current_change_request_id = id
+	},
+	RESET_REQUEST(state, id) {
+	  state.rideRequest.requestID = id;
+	  state.rideRequest.startLoc = null;
+	  state.rideRequest.endLoc = null;
+	  state.rideRequest.startAt = new Date();
+	  state.rideRequest.exclusive = null;
+	  state.rideRequest.highway = false;
+	},
+	// SET_START_LOC_CURRENT_OBJECT(state, objectnum) {
+	//   state.startLoc_currentObject = objectnum
+	// },
+	// SET_END_LOC_CURRENT_OBJECT(state, objectnum) {
+	//   state.endLoc_currentObject = objectnum
+	// },
+	// SET_START_AT_CURRENT_OBJECT(state, objectnum) {
+	//   state.startAt_currentObject = objectnum
+	// },
 	// Optional: reset all rideRequest fields
 	RESET_RIDE_REQUEST(state) {
 	  state.rideRequest = {
@@ -86,8 +107,8 @@ export default createStore({
 	setStartAt({ commit }, datetime) {
 	  commit('SET_START_AT', datetime)
 	},
-	toggleExclusive({ commit }) {
-	  commit('TOGGLE_EXCLUSIVE')
+	setExclusive({ commit },exclusive) {
+	  commit('SET_EXCLUSIVE',exclusive)
 	},
 	toggleHighway({ commit }) {
 	  commit('TOGGLE_HIGHWAY')
@@ -104,5 +125,20 @@ export default createStore({
 	setInvitationId({ commit }, id) {
 	  commit('SET_INVITATION_ID', id)
 	},
+	setCurrentChangeRequestId({ commit }, id) {
+	  commit('SET_CURRENT_CHANGE_REQUEST_ID', id)
+	},
+	// setStartLocCurrentObject({ commit }, objectnum) {
+	//   commit('SET_START_LOC_CURRENT_OBJECT', objectnum)
+	// },
+	// setEndLocCurrentObject({ commit }, objectnum) {
+	//   commit('SET_END_LOC_CURRENT_OBJECT', objectnum)
+	// },
+	// setStartAtCurrentObject({ commit }, objectnum) {
+	//   commit('SET_START_AT_CURRENT_OBJECT', objectnum)
+	// },
+	resetRequest({commit},id){
+		commit('RESET_REQUEST', id)
+	}
   }
 })

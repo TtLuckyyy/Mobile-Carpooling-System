@@ -148,7 +148,7 @@ export default {
     // 获取用户信息，加载到表单
     fetchUserInfo() {
       uni.request({
-        url: `http://localhost:8083/carsharing/get-user-info?userId=${this.userID}`, // 改成你的后端接口
+        url: `http://10.0.2.2:8083/carsharing/get-user-info?userId=${this.userID}`, // 改成你的后端接口
         method: 'GET',
         success: (res) => {
           if (res.data.status === "success" && res.data) {
@@ -211,7 +211,7 @@ export default {
 
       // 发送更新请求
       uni.request({
-        url: `http://localhost:8083/carsharing/update-user-info`, // 改成你的后端接口
+        url: `http://10.0.2.2:8083/carsharing/update-user-info`, // 改成你的后端接口
         method: 'POST',
         data: {
           userId: this.userID,          // 带上 userID

@@ -9,6 +9,11 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
+		},
+		globalData:{
+			api_key:"82cf2479ddcf7f456d7edf241abd5ab6",
+			my_location_longitude : 121.215252, 
+			my_location_latitude : 31.286054,
 		}
 	}
 </script>

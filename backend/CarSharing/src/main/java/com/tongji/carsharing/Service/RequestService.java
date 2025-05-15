@@ -52,6 +52,17 @@ public class RequestService {
         }
     }
 
+    // 获取用户需求中最热门的10条起点或终点位置
+    public List<String> getLocHot(boolean isStart) {
+        RowBounds rowBounds = new RowBounds(0, 10);  // 从第0条记录开始，返回最多10条记录
+        if(isStart) {
+            return requestmapper.findTop10StartLocOrderByFrequency(rowBounds);
+        }
+        else {
+            return requestmapper.findTop10EndLocOrderByFrequency(rowBounds);
+        }
+    }
+
     // 获取匹配的用户需求表
     public Map<String, Object> matchedRequests(Offer offer,CalculateTool calculateTool) {
         // 1️⃣ 获取所有乘客需求

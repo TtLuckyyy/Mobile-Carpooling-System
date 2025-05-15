@@ -62,8 +62,8 @@
 			    //}
 			    
 			    const response = await uni.request({
-			      //url: `http://localhost:8083/carsharing/get-driver-trip-list?userId=${this.userID}`,
-			      url: `http://localhost:8083/carsharing/get-driver-trip-list?userId=2`, // 直接拼接参数
+			      //url: `http://10.0.2.2:8083/carsharing/get-driver-trip-list?userId=${this.userID}`,
+			      url: `http://10.0.2.2:8083/carsharing/get-driver-trip-list?userId=2`, // 直接拼接参数
 			      method: 'GET',
 			      header: {
 			        'Content-Type': 'application/json'

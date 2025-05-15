@@ -509,15 +509,26 @@
 }
 
 .location-list[data-v-ba39095f] {
-  margin-top: 10px;
+}
+.title[data-v-ba39095f]{
+	display: flex;
+	align-items: center;
+	font-size: 16px;
+	font-weight: bold;
+	color: black;
+	padding: 2px 0px 5px 10px ;
+	border-bottom: 1px solid var(--color-lightgrey);
 }
 .location[data-v-ba39095f] {
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  border-bottom: 1px solid #ddd;
   cursor: pointer;
   align-items: center;
+  border-bottom: 1px solid var(--color-lightgrey);
+}
+.location[data-v-ba39095f]:last-child {
+  border-bottom: none; /* 移除最后一个表项的下边框 */
 }
 
 /* 使 name 和 address 纵向排列 */
@@ -529,21 +540,21 @@
 
 /* name 大小适中 */
 .loc-name[data-v-ba39095f] {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 14px;
+/*  font-weight: bold; */
 }
 
 /* address 在 name 下方 */
 .loc-address[data-v-ba39095f] {
   font-size: 12px;
-  color: #666666;
+  color: var(--color-darkgrey);
   margin-top: 3px; /* 添加一点间距 */
 }
 
 /* 距离保持在右侧 */
 .distance[data-v-ba39095f] {
   font-size: 12px;
-  color: #666666;
+  color: var(--color-darkgrey);
   width: 25%; /* 让 distance 继续占据 25% 的宽度 */
   text-align: right;
 }
@@ -551,122 +562,175 @@
 /* 没有地址记录时的样式 */
 .no-record[data-v-ba39095f] {
   text-align: center;
-  color: #666666;
+  color: var(--color-darkgrey);
   font-size: 14px;
   padding: 20px;
 }
 
 
-.suggestion-item[data-v-d057533e] {
-	  display: flex;
-	  justify-content: space-between;
-	  padding: 10px;
-	  border-bottom: 1px solid #ddd;
-	  cursor: pointer;
-	  align-items: center;
+.all {
+  background-color: #f5f5f5;
 }
-	/* 使 name 和 address 纵向排列 */
-.sug-info[data-v-d057533e] {
-	  display: flex;
-	  flex-direction: column;
-	  width: 75%; /* 让 name + address 占据 75% 的宽度 */
+.head-content {
+  background-color: #ffffff;
 }
-	
-	/* name 大小适中 */
-.sug-name[data-v-d057533e] {
-	  font-size: 16px;
-	  font-weight: bold;
+.left-arrow {
+  height: 18px;
+  width: 18px;
 }
-	
-	/* address 在 name 下方 */
-.sug-address[data-v-d057533e] {
-	  font-size: 12px;
-	  color: #666666;
-	  margin-top: 3px; /* 添加一点间距 */
-}
-	
-	/* 距离保持在右侧 */
-.sug-distance[data-v-d057533e] {
-	  font-size: 12px;
-	  color: #666666;
-	  width: 25%; /* 让 distance 继续占据 25% 的宽度 */
-	  text-align: right;
-}
-.container[data-v-d057533e] {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-}
-.input-wrapper[data-v-d057533e] {
-  position: relative;
+.back-btn {
   display: flex;
   align-items: center;
+  flex-direction: row;
+  gap: 20px;
+  padding: 40px 10px 10px 10px;
 }
-.status-dot[data-v-d057533e] {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background-color: #da713c;
-  border-radius: 50%;
-  margin-right: 5px;
+.back-text {
+  font-family: "Microsoft YaHei";
+  font-weight: bold;
+  font-size: 18px;
 }
-.end-loc-input[data-v-d057533e] {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+
+
+.suggestion-item[data-v-d057533e] {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+	cursor: pointer;
+	align-items: center;
+}
+.sug-info[data-v-d057533e] {
+	display: flex;
+	flex-direction: column;
+	width: 75%;
+}
+.sug-name[data-v-d057533e] {
+	font-size: 16px;
+	font-weight: bold;
+}
+.sug-address[data-v-d057533e] {
+	font-size: 12px;
+	color: #666666;
+	margin-top: 3px;
+}
+.sug-distance[data-v-d057533e] {
+	font-size: 12px;
+	color: #666666;
+	width: 25%;
+	text-align: right;
+}
+.input-wrapper[data-v-d057533e] {
+	position: relative;
+	display: flex;
+	align-items: center;
+	background-color: var(--color-lightgrey);
+	border-radius: 10px;
+	padding: 0px 20px;
+	width: 90%;
+}
+.start-loc-input[data-v-d057533e] {
+	width: 70%;
+	padding: 8px;
+	font-weight: bold;
 }
 .address-settings[data-v-d057533e] {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 0;
 }
 .address-option[data-v-d057533e] {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 让文本和图标分开 */
-    min-height: 50px;
-    padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 50px;
+	padding: 10px;
+	margin-left: 5px;
 }
 .address-option.address-text[data-v-d057533e] {
-    flex-grow: 1;  /* 让文本部分自动占满 */
+	flex-grow: 1;
 }
 .back-icon[data-v-d057533e] {
-  font-size: 20px;
-  cursor: pointer;
-  margin-right: 10px;
+	font-size: 20px;
+	cursor: pointer;
+	margin-right: 10px;
 }
 .small-text[data-v-d057533e] {
-    font-size: 12px; /* 设置较小的字体 */
-    color: #666666; /* 深灰色 */
+	font-size: 14px;
+	color: var(--color-darkgrey);
+}
+.input-container[data-v-d057533e] {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	flex: 1;
 }
 .clear-icon[data-v-d057533e] {
-  position: absolute;
-  right: 0.625rem; /* 靠近输入框右侧 */
-  top: 50%;
-  transform: translateY(-50%);
-  color: #999;
-  z-index: 10;
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #999;
+	z-index: 10;
 }
 .suggestion-list[data-v-d057533e] {
-  position: absolute;
-  top: 3.4375rem; /* 根据 header 实际高度可调 */
-  left: 0;
-  right: 0;
-  max-width: 21.875rem;
-  margin: 0 auto;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 0.375rem;
-  z-index: 1000;
-  max-height: 31.25rem;
-  overflow-y: auto;
-  box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.1);
+	position: absolute;
+	top: 3.4375rem;
+	left: 0;
+	right: 0;
+	max-width: 21.875rem;
+	margin: 0 auto;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 0.375rem;
+	z-index: 1000;
+	max-height: 31.25rem;
+	overflow-y: auto;
+	box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.1);
 }
 .suggestion-item[data-v-d057533e]:last-child {
-  border-bottom: none;
+	border-bottom: none;
 }
-header[data-v-d057533e] {
-  display: flex;
-  align-items: center; /* 垂直居中 */
-  gap: 8px; /* 控制间距 */
+.icon[data-v-d057533e] {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+.start-icon[data-v-d057533e] {
+	background-color: var(--color-green);
+}
+.end-icon[data-v-d057533e] {
+	background-color: var(--color-orange);
+}
+.block[data-v-d057533e] {
+	background-color: white;
+	margin: 10px 10px;
+	border-radius: 10px;
+	padding: 10px 10px;
+}
+.input-place[data-v-d057533e] {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.location-list[data-v-d057533e] {
+	padding-bottom: 4px;
+}
+.address[data-v-d057533e] {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.address-unit[data-v-d057533e] {
+	width: 180px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-left: 25px;
+}
+.vertical-divider[data-v-d057533e] {
+	width: 1px;
+	height: 48px;
+	background-color: var(--color-grey);
 }

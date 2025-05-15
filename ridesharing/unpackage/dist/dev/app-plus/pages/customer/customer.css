@@ -7,6 +7,7 @@
   border-radius: 8px;
   display: flex;
   flex-direction: row;
+  padding: 5px 5px 10px 5px;
 }
 .left {
   width: 30px;
@@ -14,6 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 4px;
 }
 .left uni-cover-image {
   width: 100%;
@@ -31,7 +33,7 @@
 .type-name {
   font-size: 14px;
   font-family: "Microsoft YaHei";
-  font-weight: 900;
+  font-weight: bold;
 }
 .shared .type-name {
   color: var(--color-green);
@@ -42,6 +44,7 @@
 .type-desc {
   font-size: 10px;
   color: var(--color-darkgrey);
+  font-weight: bold;
   text-align: left;
 }
 
@@ -75,13 +78,6 @@
 }
 
 /* 未选中状态 */
-.option-card.shared {
-  border: 1px solid #E0E0E0;
-}
-.option-card.exclusive {
-  border: 1px solid #E0E0E0;
-}
-
 /* 选中状态 */
 .option-card.selected {
   transform: translateY(-2px);
@@ -90,7 +86,6 @@
   background-color: #F0FAF0;
 }
 .option-card.exclusive.selected {
-  border: 1px solid var(--color-orange);
   background-color: #FFF5E6;
 }
 

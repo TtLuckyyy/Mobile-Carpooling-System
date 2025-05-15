@@ -59,6 +59,7 @@ public class RequestController {
     public Map<String, Object> getStartLocHistory(@RequestParam Integer userId) {  //使用方法：后端路径/参数，而非后端路径/?key=value
         Map<String, Object> response = new HashMap<>();
         List<String> history = requestservice.getLocHistory(userId,true);
+        System.out.println("History for userId " + userId + ": " + history);
         if (!history.isEmpty()) {
             response.put("status","success");
             response.put("message", "起点历史记录查询成功!");
@@ -67,6 +68,42 @@ public class RequestController {
         else{
             response.put("status","error");
             response.put("message","起点历史记录查询失败！");
+        }
+        return response;
+    }
+
+    // 查询需求表中的热门起始地点
+    @GetMapping("/get-start-loc-hot")
+    public Map<String, Object> getStartLocHot() {  //使用方法：后端路径/参数，而非后端路径/?key=value
+        Map<String, Object> response = new HashMap<>();
+        List<String> hotLoc = requestservice.getLocHot(true);
+        System.out.println("History for userId " + ": " + hotLoc);
+        if (!hotLoc.isEmpty()) {
+            response.put("status","success");
+            response.put("message", "热门起始地点查询成功!");
+            response.put("hotLoc", hotLoc);
+        }
+        else{
+            response.put("status","error");
+            response.put("message","热门起始地点查询失败！");
+        }
+        return response;
+    }
+
+    // 查询需求表中的热门起始地点
+    @GetMapping("/get-end-loc-hot")
+    public Map<String, Object> getEndLocHot() {  //使用方法：后端路径/参数，而非后端路径/?key=value
+        Map<String, Object> response = new HashMap<>();
+        List<String> hotLoc = requestservice.getLocHot(false);
+        System.out.println("History for userId " + ": " + hotLoc);
+        if (!hotLoc.isEmpty()) {
+            response.put("status","success");
+            response.put("message", "热门起始地点查询成功!");
+            response.put("hotLoc", hotLoc);
+        }
+        else{
+            response.put("status","error");
+            response.put("message","热门起始地点查询失败！");
         }
         return response;
     }

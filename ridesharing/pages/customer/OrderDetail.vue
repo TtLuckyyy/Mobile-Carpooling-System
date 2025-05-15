@@ -120,7 +120,7 @@ export default {
         }
         
         const response = await uni.request({
-		  url: `http://localhost:8083/carsharing/get-certain-order?orderId=${this.rideOrder.orderID}`,
+		  url: `http://10.0.2.2:8083/carsharing/get-certain-order?orderId=${this.rideOrder.orderID}`,
           method: 'GET',
           header: {
             'Content-Type': 'application/json'
@@ -158,7 +158,7 @@ export default {
         }
         
         const response = await uni.request({
-          url: 'http://localhost:8083/carsharing/cancel-order',
+          url: 'http://10.0.2.2:8083/carsharing/cancel-order',
           method: 'POST',
           data: {
             order_id: this.orderId

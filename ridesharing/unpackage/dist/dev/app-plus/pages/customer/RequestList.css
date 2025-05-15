@@ -1,25 +1,25 @@
 
-.all{
+.all {
   background-color: #f5f5f5;
 }
 .head-content {
   background-color: #ffffff;
 }
-.left-arrow{
-	height: 18px;
-	width: 18px;
+.left-arrow {
+  height: 18px;
+  width: 18px;
 }
-.back-btn{
-	display: flex;
-	align-items: center; /* 垂直居中 */
-	flex-direction: row; /* 横向排列 */
-	gap: 20px;
-	padding: 40px 10px 10px 10px;
+.back-btn {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+  padding: 40px 10px 10px 10px;
 }
-.back-text{
-	  font-family: "Microsoft YaHei";
-	  font-weight: bold;
-	  font-size: 18px; /* 字号 */
+.back-text {
+  font-family: "Microsoft YaHei";
+  font-weight: bold;
+  font-size: 18px;
 }
 
 /* 水平间距 */

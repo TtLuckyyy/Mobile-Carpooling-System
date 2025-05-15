@@ -55,7 +55,7 @@
 			    // }
 			    
 			    const response = await uni.request({
-			      url: 'http://localhost:8083/carsharing/get-requests?userId=1',
+			      url: 'http://10.0.2.2:8083/carsharing/get-requests?userId=1',
 			      method: 'GET',
 			      header: {
 			        'Content-Type': 'application/json'

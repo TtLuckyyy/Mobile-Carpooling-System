@@ -183,7 +183,7 @@ export default {
       try {
         // 向后端发送注册请求
         const res = await uni.request({
-          url: 'http://localhost:8083/carsharing/forget',  
+          url: 'http://10.0.2.2:8083/carsharing/forget',  
           method: 'POST',
           data: {
             phone: this.phone,  // 用户手机号

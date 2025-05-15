@@ -242,7 +242,7 @@ export default {
 	    };
 	
 	    const response = await uni.request({
-	      url: `http://localhost:8083/carsharing/modify-request?orderId=${this.rideOrder.orderID}`,
+	      url: `http://10.0.2.2:8083/carsharing/modify-request?orderId=${this.rideOrder.orderID}`,
 	      method: 'POST',
 	      data: requestData,
 	      header: {

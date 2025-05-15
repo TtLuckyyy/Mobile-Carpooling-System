@@ -59,7 +59,7 @@ export default {
   methods: {
     fetchUserInfo() {
       uni.request({
-        url: `http://localhost:8083/carsharing/my?userId=${this.userID}`, // 修改为你的接口
+        url: `http://10.0.2.2:8083/carsharing/my?userId=${this.userID}`, // 修改为你的接口
         method: 'GET',
         success: (res) => {
           if (res.data.status === "success" && res.data) {
