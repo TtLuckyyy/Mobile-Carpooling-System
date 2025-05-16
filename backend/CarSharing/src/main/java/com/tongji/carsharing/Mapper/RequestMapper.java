@@ -42,7 +42,8 @@ public interface RequestMapper
             start_at As startAt, 
             start_loc AS startLoc, 
             end_loc AS endLoc, 
-            status
+            status,
+            id
         FROM carpool_request
         WHERE passenger_id = #{userId}
         ORDER BY start_at DESC
@@ -75,4 +76,22 @@ public interface RequestMapper
                       @Param("startLoc") String startLoc,
                       @Param("endLoc") String endLoc,
                       @Param("startAt") Timestamp startAt);
+
+    // 根据需求表ID获取详细需求表记录
+    @Select("SELECT cr.start_at, cr.start_loc, cr.end_loc, cr.price, u.phone, u.avatar " +
+            "FROM carpool_request cr " +
+            "JOIN users u ON cr.passenger_id = u.id " +
+            "WHERE cr.id = #{requestId}")
+    Map<String, Object> getCarpoolRequestDetails(@Param("requestId") Integer requestId);
+
+    // 根据需求ID获取需求信息
+    @Select("""
+        SELECT 
+            start_at As startAt, 
+            start_loc AS startLoc, 
+            end_loc AS endLoc, 
+            status
+        FROM carpool_request
+        WHERE id = #{requestId}""")
+     Map<String, Object> selectCertainRequestInfo(@Param("requestId") Integer requestId);
 }

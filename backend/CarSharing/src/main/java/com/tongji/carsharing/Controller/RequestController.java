@@ -88,7 +88,7 @@ public class RequestController {
         return response;
     }
 
-    //获取用户当前所有的拼车需求（简略的）
+    // 获取用户当前所有的拼车需求
     @GetMapping("/get-requests")
     public Map<String, Object> getUserRequests(@RequestParam("userId") Integer userId) {
         Map<String, Object> response = new HashMap<>();
@@ -123,7 +123,7 @@ public class RequestController {
         return response;
     }
 
-    // 获取匹配的用户需求表
+    // 获取匹配（在一定区域内的）的用户需求表
     @GetMapping("/matched-requests")
     public Map<String, Object> matchedRequests(@RequestParam("offerId") Integer offerId) {
         Map<String, Object> response = new HashMap<>();
@@ -163,6 +163,7 @@ public class RequestController {
         String startAt = (String) params.get("startAt");
 
         // 转换时间格式
+        startAt = startAt.replace("T", " ").replace("Z", "");
         Timestamp startAtTimestamp = Timestamp.valueOf(startAt);
 
         // 更新拼车需求表
@@ -177,4 +178,37 @@ public class RequestController {
         }
         return response;
         }
+
+    // 根据用户需求表获取表内相关信息
+    @GetMapping("/get-invitation")
+    public Map<String, Object> getCarpoolRequestDetails(@RequestParam("requestId")  Integer requestId) {
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> result = requestmapper.getCarpoolRequestDetails(requestId);
+        if (result != null) {
+            response.put("status","success");
+            response.put("message", "拼车需求信息查询成功!");
+            response.put("data",result);
+        }
+        else{
+            response.put("status","error");
+            response.put("message","拼车需求信息查询失败！");
+        }
+        return response;
+    }
+
+    // 获取用户的某个需求表信息
+    @GetMapping("/get-certain-request")
+    public Map<String, Object> getCertainRequest(@RequestParam Integer requestId) {
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> request = requestmapper.selectCertainRequestInfo(requestId);
+        if (request!= null) {
+            response.put("status", "success");
+            response.put("message", "获取当前需求表信息成功！");
+            response.put("history", request);
+        } else {
+            response.put("status", "error");
+            response.put("message", "获取当前需求表信息失败！");
+        }
+        return response;
+    }
 }
