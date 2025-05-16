@@ -41,6 +41,7 @@ public class RequestController {
         request.setStatus(enums.PDStatus.PENDING);
         request.setDistance(BigDecimal.valueOf(calculateTool.calculateTripDistance(request)));
 
+        System.out.println(request);
         Integer request_id = requestservice.createUserRequest(requestmapper,calculateTool,request);
         if (request_id > 0) {
             response.put("status", "success");
@@ -194,16 +195,21 @@ public class RequestController {
     public Map<String, Object> modifyRequest(@RequestBody Map<String, Object> params) {
         Map<String, Object> response = new HashMap<>();
 
-        Integer orderId = (Integer) params.get("orderId");
+        Integer requestId = (Integer) params.get("requestId");
         String startLoc = (String) params.get("startLoc");
         String endLoc = (String) params.get("endLoc");
         String startAt = (String) params.get("startAt");
+        Boolean exclusive = (Boolean) params.get("exclusive");
+        Boolean highway = (Boolean) params.get("highway");
 
         // 转换时间格式
+        startAt = startAt.replace("T", " ").replace("Z", "");
         Timestamp startAtTimestamp = Timestamp.valueOf(startAt);
+        startAtTimestamp.setTime(startAtTimestamp.getTime() + 8 * 60 * 60 * 1000);
+        System.out.println("startAtTimestamp: " + startAtTimestamp);
 
         // 更新拼车需求表
-        int success = requestmapper.updateRequest(orderId, startLoc, endLoc, startAtTimestamp);
+        int success = requestmapper.updateRequest(requestId, startLoc, endLoc, exclusive,highway,startAtTimestamp);
 
         if (success > 0) {
             response.put("status", "success");
@@ -214,4 +220,56 @@ public class RequestController {
         }
         return response;
         }
+
+    // 删除拼车需求
+    @DeleteMapping("/delete-request")
+    public Map<String, Object> deleteRequest(@RequestParam("id") Integer requestId) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            // 检查需求是否存在
+            Request request = requestmapper.getRequestById(requestId);
+            if (request == null) {
+                response.put("status", "error");
+                response.put("message", "拼车需求不存在！");
+                return response;
+            }
+            // 只允许删除 PENDING 或 MATCHED 状态的需求
+            if (!request.getStatus().equals(enums.PDStatus.PENDING)) {
+                response.put("status", "error");
+                response.put("message", "只能删除待接单的拼车需求！");
+                return response;
+            }
+            // 执行删除
+            int affectedRows = requestmapper.deleteRequest(requestId);
+            if (affectedRows > 0) {
+                response.put("status", "success");
+                response.put("message", "拼车需求删除成功！");
+            } else {
+                response.put("status", "error");
+                response.put("message", "拼车需求删除失败！");
+            }
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", "删除拼车需求时发生错误：" + e.getMessage());
+        }
+        return response;
+    }
+
+    //获取指定某一条的拼车需求
+    @GetMapping("/get-certain-request")
+    public Map<String, Object> getCertainRequests(@RequestParam("requestId") Integer requestId) {
+        Map<String, Object> response = new HashMap<>();
+        List<Map<String, Object>> data = requestmapper.selectRequestsByRequestId(requestId);
+        System.out.println(data);
+        if (!data.isEmpty()) {
+            response.put("status","success");
+            response.put("message", "当前用户拼车需求查询成功!");
+            response.put("data", data);
+        }
+        else{
+            response.put("status","error");
+            response.put("message","当前用户拼车需求查询失败！");
+        }
+        return response;
+    }
 }

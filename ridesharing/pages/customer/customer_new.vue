@@ -137,7 +137,7 @@ export default {
     const app = getApp();
     const now = new Date();
     const currentTime = `${now.getFullYear()}年${(now.getMonth() + 1).toString().padStart(2, '0')}月${now.getDate().toString().padStart(2, '0')}日 ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-    return {
+	return {
       statusBarHeight: uni.getSystemInfoSync().statusBarHeight,
       longitude: app.globalData.my_location_longitude,
       latitude: app.globalData.my_location_latitude,
@@ -164,11 +164,14 @@ export default {
     ...mapState(['userID', 'rideRequest', 'rideOrder', 'current_change_request_id']),
   },
   onLoad() {
-    this.getRequests();
-    this.getCurrentOrder();
+	this.currentTime.setHours(this.currentTime.getHours() + 8); // 加上8小时
     this.setStartAt(this.currentTime.toISOString());
+	this.currentTime.setHours(this.currentTime.getHours() - 8); // 加上8小时
+	console.log(this.rideRequest.startAt);
   },
   onShow() {
+	this.getRequests();
+	this.getCurrentOrder();
     this.setCurrentChangeRequestId(0);
     this.resetGlobal();
   },
@@ -194,6 +197,14 @@ export default {
     async resetGlobal() {
       if (this.rideRequest.requestID != this.current_change_request_id) {
         this.resetRequest(this.current_change_request_id);
+		const now = new Date();
+		const currentTime = `${now.getFullYear()}年${(now.getMonth() + 1).toString().padStart(2, '0')}月${now.getDate().toString().padStart(2, '0')}日 ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+		this.selectedTime = currentTime;
+		this.currentTime = now;
+		this.currentTime.setHours(this.currentTime.getHours() + 8); // 加上8小时
+		this.setStartAt(this.currentTime.toISOString());
+		this.currentTime.setHours(this.currentTime.getHours() - 8); // 加上8小时
+		this.selectedSeats = 1;
       } else {
         try {
           // 检查起点和终点是否存在
@@ -430,7 +441,7 @@ export default {
         type: 'wgs84',
         geocode: true,
         success: function (res) {
-          console.log('定位成功:', res);
+          // console.log('定位成功:', res);
           that.addrDel = res;
           that.longitude = res.longitude;
           that.latitude = res.latitude;
@@ -626,6 +637,7 @@ export default {
 
       const formattedDate = `${year}年${month}月${day}日 ${hours}:${minutes}`;
       this.selectedTime = formattedDate;
+	  targetTime.setHours(this.currentTime.getHours() + 8); // 加上8小时
       this.setStartAt(targetTime.toISOString());
 
       uni.showToast({
@@ -635,15 +647,19 @@ export default {
     },
     selectTime(minutesLater) {
       // const now = new Date();
-      const targetTime = new Date(this.currentTime.getTime() + minutesLater * 60000);
-      const hours = targetTime.getHours().toString().padStart(2, '0');
-      const minutes = targetTime.getMinutes().toString().padStart(2, '0');
+	  this.currentTime.setHours(this.currentTime.getHours() + 8); // 加上8小时
+	  const targetTime1 = new Date(this.currentTime.getTime() + minutesLater * 60000);
+	  this.currentTime.setHours(this.currentTime.getHours() - 8); 
+	  
+      const targetTime2 = new Date(this.currentTime.getTime() + minutesLater * 60000);
+      const hours = targetTime2.getHours().toString().padStart(2, '0');
+      const minutes = targetTime2.getMinutes().toString().padStart(2, '0');
       if (minutesLater === 0) {
-        this.selectedTime = `${now.getFullYear()}年${(now.getMonth() + 1).toString().padStart(2, '0')}月${now.getDate().toString().padStart(2, '0')}日 ${hours}:${minutes}`;
+        this.selectedTime = `${this.currentTime.getFullYear()}年${(this.currentTime.getMonth() + 1).toString().padStart(2, '0')}月${this.currentTime.getDate().toString().padStart(2, '0')}日 ${hours}:${minutes}`;
       } else {
         this.selectedTime = `${minutesLater}分钟后 (${hours}:${minutes})`;
       }
-      this.setStartAt(targetTime.toISOString());
+      this.setStartAt(targetTime1.toISOString());
     },
     showSeatsInput() {
       uni.showModal({

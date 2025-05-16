@@ -2002,8 +2002,8 @@ if (uni.restoreGlobal) {
     },
     data() {
       const app = getApp();
-      const now2 = /* @__PURE__ */ new Date();
-      const currentTime = `${now2.getFullYear()}年${(now2.getMonth() + 1).toString().padStart(2, "0")}月${now2.getDate().toString().padStart(2, "0")}日 ${now2.getHours().toString().padStart(2, "0")}:${now2.getMinutes().toString().padStart(2, "0")}`;
+      const now = /* @__PURE__ */ new Date();
+      const currentTime = `${now.getFullYear()}年${(now.getMonth() + 1).toString().padStart(2, "0")}月${now.getDate().toString().padStart(2, "0")}日 ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
       return {
         statusBarHeight: uni.getSystemInfoSync().statusBarHeight,
         longitude: app.globalData.my_location_longitude,
@@ -2019,7 +2019,7 @@ if (uni.restoreGlobal) {
         endPoint: null,
         selectedType: null,
         selectedTime: currentTime,
-        currentTime: now2,
+        currentTime: now,
         selectedSeats: 1,
         requestnumber: 0,
         ordersnumber: 0,
@@ -2031,11 +2031,14 @@ if (uni.restoreGlobal) {
       ...mapState(["userID", "rideRequest", "rideOrder", "current_change_request_id"])
     },
     onLoad() {
-      this.getRequests();
-      this.getCurrentOrder();
+      this.currentTime.setHours(this.currentTime.getHours() + 8);
       this.setStartAt(this.currentTime.toISOString());
+      this.currentTime.setHours(this.currentTime.getHours() - 8);
+      formatAppLog("log", "at pages/customer/customer_new.vue:170", this.rideRequest.startAt);
     },
     onShow() {
+      this.getRequests();
+      this.getCurrentOrder();
       this.setCurrentChangeRequestId(0);
       this.resetGlobal();
     },
@@ -2061,6 +2064,14 @@ if (uni.restoreGlobal) {
       async resetGlobal() {
         if (this.rideRequest.requestID != this.current_change_request_id) {
           this.resetRequest(this.current_change_request_id);
+          const now = /* @__PURE__ */ new Date();
+          const currentTime = `${now.getFullYear()}年${(now.getMonth() + 1).toString().padStart(2, "0")}月${now.getDate().toString().padStart(2, "0")}日 ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
+          this.selectedTime = currentTime;
+          this.currentTime = now;
+          this.currentTime.setHours(this.currentTime.getHours() + 8);
+          this.setStartAt(this.currentTime.toISOString());
+          this.currentTime.setHours(this.currentTime.getHours() - 8);
+          this.selectedSeats = 1;
         } else {
           try {
             const hasStart = this.rideRequest.startLoc;
@@ -2115,7 +2126,7 @@ if (uni.restoreGlobal) {
               this.getCurrentLocation();
             }
           } catch (error) {
-            formatAppLog("log", "at pages/customer/customer_new.vue:257", "地址解析失败:", error);
+            formatAppLog("log", "at pages/customer/customer_new.vue:268", "地址解析失败:", error);
             uni.showToast({
               title: "地址解析失败，请检查地址",
               icon: "none",
@@ -2196,7 +2207,7 @@ if (uni.restoreGlobal) {
             throw new Error("路径规划失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/customer_new.vue:347", "路线规划错误:", error);
+          formatAppLog("error", "at pages/customer/customer_new.vue:358", "路线规划错误:", error);
           uni.showToast({
             title: "路线规划失败",
             icon: "none"
@@ -2260,7 +2271,6 @@ if (uni.restoreGlobal) {
           type: "wgs84",
           geocode: true,
           success: function(res2) {
-            formatAppLog("log", "at pages/customer/customer_new.vue:433", "定位成功:", res2);
             that.addrDel = res2;
             that.longitude = res2.longitude;
             that.latitude = res2.latitude;
@@ -2281,7 +2291,7 @@ if (uni.restoreGlobal) {
             }
           },
           fail: function(err) {
-            formatAppLog("log", "at pages/customer/customer_new.vue:454", "定位失败:", err);
+            formatAppLog("log", "at pages/customer/customer_new.vue:465", "定位失败:", err);
             uni.showToast({
               title: "获取地址失败，将导致部分功能不可用",
               icon: "none",
@@ -2301,7 +2311,7 @@ if (uni.restoreGlobal) {
             exclusive: this.rideRequest.exclusive,
             highway: this.rideRequest.highway
           };
-          formatAppLog("log", "at pages/customer/customer_new.vue:474", requestData);
+          formatAppLog("log", "at pages/customer/customer_new.vue:485", requestData);
           const response = await uni.request({
             url: "http://10.0.2.2:8083/carsharing/post-request",
             method: "POST",
@@ -2338,7 +2348,7 @@ if (uni.restoreGlobal) {
             throw new Error("请求失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/customer_new.vue:517", "发布失败:", error);
+          formatAppLog("error", "at pages/customer/customer_new.vue:528", "发布失败:", error);
           uni.showToast({
             title: "发布失败",
             icon: "none"
@@ -2395,8 +2405,8 @@ if (uni.restoreGlobal) {
         });
       },
       showDateTimeInput() {
-        const now2 = /* @__PURE__ */ new Date();
-        const currentDateTime = `${now2.getFullYear()}-${(now2.getMonth() + 1).toString().padStart(2, "0")}-${now2.getDate().toString().padStart(2, "0")} ${now2.getHours().toString().padStart(2, "0")}:${now2.getMinutes().toString().padStart(2, "0")}`;
+        const now = /* @__PURE__ */ new Date();
+        const currentDateTime = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")} ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
         uni.showModal({
           title: "自定义出发时间",
           content: `当前时间: ${currentDateTime}
@@ -2429,7 +2439,7 @@ if (uni.restoreGlobal) {
         }
         const [_, year, month, day, hours, minutes] = dateTimeStr.match(dateTimeRegex);
         const targetTime = new Date(year, month - 1, day, hours, minutes);
-        const now2 = /* @__PURE__ */ new Date();
+        const now = /* @__PURE__ */ new Date();
         if (isNaN(targetTime.getTime())) {
           uni.showToast({
             title: "日期时间无效",
@@ -2437,7 +2447,7 @@ if (uni.restoreGlobal) {
           });
           return;
         }
-        if (targetTime < now2) {
+        if (targetTime < now) {
           uni.showToast({
             title: "时间已过，请选择未来的时间",
             icon: "none"
@@ -2446,6 +2456,7 @@ if (uni.restoreGlobal) {
         }
         const formattedDate = `${year}年${month}月${day}日 ${hours}:${minutes}`;
         this.selectedTime = formattedDate;
+        targetTime.setHours(this.currentTime.getHours() + 8);
         this.setStartAt(targetTime.toISOString());
         uni.showToast({
           title: `已设置: ${formattedDate}`,
@@ -2453,15 +2464,18 @@ if (uni.restoreGlobal) {
         });
       },
       selectTime(minutesLater) {
-        const targetTime = new Date(this.currentTime.getTime() + minutesLater * 6e4);
-        const hours = targetTime.getHours().toString().padStart(2, "0");
-        const minutes = targetTime.getMinutes().toString().padStart(2, "0");
+        this.currentTime.setHours(this.currentTime.getHours() + 8);
+        const targetTime1 = new Date(this.currentTime.getTime() + minutesLater * 6e4);
+        this.currentTime.setHours(this.currentTime.getHours() - 8);
+        const targetTime2 = new Date(this.currentTime.getTime() + minutesLater * 6e4);
+        const hours = targetTime2.getHours().toString().padStart(2, "0");
+        const minutes = targetTime2.getMinutes().toString().padStart(2, "0");
         if (minutesLater === 0) {
-          this.selectedTime = `${now.getFullYear()}年${(now.getMonth() + 1).toString().padStart(2, "0")}月${now.getDate().toString().padStart(2, "0")}日 ${hours}:${minutes}`;
+          this.selectedTime = `${this.currentTime.getFullYear()}年${(this.currentTime.getMonth() + 1).toString().padStart(2, "0")}月${this.currentTime.getDate().toString().padStart(2, "0")}日 ${hours}:${minutes}`;
         } else {
           this.selectedTime = `${minutesLater}分钟后 (${hours}:${minutes})`;
         }
-        this.setStartAt(targetTime.toISOString());
+        this.setStartAt(targetTime1.toISOString());
       },
       showSeatsInput() {
         uni.showModal({
@@ -2516,7 +2530,7 @@ if (uni.restoreGlobal) {
             throw new Error(response.data.message || "获取请求列表失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/customer_new.vue:701", "获取请求列表失败:", error);
+          formatAppLog("error", "at pages/customer/customer_new.vue:717", "获取请求列表失败:", error);
           this.error = error.message || "获取请求列表失败";
           this.requestnumber = 0;
           uni.showToast({
@@ -2543,9 +2557,9 @@ if (uni.restoreGlobal) {
           });
           if (response.data.status === "success") {
             const res2 = response.data;
-            const now2 = /* @__PURE__ */ new Date();
+            const now = /* @__PURE__ */ new Date();
             if (res2.orders && res2.orders.length > 0) {
-              const pastOrders = res2.orders.filter((order) => new Date(order.startAt) < now2).sort((a, b) => new Date(b.startAt) - new Date(a.startAt));
+              const pastOrders = res2.orders.filter((order) => new Date(order.startAt) < now).sort((a, b) => new Date(b.startAt) - new Date(a.startAt));
               this.currentOrders = pastOrders.length > 0 ? [{
                 id: pastOrders[0].id,
                 distance: pastOrders[0].distance,
@@ -2565,7 +2579,7 @@ if (uni.restoreGlobal) {
             throw new Error(response.data.message || "获取当前订单失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/customer_new.vue:754", "获取当前订单失败:", error);
+          formatAppLog("error", "at pages/customer/customer_new.vue:770", "获取当前订单失败:", error);
           this.error = error.message || "获取当前订单失败";
           this.ordersnumber = 0;
           this.currentOrders = [];
@@ -3127,8 +3141,8 @@ if (uni.restoreGlobal) {
         });
       },
       showDateTimeInput() {
-        const now2 = /* @__PURE__ */ new Date();
-        const currentDateTime = `${now2.getFullYear()}-${(now2.getMonth() + 1).toString().padStart(2, "0")}-${now2.getDate().toString().padStart(2, "0")} ${now2.getHours().toString().padStart(2, "0")}:${now2.getMinutes().toString().padStart(2, "0")}`;
+        const now = /* @__PURE__ */ new Date();
+        const currentDateTime = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")} ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
         uni.showModal({
           title: "自定义出发时间",
           content: `当前时间: ${currentDateTime}
@@ -3164,7 +3178,7 @@ if (uni.restoreGlobal) {
         }
         const [_, year, month, day, hours, minutes] = dateTimeStr.match(dateTimeRegex);
         const targetTime = new Date(year, month - 1, day, hours, minutes);
-        const now2 = /* @__PURE__ */ new Date();
+        const now = /* @__PURE__ */ new Date();
         if (isNaN(targetTime.getTime())) {
           uni.showToast({
             title: "日期时间无效",
@@ -3172,7 +3186,7 @@ if (uni.restoreGlobal) {
           });
           return;
         }
-        if (targetTime < now2) {
+        if (targetTime < now) {
           uni.showToast({
             title: "时间已过，请选择未来的时间",
             icon: "none"
@@ -3188,8 +3202,8 @@ if (uni.restoreGlobal) {
         });
       },
       selectTime(minutesLater) {
-        const now2 = /* @__PURE__ */ new Date();
-        const targetTime = new Date(now2.getTime() + minutesLater * 6e4);
+        const now = /* @__PURE__ */ new Date();
+        const targetTime = new Date(now.getTime() + minutesLater * 6e4);
         this.selectedTime = `${minutesLater}分钟后 (${targetTime.getHours()}:${targetTime.getMinutes().toString().padStart(2, "0")})`;
         this.setStartAt(targetTime.toISOString());
       },
@@ -3243,10 +3257,10 @@ if (uni.restoreGlobal) {
           });
           if (response.data.status === "success") {
             const res2 = response.data;
-            const now2 = /* @__PURE__ */ new Date();
+            const now = /* @__PURE__ */ new Date();
             formatAppLog("log", "at pages/customer/customer.vue:441", res2.orders);
             if (res2.orders && res2.orders.length > 0) {
-              const pastOrders = res2.orders.filter((order) => new Date(order.startAt) < now2).sort((a, b) => new Date(b.startAt) - new Date(a.startAt));
+              const pastOrders = res2.orders.filter((order) => new Date(order.startAt) < now).sort((a, b) => new Date(b.startAt) - new Date(a.startAt));
               formatAppLog("log", "at pages/customer/customer.vue:447", pastOrders);
               this.currentOrders = pastOrders.length > 0 ? [{
                 id: pastOrders[0].id,
@@ -3607,6 +3621,9 @@ if (uni.restoreGlobal) {
       SET_EXCLUSIVE(state, exclusive) {
         state.rideRequest.exclusive = exclusive;
       },
+      SET_HIGHWAY(state, highway) {
+        state.rideRequest.highway = highway;
+      },
       TOGGLE_HIGHWAY(state) {
         state.rideRequest.highway = !state.rideRequest.highway;
       },
@@ -3649,7 +3666,7 @@ if (uni.restoreGlobal) {
       },
       SET_ORDER_ID(state, id) {
         state.rideOrder.orderID = id;
-        formatAppLog("log", "at store/index.js:90", "111", state.rideOrder.orderID);
+        formatAppLog("log", "at store/index.js:93", "111", state.rideOrder.orderID);
       }
     },
     actions: {
@@ -3671,6 +3688,9 @@ if (uni.restoreGlobal) {
       },
       setExclusive({ commit }, exclusive) {
         commit("SET_EXCLUSIVE", exclusive);
+      },
+      setHighway({ commit }, highway) {
+        commit("SET_HIGHWAY", highway);
       },
       toggleHighway({ commit }) {
         commit("TOGGLE_HIGHWAY");
@@ -4827,14 +4847,14 @@ if (uni.restoreGlobal) {
     computed: {
       ...mapState(["userID", "rideRequest", "rideOrder", "rideInvitation"]),
       formattedTime() {
-        const now2 = this.rideInvitation.startAt;
+        const now = this.rideInvitation.startAt;
         const today = /* @__PURE__ */ new Date();
         let prefix = "今天";
-        if (now2.getDate() !== today.getDate()) {
-          prefix = `${now2.getMonth() + 1}月${now2.getDate()}日`;
+        if (now.getDate() !== today.getDate()) {
+          prefix = `${now.getMonth() + 1}月${now.getDate()}日`;
         }
-        const hours = now2.getHours().toString().padStart(2, "0");
-        const minutes = now2.getMinutes().toString().padStart(2, "0");
+        const hours = now.getHours().toString().padStart(2, "0");
+        const minutes = now.getMinutes().toString().padStart(2, "0");
         return `${prefix}${hours}:${minutes}`;
       }
     },
@@ -6591,13 +6611,70 @@ if (uni.restoreGlobal) {
       }
     },
     name: "RequestBlock",
-    // 给组件命名
     data() {
-      return {};
+      return {
+        isLoading: false,
+        error: null
+      };
     },
     methods: {
+      ...mapActions([
+        "setCurrentChangeRequestId"
+      ]),
       formatDateTime,
+      async deleteRequest() {
+        uni.showModal({
+          title: "确认删除",
+          content: "确定要删除此拼车需求吗？",
+          confirmText: "确定",
+          cancelText: "取消",
+          success: async (res2) => {
+            if (res2.confirm) {
+              this.isLoading = true;
+              this.error = null;
+              try {
+                const response = await uni.request({
+                  url: `http://10.0.2.2:8083/carsharing/delete-request?id=${this.item.id}`,
+                  method: "DELETE",
+                  header: {
+                    "Content-Type": "application/json"
+                  }
+                });
+                if (response.data.status === "success") {
+                  uni.showToast({
+                    title: "删除成功",
+                    icon: "success",
+                    duration: 2e3
+                  });
+                  this.$emit("request-deleted", this.item.id);
+                } else {
+                  throw new Error(response.data.message || "删除请求失败");
+                }
+              } catch (error) {
+                formatAppLog("error", "at components/RequestBlock.vue:95", "删除请求失败:", error);
+                this.error = error.message || "删除请求失败";
+                uni.showToast({
+                  title: this.error,
+                  icon: "none",
+                  duration: 2e3
+                });
+              } finally {
+                this.isLoading = false;
+              }
+            }
+          }
+        });
+      },
+      goToEdit(id) {
+        uni.navigateTo({
+          url: "/pages/customer/OrderModify",
+          animationType: "slide-in-right",
+          huntingDuration: 300
+        });
+      },
       editRequest() {
+        this.setCurrentChangeRequestId(this.item.id);
+        this.goToEdit(this.item.id);
       }
     }
   };
@@ -6652,11 +6729,15 @@ if (uni.restoreGlobal) {
             key: 0,
             class: "edit-btn"
           }, [
+            vue.createElementVNode("text", {
+              class: "delete-text",
+              onClick: _cache[0] || (_cache[0] = (...args) => $options.deleteRequest && $options.deleteRequest(...args))
+            }, "删除"),
             vue.createElementVNode("text", { class: "edit-text" }, "修改"),
             vue.createElementVNode("image", {
               src: _imports_0$3,
               class: "right-arrow",
-              onClick: _cache[0] || (_cache[0] = (...args) => $options.editRequest && $options.editRequest(...args))
+              onClick: _cache[1] || (_cache[1] = (...args) => $options.editRequest && $options.editRequest(...args))
             })
           ])) : (vue.openBlock(), vue.createElementBlock("view", {
             key: 1,
@@ -6667,7 +6748,7 @@ if (uni.restoreGlobal) {
             {
               class: vue.normalizeClass(["status", "status-" + $props.item.status])
             },
-            vue.toDisplayString($props.item.status === "PENDING" ? "待接单" : $props.item.status === "MATCHED" ? "进行中" : $props.item.status === "COMPLETED" ? "已完成" : $props.item.status === "CANCELED" ? "已取消" : ""),
+            vue.toDisplayString($props.item.status === "PENDING" ? "待接单" : $props.item.status === "ONGOING" ? "进行中" : $props.item.status === "COMPLETED" ? "已完成" : $props.item.status === "CANCELLED" ? "已取消" : ""),
             3
             /* TEXT, CLASS */
           )
@@ -6684,24 +6765,16 @@ if (uni.restoreGlobal) {
     data() {
       return {
         requestnumber: 0,
-        RequestBlockItems: [
-          // {
-          // 	startAt: '2023-05-15 08:30',
-          // 	startLoc: '北京市海淀区中关村',
-          // 	endLoc: '北京市朝阳区国贸',
-          // 	status:'pending',
-          // },
-          // {
-          // 	startAt: '2023-05-15 09:15',
-          // 	startLoc: '北京市海淀区五道口',
-          // 	endLoc: '北京市西城区金融街',
-          // 	status:'completed',
-          // },
-        ]
+        RequestBlockItems: [],
+        isLoading: false,
+        error: null
       };
     },
-    onLoad() {
+    onShow() {
       this.getRequests();
+    },
+    computed: {
+      ...mapState(["userID", "rideRequest", "current_change_request_id"])
     },
     methods: {
       async getRequests() {
@@ -6709,7 +6782,7 @@ if (uni.restoreGlobal) {
         this.error = null;
         try {
           const response = await uni.request({
-            url: "http://10.0.2.2:8083/carsharing/get-requests?userId=1",
+            url: `http://10.0.2.2:8083/carsharing/get-requests?userId=${this.userID}`,
             method: "GET",
             header: {
               "Content-Type": "application/json"
@@ -6720,9 +6793,10 @@ if (uni.restoreGlobal) {
             if (res2 && res2.length > 0) {
               this.RequestBlockItems = res2.map((item) => ({
                 startAt: item.startAt || "未知时间",
-                startLoc: item.startLoc || ["未知位置"],
-                endLoc: item.endLoc || ["未知位置"],
-                status: item.status || "未知状态"
+                startLoc: item.startLoc || "未知位置",
+                endLoc: item.endLoc || "未知位置",
+                status: item.status || "未知状态",
+                id: item.id
               }));
               this.requestnumber = res2.length;
             } else {
@@ -6733,7 +6807,7 @@ if (uni.restoreGlobal) {
             throw new Error(response.data.message || "获取请求列表失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/RequestList.vue:85", "获取请求列表失败:", error);
+          formatAppLog("error", "at pages/customer/RequestList.vue:74", "获取请求列表失败:", error);
           this.error = error.message || "获取请求列表失败";
           this.RequestBlockItems = [];
           this.requestnumber = 0;
@@ -6744,6 +6818,9 @@ if (uni.restoreGlobal) {
         } finally {
           this.isLoading = false;
         }
+      },
+      handleRequestDeleted(id) {
+        this.getRequests();
       }
     }
   };
@@ -6762,8 +6839,9 @@ if (uni.restoreGlobal) {
           vue.renderList($data.RequestBlockItems, (item, index) => {
             return vue.openBlock(), vue.createBlock(_component_RequestBlock, {
               key: index,
-              item
-            }, null, 8, ["item"]);
+              item,
+              onRequestDeleted: $options.handleRequestDeleted
+            }, null, 8, ["item", "onRequestDeleted"]);
           }),
           128
           /* KEYED_FRAGMENT */
@@ -9098,29 +9176,41 @@ if (uni.restoreGlobal) {
   const PagesCustomerOrderCancel = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__file", "D:/大三下/软工课设/new_code/Mobile-Carpooling-System/ridesharing/pages/customer/OrderCancel.vue"]]);
   const _sfc_main$5 = {
     components: {
-      PageHeader_cover: ComponentsPageHeaderCover
-    },
-    computed: {
-      ...mapState(["rideRequest", "rideOrder"]),
-      formattedTime() {
-        const date = this.rideRequest.startAt;
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        const hour = String(date.getHours()).padStart(2, "0");
-        const minute = String(date.getMinutes()).padStart(2, "0");
-        return `${month}月${day}日 ${hour}:${minute}`;
-      }
+      PageHeader: ComponentsPageHeader,
+      ShareOption: ComponentsShareOption
     },
     data() {
+      const app = getApp();
+      const now = /* @__PURE__ */ new Date();
+      const currentTime = `${now.getFullYear()}年${(now.getMonth() + 1).toString().padStart(2, "0")}月${now.getDate().toString().padStart(2, "0")}日 ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
       return {
         statusBarHeight: uni.getSystemInfoSync().statusBarHeight,
+        longitude: app.globalData.my_location_longitude,
+        latitude: app.globalData.my_location_latitude,
+        api_key: app.globalData.api_key,
+        scale: 16,
+        markers: [],
+        polyline: [],
+        mapContext: null,
         currentLocation: null,
         startPoint: null,
         endPoint: null,
+        selectedTime: currentTime,
+        currentTime: now,
+        selectedSeats: 1,
         selectedType: null,
-        selectedTime: null,
-        showTimePopup: false
+        highway: null,
+        id: 0
       };
+    },
+    computed: {
+      ...mapState(["rideRequest", "rideOrder", "current_change_request_id"])
+    },
+    async onShow() {
+      formatAppLog("log", "at pages/customer/OrderModify.vue:117", "接收到的id:", this.current_change_request_id);
+      this.id = this.current_change_request_id;
+      await this.fetchRideData();
+      await this.resetGlobal();
     },
     methods: {
       ...mapActions([
@@ -9130,57 +9220,300 @@ if (uni.restoreGlobal) {
         "setStartLoc",
         "setEndLoc",
         "setStartAt",
-        "toggleExclusive",
+        "setExclusive",
         "toggleHighway",
-        "resetRideRequest",
-        "setOrderId"
+        "resetRequest",
+        "setOrderId",
+        "setHighway",
+        "setCurrentChangeRequestId"
       ]),
-      handleMapMessage(e) {
-        const { longitude, latitude, type, distance, duration } = e.detail.data;
-        if (type === "select") {
-          if (!this.startPoint) {
-            this.startPoint = [longitude, latitude];
-            uni.showToast({
-              title: `已记录起点: ${longitude}, ${latitude}`,
-              icon: "none"
+      async fetchRideData() {
+        if (this.id != this.rideRequest.requestID) {
+          try {
+            const response = await uni.request({
+              url: `http://10.0.2.2:8083/carsharing/get-certain-request?requestId=${this.id}`,
+              method: "GET",
+              header: {
+                "Content-Type": "application/json"
+              }
             });
-          } else if (!this.endPoint) {
-            this.endPoint = [longitude, latitude];
+            if (response.data.status === "success") {
+              const data = response.data.data[0];
+              const string = data.startAt;
+              const normalizedDateStr = `${string}Z`;
+              const startAt = new Date(normalizedDateStr);
+              formatAppLog("log", "at pages/customer/OrderModify.vue:156", normalizedDateStr);
+              startAt.setHours(startAt.getHours() - 8);
+              const year = startAt.getFullYear();
+              const month = (startAt.getMonth() + 1).toString().padStart(2, "0");
+              const day = startAt.getDate().toString().padStart(2, "0");
+              const hours = startAt.getHours().toString().padStart(2, "0");
+              const minutes = startAt.getMinutes().toString().padStart(2, "0");
+              this.selectedTime = `${year}年${month}月${day}日 ${hours}:${minutes}`;
+              startAt.setHours(startAt.getHours() + 8);
+              this.setRequestId(this.id);
+              this.setStartLoc(data.startLoc);
+              this.setEndLoc(data.endLoc);
+              this.setStartAt(startAt.toISOString());
+              this.setExclusive(data.exclusive);
+              this.setHighway(data.highway);
+              this.highway = data.highway;
+              this.selectedType = data.exclusive ? "exclusive" : "shared";
+              this.selectedSeats = 1;
+            } else {
+              throw new Error("获取行程数据失败");
+            }
+          } catch (error) {
+            formatAppLog("error", "at pages/customer/OrderModify.vue:181", "获取行程数据失败:", error);
             uni.showToast({
-              title: `已记录终点: ${longitude}, ${latitude}`,
+              title: "获取行程数据失败",
               icon: "none"
             });
           }
-        } else if (type === "location") {
-          this.currentLocation = [longitude, latitude];
-          uni.showToast({
-            title: `当前位置: ${longitude}, ${latitude}`,
-            icon: "none"
+        }
+      },
+      onMapReady() {
+        this.mapContext = uni.createMapContext("map", this);
+        this.getCurrentLocation();
+      },
+      async resetGlobal() {
+        if (this.rideRequest.requestID != this.current_change_request_id) {
+          this.resetRequest(this.current_change_request_id);
+          const now = /* @__PURE__ */ new Date();
+          const currentTime = `${now.getFullYear()}年${(now.getMonth() + 1).toString().padStart(2, "0")}月${now.getDate().toString().padStart(2, "0")}日 ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
+          this.selectedTime = currentTime;
+          this.currentTime = now;
+          this.selectedSeats = 1;
+        } else {
+          try {
+            const hasStart = this.rideRequest.startLoc;
+            const hasEnd = this.rideRequest.endLoc;
+            if (hasStart && !hasEnd) {
+              this.startPoint = await this.geocodeAddress(this.rideRequest.startLoc);
+              this.longitude = this.startPoint[0];
+              this.latitude = this.startPoint[1];
+              this.scale = 16;
+              this.markers = [{
+                id: 1,
+                latitude: this.startPoint[1],
+                longitude: this.startPoint[0],
+                width: 24,
+                height: 24,
+                iconPath: "/static/point_start.png"
+              }];
+              this.polyline = [];
+              if (this.mapContext) {
+                this.mapContext.moveToLocation({
+                  longitude: this.startPoint[0],
+                  latitude: this.startPoint[1]
+                });
+              }
+            } else if (!hasStart && hasEnd) {
+              this.endPoint = await this.geocodeAddress(this.rideRequest.endLoc);
+              this.longitude = this.endPoint[0];
+              this.latitude = this.endPoint[1];
+              this.scale = 16;
+              this.markers = [{
+                id: 2,
+                latitude: this.endPoint[1],
+                longitude: this.endPoint[0],
+                width: 24,
+                height: 24,
+                iconPath: "/static/point_end.png"
+              }];
+              this.polyline = [];
+              if (this.mapContext) {
+                this.mapContext.moveToLocation({
+                  longitude: this.endPoint[0],
+                  latitude: this.endPoint[1]
+                });
+              }
+            } else if (hasStart && hasEnd) {
+              this.startPoint = await this.geocodeAddress(this.rideRequest.startLoc);
+              this.endPoint = await this.geocodeAddress(this.rideRequest.endLoc);
+              await this.getDrivingRoute(this.startPoint, this.endPoint);
+            } else {
+              this.markers = [];
+              this.polyline = [];
+              this.getCurrentLocation();
+            }
+          } catch (error) {
+            formatAppLog("error", "at pages/customer/OrderModify.vue:258", "地址解析失败:", error);
+            uni.showToast({
+              title: "地址解析失败，请检查地址",
+              icon: "none",
+              duration: 2e3
+            });
+            this.markers = [];
+            this.polyline = [];
+            this.getCurrentLocation();
+          }
+        }
+      },
+      async geocodeAddress(address) {
+        return new Promise((resolve, reject) => {
+          const geocodeUrl = `https://restapi.amap.com/v3/geocode/geo?address=${encodeURIComponent(address)}&output=json&key=${this.api_key}`;
+          uni.request({
+            url: geocodeUrl,
+            method: "GET",
+            success: (res2) => {
+              if (res2.data.status === "1" && res2.data.geocodes && res2.data.geocodes.length > 0) {
+                const location = res2.data.geocodes[0].location.split(",");
+                const lngLat = [parseFloat(location[0]), parseFloat(location[1])];
+                resolve(lngLat);
+              } else {
+                reject("地理编码失败：未找到该地点");
+              }
+            },
+            fail: (error) => {
+              reject(`地理编码请求失败：${error}`);
+            }
           });
-        } else if (type === "route") {
+        });
+      },
+      async getDrivingRoute(startLngLat, endLngLat) {
+        if (!startLngLat || !endLngLat)
+          return;
+        try {
+          const url = `https://restapi.amap.com/v3/direction/driving?key=${this.api_key}&origin=${startLngLat[0]},${startLngLat[1]}&destination=${endLngLat[0]},${endLngLat[1]}&strategy=0`;
+          const response = await uni.request({
+            url,
+            method: "GET"
+          });
+          if (response.data.status === "1" && response.data.route) {
+            const pathSteps = response.data.route.paths[0].steps;
+            this.markers = [
+              {
+                id: 1,
+                longitude: startLngLat[0],
+                latitude: startLngLat[1],
+                title: this.rideRequest.startLoc,
+                iconPath: "/static/point_start.png",
+                width: 24,
+                height: 24
+              },
+              {
+                id: 2,
+                longitude: endLngLat[0],
+                latitude: endLngLat[1],
+                title: this.rideRequest.endLoc,
+                iconPath: "/static/point_end.png",
+                width: 24,
+                height: 24
+              }
+            ];
+            this.polyline = pathSteps.map((step) => ({
+              points: step.polyline.split(";").map((coord) => {
+                const [lng, lat] = coord.split(",").map(Number);
+                return {
+                  longitude: lng,
+                  latitude: lat
+                };
+              }),
+              color: "#517aff",
+              width: 10,
+              dottedLine: false
+            }));
+            this.adjustMapView();
+          } else {
+            throw new Error("路径规划失败");
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/customer/OrderModify.vue:344", "路线规划错误:", error);
           uni.showToast({
-            title: `距离: ${distance}m, 时长: ${Math.round(duration / 60)}分钟`,
+            title: "路线规划失败",
             icon: "none"
           });
         }
+      },
+      adjustMapView() {
+        let allPoints = [];
+        this.markers.forEach((marker) => {
+          allPoints.push({
+            longitude: marker.longitude,
+            latitude: marker.latitude
+          });
+        });
+        this.polyline.forEach((line) => {
+          line.points.forEach((point) => {
+            allPoints.push(point);
+          });
+        });
+        const bounds = this.calculateBounds(allPoints);
+        const centerLng = (bounds.minLng + bounds.maxLng) / 2;
+        const centerLat = (bounds.minLat + bounds.maxLat) / 2;
+        this.longitude = centerLng;
+        this.latitude = centerLat;
+        this.scale = this.calculateScale(bounds);
+      },
+      calculateBounds(points) {
+        let minLng = Infinity;
+        let maxLng = -Infinity;
+        let minLat = Infinity;
+        let maxLat = -Infinity;
+        points.forEach((p) => {
+          minLng = Math.min(minLng, p.longitude);
+          maxLng = Math.max(maxLng, p.longitude);
+          minLat = Math.min(minLat, p.latitude);
+          maxLat = Math.max(maxLat, p.latitude);
+        });
+        return {
+          minLng,
+          maxLng,
+          minLat,
+          maxLat
+        };
+      },
+      calculateScale(bounds) {
+        const systemInfo = uni.getSystemInfoSync();
+        const widthInPx = systemInfo.windowWidth;
+        const deltaLng = bounds.maxLng - bounds.minLng;
+        const deltaLat = bounds.maxLat - bounds.minLat;
+        const padding = 0.2;
+        const paddedDeltaLng = deltaLng * (1 + padding);
+        const paddedDeltaLat = deltaLat * (1 + padding);
+        const metersPerPixel = (paddedDeltaLng * 111319 + paddedDeltaLat * 110574) / widthInPx;
+        const baseZoomLevel = 17;
+        let scale = baseZoomLevel - Math.log(metersPerPixel) / Math.LN2;
+        return Math.max(3, Math.min(18, Math.floor(scale)));
       },
       getCurrentLocation() {
-        const webview = this.$refs.webview;
-        webview.evalJS("getCurrentPosition()");
-      },
-      startRoutePlanning() {
-        if (!this.rideRequest.startLoc || !this.rideRequest.endLoc) {
-          uni.showToast({
-            title: "请先设置起点和终点",
-            icon: "none"
-          });
-          return;
-        }
-        const webview = this.$refs.webview;
-        webview.evalJS(`planRoute(${this.rideRequest.startLoc[0]}, ${this.rideRequest.startLoc[1]}, ${this.rideRequest.endLoc[0]}, ${this.rideRequest.endLoc[1]})`);
+        uni.getLocation({
+          type: "wgs84",
+          geocode: true,
+          success: (res2) => {
+            formatAppLog("log", "at pages/customer/OrderModify.vue:419", "定位成功:", res2);
+            this.currentLocation = res2;
+            this.longitude = res2.longitude;
+            this.latitude = res2.latitude;
+            this.scale = 16;
+            this.markers = [{
+              id: 1,
+              latitude: res2.latitude,
+              longitude: res2.longitude,
+              width: 24,
+              height: 24,
+              iconPath: "/static/current_location.png"
+            }];
+            if (this.mapContext) {
+              this.mapContext.moveToLocation({
+                longitude: res2.longitude,
+                latitude: res2.latitude
+              });
+            }
+          },
+          fail: (err) => {
+            formatAppLog("log", "at pages/customer/OrderModify.vue:440", "定位失败:", err);
+            uni.showToast({
+              title: "获取地址失败，将导致部分功能不可用",
+              icon: "none",
+              duration: 2e3
+            });
+          }
+        });
       },
       ToStartLoc() {
-        formatAppLog("log", "at pages/customer/OrderModify.vue:135", "Start location clicked");
+        this.setCurrentChangeRequestId(this.id);
         uni.navigateTo({
           url: "/pages/customer/StartLoc",
           animationType: "slide-in-right",
@@ -9188,28 +9521,37 @@ if (uni.restoreGlobal) {
         });
       },
       ToEndLoc() {
+        this.setCurrentChangeRequestId(this.id);
         uni.navigateTo({
           url: "/pages/customer/EndLoc",
           animationType: "slide-in-right",
           animationDuration: 300
         });
       },
+      handleSelect(type) {
+        this.selectedType = type;
+        if (type === "shared") {
+          this.setExclusive(false);
+        } else {
+          this.setExclusive(true);
+        }
+      },
       showTimePicker() {
         uni.showActionSheet({
-          itemList: ["15分钟后", "30分钟后", "1小时后", "自定义时间"],
+          itemList: ["当前时间", "15分钟后", "30分钟后", "1小时后", "自定义时间"],
           success: (res2) => {
-            if (res2.tapIndex === 3) {
+            if (res2.tapIndex === 4) {
               this.showDateTimeInput();
             } else {
-              const times = [15, 30, 60];
+              const times = [0, 15, 30, 60];
               this.selectTime(times[res2.tapIndex]);
             }
           }
         });
       },
       showDateTimeInput() {
-        const now2 = /* @__PURE__ */ new Date();
-        const currentDateTime = `${now2.getFullYear()}-${(now2.getMonth() + 1).toString().padStart(2, "0")}-${now2.getDate().toString().padStart(2, "0")} ${now2.getHours().toString().padStart(2, "0")}:${now2.getMinutes().toString().padStart(2, "0")}`;
+        const now = /* @__PURE__ */ new Date();
+        const currentDateTime = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")} ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
         uni.showModal({
           title: "自定义出发时间",
           content: `当前时间: ${currentDateTime}
@@ -9217,11 +9559,8 @@ if (uni.restoreGlobal) {
           editable: true,
           placeholderText: "例如: " + this.getTomorrowDate(),
           showCancel: false,
-          // 不显示取消按钮
           confirmButtonText: "确定",
-          // 自定义确认按钮文字
           confirmButtonColor: "#007AFF",
-          // 自定义确认按钮颜色
           success: (res2) => {
             if (res2.confirm) {
               this.validateAndSetDateTime(res2.content);
@@ -9245,7 +9584,7 @@ if (uni.restoreGlobal) {
         }
         const [_, year, month, day, hours, minutes] = dateTimeStr.match(dateTimeRegex);
         const targetTime = new Date(year, month - 1, day, hours, minutes);
-        const now2 = /* @__PURE__ */ new Date();
+        const now = /* @__PURE__ */ new Date();
         if (isNaN(targetTime.getTime())) {
           uni.showToast({
             title: "日期时间无效",
@@ -9253,7 +9592,7 @@ if (uni.restoreGlobal) {
           });
           return;
         }
-        if (targetTime < now2) {
+        if (targetTime < now) {
           uni.showToast({
             title: "时间已过，请选择未来的时间",
             icon: "none"
@@ -9269,46 +9608,83 @@ if (uni.restoreGlobal) {
         });
       },
       selectTime(minutesLater) {
-        const now2 = /* @__PURE__ */ new Date();
-        const targetTime = new Date(now2.getTime() + minutesLater * 6e4);
-        this.selectedTime = `${minutesLater}分钟后 (${targetTime.getHours()}:${targetTime.getMinutes().toString().padStart(2, "0")})`;
-        this.setStartAt(new Date(targetTime.toISOString()));
+        this.currentTime.setHours(this.currentTime.getHours() + 8);
+        const targetTime1 = new Date(this.currentTime.getTime() + minutesLater * 6e4);
+        this.currentTime.setHours(this.currentTime.getHours() - 8);
+        const targetTime2 = new Date(this.currentTime.getTime() + minutesLater * 6e4);
+        const hours = targetTime2.getHours().toString().padStart(2, "0");
+        const minutes = targetTime2.getMinutes().toString().padStart(2, "0");
+        if (minutesLater === 0) {
+          this.selectedTime = `${this.currentTime.getFullYear()}年${(this.currentTime.getMonth() + 1).toString().padStart(2, "0")}月${this.currentTime.getDate().toString().padStart(2, "0")}日 ${hours}:${minutes}`;
+        } else {
+          this.selectedTime = `${minutesLater}分钟后 (${hours}:${minutes})`;
+        }
+        this.setStartAt(targetTime1.toISOString());
+      },
+      showSeatsInput() {
+        uni.showModal({
+          title: "选择座位人数",
+          content: "请输入需要的座位数（1-7）",
+          editable: true,
+          placeholderText: "例如: 2",
+          showCancel: false,
+          confirmButtonText: "确定",
+          confirmButtonColor: "#007AFF",
+          success: (res2) => {
+            if (res2.confirm) {
+              this.validateAndSetSeats(res2.content);
+            }
+          }
+        });
+      },
+      validateAndSetSeats(seatsStr) {
+        const seats = parseInt(seatsStr);
+        if (isNaN(seats) || seats < 1 || seats > 7) {
+          uni.showToast({
+            title: "请输入1-7之间的有效人数",
+            icon: "none"
+          });
+          return;
+        }
+        this.selectedSeats = seats;
+        uni.showToast({
+          title: `已设置: ${seats}人`,
+          icon: "success"
+        });
       },
       async publishDemand() {
         try {
           const requestData = {
             startLoc: this.rideRequest.startLoc,
             endLoc: this.rideRequest.endLoc,
-            startAt: this.rideRequest.startAt
+            startAt: this.rideRequest.startAt,
+            requestId: this.id,
+            exclusive: this.rideRequest.exclusive,
+            highway: this.rideRequest.highway
           };
+          formatAppLog("log", "at pages/customer/OrderModify.vue:606", requestData);
           const response = await uni.request({
-            url: `http://10.0.2.2:8083/carsharing/modify-request?orderId=${this.rideOrder.orderID}`,
+            url: `http://10.0.2.2:8083/carsharing/modify-request`,
             method: "POST",
             data: requestData,
             header: {
               "Content-Type": "application/json"
             }
           });
-          formatAppLog("log", "at pages/customer/OrderModify.vue:252", requestData);
           if (response.data.status === "success") {
-            const responseData = response.data;
-            if (responseData.requestID) {
-              this.setRequestId(responseData.requestID);
-              uni.showToast({
-                title: "发布成功",
-                icon: "success"
-              });
-              this.ToInvitationMatch();
-            } else {
-              throw new Error("未收到 requestID");
-            }
+            uni.showToast({
+              title: "修改成功",
+              icon: "success"
+            });
+            uni.navigateBack({
+              delta: 1
+            });
           } else {
-            throw new Error("请求失败");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/customer/OrderModify.vue:269", "发布失败:", error);
+          formatAppLog("error", "at pages/customer/OrderModify.vue:627", "修改失败:", error);
           uni.showToast({
-            title: "发布失败",
+            title: "修改失败",
             icon: "none"
           });
         }
@@ -9316,133 +9692,190 @@ if (uni.restoreGlobal) {
     }
   };
   function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_PageHeader_cover = vue.resolveComponent("PageHeader_cover");
-    return vue.openBlock(), vue.createElementBlock(
-      vue.Fragment,
-      null,
-      [
-        vue.createCommentVNode(" 模板部分保持不变，与之前相同 "),
-        vue.createElementVNode("cover-view", null, [
-          vue.createCommentVNode(" 悬浮头部 "),
-          vue.createVNode(_component_PageHeader_cover, {
-            backText: "当前订单",
-            backUrl: "/pages/customer/customer"
-          }),
-          vue.createCommentVNode(" 地图容器 "),
-          vue.createElementVNode("cover-view", { class: "map-container" }, [
-            vue.createElementVNode(
-              "web-view",
-              {
-                src: "/static/map.html",
-                onMessage: _cache[0] || (_cache[0] = (...args) => $options.handleMapMessage && $options.handleMapMessage(...args))
-              },
-              null,
-              32
-              /* NEED_HYDRATION */
-            ),
-            vue.createElementVNode("cover-view", { class: "floating-details" }, [
-              vue.createElementVNode("cover-view", { class: "detail-card" }, [
-                vue.createCommentVNode(" 顶部举报按钮 "),
-                vue.createElementVNode("cover-view", { class: "report-btn" }, [
-                  vue.createElementVNode("cover-image", {
-                    src: _imports_0$1,
-                    class: "report-icon"
-                  }),
-                  vue.createElementVNode("cover-view", { class: "report-text" }, "举报投诉")
-                ]),
-                vue.createElementVNode("cover-view", { class: "start_end_loc" }, [
-                  vue.createElementVNode("cover-view", { class: "first-row" }, [
-                    vue.createElementVNode("cover-view", {
-                      class: "location-row start",
-                      onClick: _cache[3] || (_cache[3] = (...args) => $options.ToStartLoc && $options.ToStartLoc(...args))
-                    }, [
-                      vue.createElementVNode("cover-view", {
-                        class: "icon start-icon",
-                        onClick: _cache[1] || (_cache[1] = (...args) => $options.ToStartLoc && $options.ToStartLoc(...args))
-                      }),
-                      vue.createElementVNode(
-                        "cover-view",
-                        {
-                          class: "location-text",
-                          onClick: _cache[2] || (_cache[2] = (...args) => $options.ToStartLoc && $options.ToStartLoc(...args))
-                        },
-                        vue.toDisplayString(_ctx.rideRequest.startLoc ? _ctx.rideRequest.startLoc : "你从哪上车"),
-                        1
-                        /* TEXT */
-                      )
-                    ]),
-                    vue.createElementVNode("cover-view", {
-                      class: "location-row end",
-                      onClick: _cache[6] || (_cache[6] = (...args) => $options.ToEndLoc && $options.ToEndLoc(...args))
-                    }, [
-                      vue.createElementVNode("cover-view", {
-                        class: "icon end-icon",
-                        onClick: _cache[4] || (_cache[4] = (...args) => $options.ToEndLoc && $options.ToEndLoc(...args))
-                      }),
-                      vue.createElementVNode(
-                        "cover-view",
-                        {
-                          class: "location-text",
-                          onClick: _cache[5] || (_cache[5] = (...args) => $options.ToEndLoc && $options.ToEndLoc(...args))
-                        },
-                        vue.toDisplayString(_ctx.rideRequest.endLoc ? _ctx.rideRequest.endLoc : "你要到哪去"),
-                        1
-                        /* TEXT */
-                      )
-                    ])
-                  ]),
-                  vue.createElementVNode("cover-view", { class: "second-row" }, [
-                    vue.createElementVNode("cover-view", { class: "publish-button-container" }, [
-                      vue.createElementVNode(
-                        "cover-view",
-                        {
-                          class: vue.normalizeClass(["time-selector", { "has-time": $data.selectedTime }]),
-                          onClick: _cache[9] || (_cache[9] = (...args) => $options.showTimePicker && $options.showTimePicker(...args))
-                        },
-                        [
-                          vue.createElementVNode(
-                            "cover-view",
-                            {
-                              class: "time-text",
-                              onClick: _cache[7] || (_cache[7] = (...args) => $options.showTimePicker && $options.showTimePicker(...args))
-                            },
-                            vue.toDisplayString($options.formattedTime) + " 点击修改时间",
-                            1
-                            /* TEXT */
-                          ),
-                          vue.withDirectives(vue.createElementVNode(
-                            "cover-view",
-                            {
-                              class: "time-line",
-                              onClick: _cache[8] || (_cache[8] = (...args) => $options.showTimePicker && $options.showTimePicker(...args))
-                            },
-                            null,
-                            512
-                            /* NEED_PATCH */
-                          ), [
-                            [vue.vShow, !$data.selectedTime]
-                          ])
-                        ],
-                        2
-                        /* CLASS */
-                      ),
-                      vue.createElementVNode("cover-view", {
-                        class: "publish-button",
-                        onClick: _cache[10] || (_cache[10] = (...args) => $options.publishDemand && $options.publishDemand(...args))
-                      }, "完成修改")
-                    ])
-                  ])
-                ])
+    const _component_PageHeader = vue.resolveComponent("PageHeader");
+    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0);
+    const _component_ShareOption = vue.resolveComponent("ShareOption");
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
+      vue.createCommentVNode(" 悬浮头部 "),
+      vue.createVNode(_component_PageHeader, {
+        backText: "修改拼车需求",
+        backUrl: "/pages/customer/RequestList"
+      }),
+      vue.createCommentVNode(" 地图部分 "),
+      vue.createElementVNode("map", {
+        id: "map",
+        class: "map-area",
+        longitude: $data.longitude,
+        latitude: $data.latitude,
+        markers: $data.markers,
+        polyline: $data.polyline,
+        scale: $data.scale,
+        "show-location": "",
+        onReady: _cache[0] || (_cache[0] = (...args) => $options.onMapReady && $options.onMapReady(...args))
+      }, null, 40, ["longitude", "latitude", "markers", "polyline", "scale"]),
+      vue.createCommentVNode(" 定位按钮 "),
+      vue.createElementVNode("cover-view", {
+        class: "locate-button1",
+        onClick: _cache[1] || (_cache[1] = (...args) => $options.getCurrentLocation && $options.getCurrentLocation(...args))
+      }),
+      vue.createElementVNode("cover-view", {
+        class: "locate-button2",
+        onClick: _cache[2] || (_cache[2] = (...args) => $options.getCurrentLocation && $options.getCurrentLocation(...args))
+      }),
+      vue.createCommentVNode(" 浮动详情部分 "),
+      vue.createElementVNode("view", { class: "floating-details" }, [
+        vue.createElementVNode("view", { class: "start_end_loc" }, [
+          vue.createElementVNode("view", { class: "first-row" }, [
+            vue.createElementVNode("view", {
+              class: "location-select",
+              style: { "display": "flex", "flex-direction": "column", "width": "65%" }
+            }, [
+              vue.createElementVNode("view", {
+                class: "location-row start",
+                onClick: _cache[3] || (_cache[3] = (...args) => $options.ToStartLoc && $options.ToStartLoc(...args))
+              }, [
+                vue.createElementVNode("view", { class: "icon start-icon" }),
+                vue.createElementVNode(
+                  "view",
+                  {
+                    class: vue.normalizeClass(["location-text", { "selected": this.rideRequest.startLoc }])
+                  },
+                  vue.toDisplayString(this.rideRequest.startLoc ? this.rideRequest.startLoc : "您从哪儿上车"),
+                  3
+                  /* TEXT, CLASS */
+                )
+              ]),
+              vue.createElementVNode("view", {
+                class: "location-row end",
+                onClick: _cache[4] || (_cache[4] = (...args) => $options.ToEndLoc && $options.ToEndLoc(...args))
+              }, [
+                vue.createElementVNode("view", { class: "icon end-icon" }),
+                vue.createElementVNode(
+                  "view",
+                  {
+                    class: vue.normalizeClass(["location-text", { "selected": this.rideRequest.endLoc }])
+                  },
+                  vue.toDisplayString(this.rideRequest.endLoc ? this.rideRequest.endLoc : "您要到哪儿去"),
+                  3
+                  /* TEXT, CLASS */
+                )
               ])
+            ]),
+            vue.createElementVNode("view", {
+              class: "time-seats-select",
+              style: { "display": "flex", "flex-direction": "column", "width": "35%" }
+            }, [
+              vue.createElementVNode(
+                "view",
+                {
+                  class: vue.normalizeClass(["time-selector", { "has-time": $data.selectedTime }]),
+                  onClick: _cache[6] || (_cache[6] = (...args) => $options.showTimePicker && $options.showTimePicker(...args))
+                },
+                [
+                  vue.createElementVNode("view", { style: { "color": "var(--color-blue)", "font-size": "11px", "font-weight": "bold", "display": "flex", "flex-direction": "row" } }, [
+                    vue.createVNode(_component_uni_icons, {
+                      type: "compose",
+                      color: "var(--color-blue);",
+                      style: { "margin-right": "3px" },
+                      size: "16"
+                    }),
+                    vue.createTextVNode(" 出发时间 "),
+                    vue.createElementVNode("view", {
+                      class: "modify-text",
+                      onClick: _cache[5] || (_cache[5] = (...args) => $options.showTimePicker && $options.showTimePicker(...args))
+                    }, "(修改时间)")
+                  ]),
+                  vue.createElementVNode(
+                    "view",
+                    { class: "time-text" },
+                    vue.toDisplayString($data.selectedTime),
+                    1
+                    /* TEXT */
+                  )
+                ],
+                2
+                /* CLASS */
+              ),
+              vue.createElementVNode(
+                "view",
+                {
+                  class: vue.normalizeClass(["seats-selector", { "has-seats": $data.selectedSeats }]),
+                  onClick: _cache[8] || (_cache[8] = (...args) => $options.showSeatsInput && $options.showSeatsInput(...args))
+                },
+                [
+                  vue.createElementVNode("view", { style: { "color": "var(--color-blue)", "font-size": "11px", "font-weight": "bold", "display": "flex", "flex-direction": "row" } }, [
+                    vue.createVNode(_component_uni_icons, {
+                      type: "person",
+                      color: "var(--color-blue);",
+                      style: { "margin-right": "3px" },
+                      size: "16"
+                    }),
+                    vue.createTextVNode(" 座位人数 "),
+                    vue.createElementVNode("view", {
+                      class: "modify-text",
+                      onClick: _cache[7] || (_cache[7] = (...args) => $options.showSeatsInput && $options.showSeatsInput(...args))
+                    }, "(修改人数)")
+                  ]),
+                  vue.createElementVNode(
+                    "view",
+                    { class: "seats-text" },
+                    vue.toDisplayString($data.selectedSeats + "人"),
+                    1
+                    /* TEXT */
+                  )
+                ],
+                2
+                /* CLASS */
+              ),
+              vue.createElementVNode(
+                "view",
+                {
+                  class: vue.normalizeClass(["highway-selector", { "has-highway": $data.highway }])
+                },
+                [
+                  vue.createElementVNode("view", { style: { "color": "var(--color-blue)", "font-size": "11px", "font-weight": "bold", "display": "flex", "flex-direction": "row", "align-items": "center" } }, [
+                    vue.createVNode(_component_uni_icons, {
+                      type: "flag",
+                      color: "var(--color-blue);",
+                      style: { "margin-right": "3px" },
+                      size: "16"
+                    }),
+                    vue.createTextVNode(" 愿意协商高速费 "),
+                    vue.createElementVNode("checkbox", {
+                      checked: $data.highway,
+                      onClick: _cache[9] || (_cache[9] = ($event) => this.toggleHighway()),
+                      style: { "margin-left": "4px" }
+                    }, null, 8, ["checked"])
+                  ])
+                ],
+                2
+                /* CLASS */
+              )
             ])
+          ]),
+          vue.createElementVNode("view", { class: "second-row" }, [
+            vue.createElementVNode("view", { class: "share-option" }, [
+              vue.createVNode(_component_ShareOption, {
+                type: "shared",
+                isSelected: $data.selectedType === "shared",
+                onSelect: $options.handleSelect
+              }, null, 8, ["isSelected", "onSelect"]),
+              vue.createVNode(_component_ShareOption, {
+                type: "exclusive",
+                isSelected: $data.selectedType === "exclusive",
+                onSelect: $options.handleSelect
+              }, null, 8, ["isSelected", "onSelect"])
+            ]),
+            vue.createElementVNode("view", {
+              class: "publish-button",
+              onClick: _cache[10] || (_cache[10] = (...args) => $options.publishDemand && $options.publishDemand(...args))
+            }, "修 改")
           ])
         ])
-      ],
-      2112
-      /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
-    );
+      ])
+    ]);
   }
-  const PagesCustomerOrderModify = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__file", "D:/大三下/软工课设/new_code/Mobile-Carpooling-System/ridesharing/pages/customer/OrderModify.vue"]]);
+  const PagesCustomerOrderModify = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-8acb5000"], ["__file", "D:/大三下/软工课设/new_code/Mobile-Carpooling-System/ridesharing/pages/customer/OrderModify.vue"]]);
   const _sfc_main$4 = {
     name: "OrderCompleteCard",
     props: {

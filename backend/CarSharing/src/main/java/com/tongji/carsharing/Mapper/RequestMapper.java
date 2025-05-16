@@ -50,7 +50,8 @@ public interface RequestMapper
             start_at As startAt, 
             start_loc AS startLoc, 
             end_loc AS endLoc, 
-            status
+            status,
+            id
         FROM carpool_request
         WHERE passenger_id = #{userId}
         ORDER BY start_at DESC
@@ -78,9 +79,29 @@ public interface RequestMapper
     List<Request> getallRequests();
 
     // 根据需求表ID修改用户需求表记录
-    @Update("UPDATE carpool_request SET start_loc = #{startLoc}, end_loc = #{endLoc}, start_at = #{startAt} WHERE id = #{orderId}")
-    int updateRequest(@Param("orderId") Integer orderId,
+    @Update("UPDATE carpool_request SET start_loc = #{startLoc}, end_loc = #{endLoc}, exclusive = #{exclusive}, highway = #{highway},start_at = #{startAtTimestamp} WHERE id = #{requestId}")
+    int updateRequest(@Param("requestId") Integer requestId,
                       @Param("startLoc") String startLoc,
                       @Param("endLoc") String endLoc,
-                      @Param("startAt") Timestamp startAt);
+                      @Param("exclusive") Boolean exclusive,
+                      @Param("highway") Boolean highway,
+                      @Param("startAtTimestamp") Timestamp startAtTimestamp);
+
+    @Delete("DELETE FROM carpool_request WHERE id = #{id}")
+    int deleteRequest(@Param("id") Integer id);
+
+    // 根据需求ID查询指定的拼车需求
+    @Select("""
+        SELECT 
+            start_at As startAt, 
+            start_loc AS startLoc, 
+            end_loc AS endLoc, 
+            status,
+            highway,
+            exclusive
+        FROM carpool_request
+        WHERE id = #{requestId}
+        ORDER BY start_at DESC
+    """)
+    List<Map<String, Object>> selectRequestsByRequestId(@Param("requestId") Integer requestId);
 }

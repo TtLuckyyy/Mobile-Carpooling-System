@@ -45,6 +45,9 @@ export default createStore({
 	SET_EXCLUSIVE(state,exclusive) {
 	  state.rideRequest.exclusive = exclusive
 	},
+	SET_HIGHWAY(state,highway) {
+	  state.rideRequest.highway = highway
+	},
 	TOGGLE_HIGHWAY(state) {
 	  state.rideRequest.highway = !state.rideRequest.highway
 	},
@@ -109,6 +112,9 @@ export default createStore({
 	},
 	setExclusive({ commit },exclusive) {
 	  commit('SET_EXCLUSIVE',exclusive)
+	},
+	setHighway({ commit },highway) {
+	  commit('SET_HIGHWAY',highway)
 	},
 	toggleHighway({ commit }) {
 	  commit('TOGGLE_HIGHWAY')
