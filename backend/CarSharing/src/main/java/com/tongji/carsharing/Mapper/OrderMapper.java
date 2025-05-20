@@ -1,6 +1,7 @@
 package com.tongji.carsharing.Mapper;
 
 import com.tongji.carsharing.Entity.Order;
+import com.tongji.carsharing.Entity.Request;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -46,7 +47,8 @@ public interface OrderMapper {
             u.avatar AS avatar,
             r.start_loc AS startLoc,
             r.end_loc AS endLoc,
-            r.price AS price
+            r.price AS price,
+            r.start_at AS startAt
         FROM carpool_order o
         JOIN carpool_request r ON o.request_id = r.id
         JOIN verification d ON o.driver_id = d.verification_user_id
@@ -54,4 +56,11 @@ public interface OrderMapper {
         WHERE o.id = #{orderId}
     """)
     Map<String, Object> selectCertainOrderInfo(@Param("orderId") Integer orderId);
+
+
+    @Select("SELECT * FROM carpool_order WHERE id = #{id}")
+    Order getOrderById(@Param("id") int id);
+
+    @Delete("DELETE FROM carpool_order WHERE id = #{id}")
+    int deleteOrder(@Param("id") Integer id);
 }

@@ -1,58 +1,53 @@
 <template>
-  <cover-view class="ride-info-card">
+  <view class="ride-info-card">
     <!-- Top Section: Detour Info -->
-    <cover-view class="top-section">
-      <cover-view class="detour-info">
-        <cover-view class="percentage">{{ detourPercentage }}%</cover-view>
-        <cover-view class="detour-text">顺路</cover-view>
-      </cover-view>
-      <cover-view class="extra-info">
-        <cover-view>多走</cover-view>
-        <cover-view class="value">{{ extraDistance }}公里</cover-view>
-        <cover-view>, 多花</cover-view>
-        <cover-view class="value">{{ extraTime }}分钟</cover-view>
-      </cover-view>
-    </cover-view>
+    <view class="top-section">
+      <view class="detour-info" v-if="detourPercentage">
+        <view class="percentage">{{ detourPercentage }}%</view>
+        <view class="detour-text">顺路</view>
+      </view>
+      <view class="extra-info">
+        <view>起点距离您目前约</view>
+        <view class="value">{{ extraDistance }}公里</view>
+        <view>,需</view>
+        <view class="value">{{ extraTime }}分钟</view>
+		<view>到达</view>
+      </view>
+    </view>
 
     <!-- Middle Section: Driver Info -->
-    <cover-view class="middle-section">
-      <cover-view class="driver-main-info">
+    <view class="middle-section">
+      <view class="driver-main-info">
         <cover-image :src="avatarUrl" class="avatar"></cover-image>
-        <cover-view class="driver-text-details">
-          <cover-view class="driver-name-rating-line">
-            <cover-view class="driver-name">尾号{{ phoneTail }}</cover-view>
-            <cover-view class="rating-container">
-              <cover-view class="driver-rating">{{ rating }}</cover-view>
-              <cover-view class="rating-text">分</cover-view>
-            </cover-view>
-          </cover-view>
-          <cover-view class="order-time">{{ orderTime }}</cover-view>
-        </cover-view>
-      </cover-view>
-      <cover-view class="phone-action" @tap="makePhoneCall">
+        <view class="driver-text-details">
+          <view class="driver-name-rating-line">
+            <view class="driver-name">尾号{{ phoneTail }}</view>
+          </view>
+          <view class="order-time">{{ orderTime }}</view>
+        </view>
+      </view>
+      <view class="phone-action" @tap="makePhoneCall">
         <cover-image src="/static/phone-icon.png" class="phone-icon"></cover-image> 
-      </cover-view>
-    </cover-view>
+      </view>
+    </view>
 
     <!-- Trip Details Section -->
-    <cover-view class="trip-details-section">
-      <cover-view class="location-item">
-        <cover-view class="dot green"></cover-view>
-        <cover-view class="location-text-group">
-          <cover-view class="location-name">{{ startLocation }}</cover-view>
-          <cover-view class="location-distance">{{ startDistance }}</cover-view>
-        </cover-view>
-      </cover-view>
-      <cover-view class="location-separator"></cover-view>
-      <cover-view class="location-item">
-        <cover-view class="dot red"></cover-view>
-        <cover-view class="location-text-group">
-          <cover-view class="location-name">{{ endLocation }}</cover-view>
-          <cover-view class="location-distance">{{ endDistance }}</cover-view>
-        </cover-view>
-      </cover-view>
-    </cover-view>
-  </cover-view>
+    <view class="trip-details-section">
+      <view class="location-item">
+        <view class="dot green"></view>
+        <view class="location-text-group">
+          <view class="location-name">{{ startLocation }}</view>
+        </view>
+      </view>
+      <view class="location-separator"></view>
+      <view class="location-item">
+        <view class="dot red"></view>
+        <view class="location-text-group">
+          <view class="location-name">{{ endLocation }}</view>
+        </view>
+      </view>
+    </view>
+  </view>
 </template>
 <script>
 export default {
@@ -60,7 +55,6 @@ export default {
   props: {
     detourPercentage: {
       type: [String, Number],
-      default: '85'
     },
     extraDistance: {
       type: [String, Number],
@@ -72,15 +66,11 @@ export default {
     },
     avatarUrl: {
       type: String,
-      default: '/static/default-avatar.png' // Provide a default avatar path
+      default: '/static/default-avatar.png'
     },
     phoneTail: {
       type: String,
       default: '0000'
-    },
-    rating: {
-      type: [String, Number],
-      default: '5.0'
     },
     orderTime: {
       type: String,
@@ -90,25 +80,14 @@ export default {
       type: String,
       default: '起点未提供'
     },
-    startDistance: {
-      type: String, // Includes unit e.g., "20.3km"
-      default: '0km'
-    },
     endLocation: {
       type: String,
       default: '终点未提供'
-    },
-    endDistance: {
-      type: String, // Includes unit e.g., "10.5km"
-      default: '0km'
     }
   },
   methods: {
     makePhoneCall() {
-      // Implement phone call functionality, e.g., uni.makePhoneCall
       console.log('Phone call action triggered for driver ' + this.phoneTail);
-      // Example: You might need to fetch the full phone number
-      // uni.makePhoneCall({ phoneNumber: 'ACTUAL_PHONE_NUMBER_HERE' });
     }
   }
 }
@@ -195,21 +174,6 @@ export default {
   font-size: 30rpx;
   font-weight: bold;
   color: #333333;
-  margin-right: 10rpx;
-}
-.rating-container {
-  display: flex;
-  align-items: baseline;
-}
-.driver-rating {
-  font-size: 24rpx;
-  color: #FFC107; /* Gold color for rating */
-  font-weight: bold;
-}
-.rating-text {
-  font-size: 24rpx;
-  color: #FFC107;
-  margin-left: 2rpx;
 }
 .phone-action {
   padding: 10rpx;
@@ -258,20 +222,10 @@ export default {
   font-size: 28rpx;
   color: #333333;
   flex-grow: 1;
-  /* For potential truncation if needed, but cover-text might not support ellipsis well */
-  /* white-space: nowrap; */
-  /* overflow: hidden; */
-  /* text-overflow: ellipsis; */
-}
-.location-distance {
-  font-size: 26rpx;
-  color: #777777;
-  margin-left: 16rpx;
-  flex-shrink: 0;
 }
 .location-separator {
-  /* This is a visual cue, a real dotted line is tricky with cover-view. */
-  /* We can simulate it with a very short, dashed border on a cover-view, */
+  /* This is a visual cue, a real dotted line is tricky with view. */
+  /* We can simulate it with a very short, dashed border on a view, */
   /* or rely on the spacing from the parent flex container. */
   /* For simplicity, I'm relying on the gap in .trip-details-section. */
   /* If a visual line is strictly needed, it's more complex. */

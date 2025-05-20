@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view @click="handleItemClick">
     <view class="block">
       <view class="time-text">{{ formatDateTime(item.startAt) }}</view>
 
@@ -53,7 +53,19 @@ export default {
     }
   },
   methods: {
-    formatDateTime
+    formatDateTime,
+    handleItemClick() {
+      if (!this.item.id) {
+        uni.showToast({
+          title: '订单ID不存在',
+          icon: 'none'
+        });
+        return;
+      }
+      uni.navigateTo({
+        url: `/pages/driver/RideInfoDisplayPage?id=${this.item.id}`
+      });
+    }
   }
 }
 </script>

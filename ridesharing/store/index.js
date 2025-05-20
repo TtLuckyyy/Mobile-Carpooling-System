@@ -14,6 +14,9 @@ export default createStore({
 		},
 		rideOrder: {  
 			orderID:null,
+			startLoc: '华东理工大学',
+			endLoc: '上海财经大学',
+			startAt: new Date('2025-04-14 00:00:00'),
 		},
 		rideInvitation:{
 			startLoc: '华东理工大学',
@@ -90,7 +93,7 @@ export default createStore({
 	},
 	SET_ORDER_ID(state, id) {
 	    state.rideOrder.orderID = id;
-		console.log("111",state.rideOrder.orderID);
+		// console.log("111",state.rideOrder.orderID);
 	}
   },
   actions: {

@@ -98,7 +98,8 @@ export default {
 			showSuggestions: false,
 			// ak: 'qUvnqoxw0awJluKPaBmcvUam4wQYOHF7',
 			// ak:'EtqTJ1MT40bg44IsZf2fFe2eJmCD2l2e',
-			ak: 'b2gVyjseS5Wx4a1STxi6PDdNRGWakAP9',
+			// ak: 'b2gVyjseS5Wx4a1STxi6PDdNRGWakAP9',
+			ak: 'YylCDEyDLCtKCqASXVz7mXtoXLTHsn6D',
 			hot_start_loc:[],
         };
     },

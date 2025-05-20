@@ -70,17 +70,17 @@
         </view>
       </view>
 	  <view class="order-request">
-			<view class="order-card"   @click="ToOrderDetail">
-				<view class="order-header"  @click="ToOrderDetail">
-					<view class="order-title" style="font-size: 16px;"  @click="ToOrderDetail">
+			<view class="order-card"   >
+				<view class="order-header"  >
+					<view class="order-title" style="font-size: 16px;"  >
 						  <view>正在</view>
 						  <view style="color: var(--color-green);">进行中</view>
 						  <view>的订单</view>
 					</view>
 					<view class="order-detail-btn" @click="ToOrderDetail" v-if="currentOrders.length > 0">详情 >></view>
 				</view>
-				<view class="order-content"  @click="ToOrderDetail" v-if="currentOrders.length > 0">
-					<view class="order-distance"  @click="ToOrderDetail">
+				<view class="order-content"  v-if="currentOrders.length > 0">
+					<view class="order-distance" >
 						<view style="margin-bottom:2px;">剩余</view> 
 						<view class="km" style="display: flex;flex-direction: row; align-items: flex-end;">
 							<view style="color: var(--color-red); font-size: 20px;">{{currentOrders[0].distance}}</view>
@@ -783,8 +783,9 @@ export default {
       if (this.currentOrders.length > 0) {
         const orderid = this.currentOrders[0].id;
         this.setOrderId(orderid);
+		console.log(this.rideOrder.orderID);
         uni.navigateTo({
-          url: './OrderDetail',
+          url: '/pages/customer/OrderDetail',
           animationType: 'slide-in-right',
           animationDuration: 300
         });

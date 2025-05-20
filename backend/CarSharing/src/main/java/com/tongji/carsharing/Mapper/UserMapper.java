@@ -44,7 +44,7 @@ public interface UserMapper {
 
         // 获取用户当前信息
         @Select("""
-        SELECT phone, total_mileage, avatar,username FROM users WHERE id = #{userId}""")
+        SELECT phone, total_mileage, avatar,username,role FROM users WHERE id = #{userId}""")
         Map<String, Object> getUserBasicInfo(@Param("userId") Integer userId);
 
         // 获取用户详细信息

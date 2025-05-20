@@ -129,7 +129,7 @@
       "height": "60px",
       "list": [
         {
-          "pagePath": "pages/driver/driver",
+          "pagePath": "pages/driver/driver_search",
           "iconPath": "/static/tabbar/1.png",
           "selectedIconPath": "/static/tabbar/2.png",
           "text": "车主"

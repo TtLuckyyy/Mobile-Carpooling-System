@@ -79,21 +79,6 @@
   font-size: 0.9375rem;
   font-weight: bold;
   color: #333333;
-  margin-right: 0.3125rem;
-}
-.rating-container[data-v-ba2aed4b] {
-  display: flex;
-  align-items: baseline;
-}
-.driver-rating[data-v-ba2aed4b] {
-  font-size: 0.75rem;
-  color: #FFC107; /* Gold color for rating */
-  font-weight: bold;
-}
-.rating-text[data-v-ba2aed4b] {
-  font-size: 0.75rem;
-  color: #FFC107;
-  margin-left: 0.0625rem;
 }
 .phone-action[data-v-ba2aed4b] {
   padding: 0.3125rem;
@@ -142,20 +127,10 @@
   font-size: 0.875rem;
   color: #333333;
   flex-grow: 1;
-  /* For potential truncation if needed, but cover-text might not support ellipsis well */
-  /* white-space: nowrap; */
-  /* overflow: hidden; */
-  /* text-overflow: ellipsis; */
-}
-.location-distance[data-v-ba2aed4b] {
-  font-size: 0.8125rem;
-  color: #777777;
-  margin-left: 0.5rem;
-  flex-shrink: 0;
 }
 .location-separator[data-v-ba2aed4b] {
-  /* This is a visual cue, a real dotted line is tricky with cover-view. */
-  /* We can simulate it with a very short, dashed border on a cover-view, */
+  /* This is a visual cue, a real dotted line is tricky with view. */
+  /* We can simulate it with a very short, dashed border on a view, */
   /* or rely on the spacing from the parent flex container. */
   /* For simplicity, I'm relying on the gap in .trip-details-section. */
   /* If a visual line is strictly needed, it's more complex. */
@@ -167,125 +142,119 @@
 
 
 
-.floating-buttons {
-  position: fixed;
-  top: 20px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  z-index: 9999;
-  pointer-events: auto;
+.all {
+  background-color: #f5f5f5;
 }
-.header {
-  width: 95%;
-  max-width: 400px;
+.head-content {
   background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  padding: 1px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+}
+.left-arrow {
+  height: 18px;
+  width: 18px;
 }
 .back-btn {
   display: flex;
   align-items: center;
   flex-direction: row;
-  gap: 10px;
-  padding: 15px 10px;
-}
-.back-btn uni-cover-image {
-  width: 18px;
-  height: 18px;
+  gap: 20px;
+  padding: 40px 10px 10px 10px;
 }
 .back-text {
   font-family: "Microsoft YaHei";
   font-weight: bold;
   font-size: 18px;
-  margin-left: 10px;
 }
 
 
-.page-cover-container[data-v-7bce6222] {
-  /* 如果需要页面占满，可能需要设置 height: 100vh; overflow: hidden; */
-  /* 与1.vue的根 cover-view 类似 */
-}
-.map-container[data-v-7bce6222] {
+.container[data-v-7bce6222] {
   width: 100%;
-  /* 假设 PageHeader_cover 高度为 60px (uni.upx) */
-  /* 实际高度应根据 PageHeader_cover 调整 */
-  height: calc(100vh - 60px); 
-  margin-top: 60px; /* 与PageHeader_cover高度匹配 */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
   position: relative;
 }
-uni-web-view[data-v-7bce6222] {
+.map-area[data-v-7bce6222] {
   width: 100%;
-  height: 100%;
-  display: block;
+  height: 70%;
+}
+.locate-button1[data-v-7bce6222] {
+  position: absolute;
+  bottom: 15.15625rem;
+  right: 0.625rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 0.625rem;
+  border: 2px black;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+.locate-button2[data-v-7bce6222] {
+  position: absolute;
+  bottom: 15.375rem;
+  right: 0.84375rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 0.375rem;
+  background-color: var(--color-grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+.locate-button1[data-v-7bce6222]:active {
+  transform: scale(0.95);
 }
 .floating-details[data-v-7bce6222] {
-  position: fixed;
-  bottom: 20px; /* uni.upx 或 rpx */
-  left: 10px;   /* uni.upx 或 rpx */
-  right: 10px;  /* uni.upx 或 rpx */
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 10; /* 确保在地图之上，具体值可能需要调整 */
+  z-index: 10;
 }
 .ride-info-card-shell[data-v-7bce6222] {
-  width: 100%; 
+  width: 100%;
   box-sizing: border-box;
-  /* background-color, border-radius, box-shadow are NOT here anymore */
-  margin-top: 0.625rem; /* Added top margin */
-  margin-bottom: 0.625rem; /* Added bottom margin */
 }
-
-/* Styles for the new bottom action bar */
 .bottom-action-bar[data-v-7bce6222] {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0.625rem; /* Changed from 20rpx 0 to 20rpx for all sides */
-  margin-top: 0.625rem; /* Adjusted from 10rpx for consistency */
-  background-color: #ffffff; /* Added white background */
-  border-radius: 0.75rem;    /* Added border-radius */
-  box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.1); /* Added box-shadow */
+  padding: 0.625rem;
+  margin-top: 2px;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.1);
 }
 .action-income-display[data-v-7bce6222] {
   display: flex;
   align-items: baseline;
-  font-size: 0.9375rem; /* Adjusted for balance */
+  font-size: 0.9375rem;
   color: #333333;
-   margin-left: 0.625rem;
+  margin-left: 0.625rem;
 }
 .income-amount[data-v-7bce6222] {
-  font-size: 1.25rem; /* Adjusted for balance */
+  font-size: 1.25rem;
   font-weight: bold;
-  color: #FF7F50; /* Orange/red color */
-  margin: 0 0.1875rem; /* Adjusted margin */
+  color: #FF7F50;
+  margin: 0 0.1875rem;
 }
 .action-button[data-v-7bce6222] {
   padding: 0.5rem 2.1875rem;
   border-radius: 0.9375rem;
-  font-size: 0.875rem; 
+  font-size: 0.875rem;
   font-weight: bold;
   text-align: center;
   line-height: normal;
-}
-.accept-button[data-v-7bce6222] {
-  background-color: #4CAF50; /* Greenish */
+  background-color: #4CAF50;
   color: #ffffff;
+  transition: all 0.3s ease;
 }
-
-/* 移除原有的 .page-container 样式，因为它不再是根元素 */
-/*
-.page-container {
-  padding-top: 20rpx;
-  background-color: #f7f7f7;
-  min-height: 100vh;
+.action-button.accepting[data-v-7bce6222] {
+  background-color: #FFA500;
+  pointer-events: none;
 }
-*/

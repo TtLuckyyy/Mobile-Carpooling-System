@@ -61,6 +61,7 @@ public interface RequestMapper
     // 查询所有拼车需求记录（不筛选 userId）
     @Select("""
     SELECT
+        id AS id,
         start_at As startAt,
         start_loc AS startLoc,
         end_loc AS endLoc,
@@ -91,17 +92,36 @@ public interface RequestMapper
     int deleteRequest(@Param("id") Integer id);
 
     // 根据需求ID查询指定的拼车需求
+//    @Select("""
+//        SELECT
+//            start_at As startAt,
+//            start_loc AS startLoc,
+//            end_loc AS endLoc,
+//            status,
+//            highway,
+//            exclusive,
+//            price
+//        FROM carpool_request
+//        WHERE id = #{requestId}
+//        ORDER BY start_at DESC
+//    """)
+//    List<Map<String, Object>> selectRequestsByRequestId(@Param("requestId") Integer requestId);
+
     @Select("""
         SELECT 
-            start_at As startAt, 
-            start_loc AS startLoc, 
-            end_loc AS endLoc, 
-            status,
-            highway,
-            exclusive
-        FROM carpool_request
-        WHERE id = #{requestId}
-        ORDER BY start_at DESC
+            cr.start_at AS startAt, 
+            cr.start_loc AS startLoc, 
+            cr.end_loc AS endLoc, 
+            cr.status,
+            cr.highway,
+            cr.exclusive,
+            cr.price,
+            u.avatar,
+            u.phone
+        FROM carpool_request cr
+        INNER JOIN users u ON cr.passenger_id = u.id
+        WHERE cr.id = #{requestId}
+        ORDER BY cr.start_at DESC
     """)
     List<Map<String, Object>> selectRequestsByRequestId(@Param("requestId") Integer requestId);
 }

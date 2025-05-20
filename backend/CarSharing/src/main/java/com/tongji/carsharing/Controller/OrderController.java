@@ -114,4 +114,34 @@ public class OrderController {
         }
         return response;
     }
+
+    // 删除拼车需求
+    @DeleteMapping("/cancel-order")
+    public Map<String, Object> deleteOrder(@RequestParam("id") Integer orderId) {
+        Map<String, Object> response = new HashMap<>();
+        // 检查需求是否存在
+        Order order = ordermapper.getOrderById(orderId);
+        if (order == null) {
+            response.put("status", "error");
+            response.put("message", "订单不存在！");
+            return response;
+        }
+        // 只允许删除 PENDING 或 MATCHED 状态的需求
+        if (!order.getStatus().equals(enums.PDStatus.PENDING) && !order.getStatus().equals(enums.PDStatus.ONGOING)) {
+            response.put("status", "error");
+            response.put("message", "低昂单已结束，不符合删除规则！");
+            return response;
+        }
+        // 执行删除
+        int affectedRows = ordermapper.deleteOrder(orderId);
+        if (affectedRows > 0) {
+            response.put("status", "success");
+            response.put("message", "订单删除成功！");
+        } else {
+            response.put("status", "error");
+            response.put("message", "订单删除失败！");
+        }
+
+        return response;
+    }
 }

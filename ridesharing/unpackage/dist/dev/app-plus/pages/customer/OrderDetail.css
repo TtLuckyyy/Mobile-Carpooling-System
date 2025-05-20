@@ -1,46 +1,28 @@
 
-.floating-buttons {
-  position: fixed;
-  top: 20px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  z-index: 9999;
-  pointer-events: auto;
+.all {
+  background-color: #f5f5f5;
 }
-.header {
-  width: 95%;
-  max-width: 400px;
+.head-content {
   background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  padding: 1px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+}
+.left-arrow {
+  height: 18px;
+  width: 18px;
 }
 .back-btn {
   display: flex;
   align-items: center;
   flex-direction: row;
-  gap: 10px;
-  padding: 15px 10px;
-}
-.back-btn uni-cover-image {
-  width: 18px;
-  height: 18px;
+  gap: 20px;
+  padding: 40px 10px 10px 10px;
 }
 .back-text {
   font-family: "Microsoft YaHei";
   font-weight: bold;
   font-size: 18px;
-  margin-left: 10px;
 }
 
 
-/* 样式部分保持不变，与之前相同 */
 .price-info {
   font-size: 16px;
   color: #FF4D4F;
@@ -48,52 +30,91 @@
   margin: 10px 0;
   font-weight: bold;
 }
-.map-container {
+.container {
   width: 100%;
-  height: calc(100vh - 60px);
-  margin-top: 60px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
   position: relative;
 }
+.map-area {
+  width: 100%;
+}
+.locate-button1 {
+  position: absolute;
+  bottom: 15.15625rem;
+  right: 0.625rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 0.625rem;
+  border: 2px black;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+.locate-button2 {
+  position: absolute;
+  bottom: 15.375rem;
+  right: 0.84375rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 0.375rem;
+  background-color: var(--color-grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+.locate-button1:active {
+  transform: scale(0.95);
+}
 .floating-details {
-  position: fixed;
-  bottom: 20px;
-  left: 10px;
-  right: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 9999;
 }
+.scroll-view {
+  height: 100%;
+}
 .detail-card {
-  width: 95%;
-  max-width: 400px;
+  width: 93%;
   background-color: #ffffff;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  padding: 15px;
+  padding: 10px 15px 15px 15px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 .report-btn {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 5px;
+  padding-top: 10px;
 }
 .report-icon {
   width: 18px;
   height: 18px;
 }
 .avatar-icon {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   overflow: hidden;
   object-fit: cover;
+  margin-top: 10px;
 }
 .report-text {
   font-size: 12px;
-  color:var(--color-blue);
+  color: var(--color-blue);
 }
 .music-control {
   display: flex;
@@ -109,14 +130,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+/*  gap: 5px; */
 }
 .car-plate {
   font-size: 30px;
   color: black;
-  font-weight: bold; 
-  margin-bottom: 5px;
-  letter-spacing: 2px; /* 增加字间距 */
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 .car-detail {
   font-size: 14px;
@@ -127,14 +147,12 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 .driver-name {
-  font-size: 16px;
-  font-weight: bold;
-  color: darkgrey;
+  font-size: 14px;
+  color: var(--color-darkgrey);
   margin-right: 10px;
-  font-weight: bold;
 }
 .driver-rating {
   font-size: 14px;
@@ -143,18 +161,18 @@
 .route-info {
   display: flex;
   flex-direction: row;
-  align-items: center; /* 保持垂直居中 */
-  justify-content: center; /* 添加水平居中 */
+  align-items: center;
+  justify-content: center;
   gap: 5px;
-  margin-top: 10px;
-  padding: 10px 0;
-  width: 100%; /* 确保容器宽度 */
+  padding: 10px 0px;
+  width: 100%;
 }
 .route-text-container {
-  max-width: 120px; /* 根据实际布局调整 */
+  width: 140px;
   overflow: hidden;
 }
-.route-from, .route-to {
+.route-from,
+.route-to {
   font-size: 14px;
   color: #333;
   white-space: nowrap;
@@ -162,35 +180,44 @@
   text-overflow: ellipsis;
 }
 .route-separator {
-  flex-shrink: 0; /* 防止分隔线被压缩 */
+  flex-shrink: 0;
   font-size: 12px;
   color: var(--color-grey);
   margin-left: 5px;
   margin-right: 10px;
 }
 .cancel-btn {
-	background-color: var(--color-red);
-	border-radius: 20px;
+  background-color: var(--color-blue);
+  border-radius: 20px;
   display: flex;
   justify-content: center;
-  align-items: center; /* 添加垂直居中 */
-  margin-top: 10px;
-  width: 70%; /* 确保宽度填满容器 */
-  height: 30px;
+  align-items: center;
+  margin-top: 4px;
+  width: 90%;
+  height: 40px;
+}
+.deleted-btn{
+	background-color: var(--color-grey);
+	border-radius: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 4px;
+	width: 90%;
+	height: 40px;
 }
 .cancel-text {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   color: white;
-  text-align: center; /* 确保文字居中 */
+  text-align: center;
 }
 .first-row {
   display: flex;
-  flex-direction: row; /* 横向排布 */
-  align-items: center; /* 垂直居中 */
-  justify-content: space-between; /* 子元素之间的间距均匀分布 */
-  padding: 8px 12px;
-  border-radius: 8px;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding: 5px 10px;
 }
 .icon {
   width: 12px;
@@ -203,9 +230,4 @@
 }
 .end-icon {
   background-color: var(--color-orange);
-}
-uni-web-view {
-  width: 100%;
-  height: 100%;
-  display: block;
 }
